@@ -1,0 +1,57 @@
+{% set profile = data['user:user-profile'] %}
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profile</h2>
+<div>
+    <p>Your account details:</p>
+    <table>
+        <tr>
+            <td>Display Name</td>
+            <td>{{ profile['user:user-display-name'] }}</td>
+        </tr>
+        <tr>
+            <td>Nickname</td>
+            <td>{{ profile['user:user-nickname'] }}</td>
+        </tr>
+        <tr>
+            <td>User ID</td>
+            <td>{{ profile['user:user-id'] }}</td>
+        </tr>
+        <tr>
+            <td>User Email</td>
+            <td>{{ profile['user:user-email'] }}</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>{{ profile['user:user-phone-number'] }}</td>
+        </tr>
+        <tr>
+            <td>Registration Date</td>
+            <td>{{ profile['user:user-registration-date']|datetime }}</td>
+        </tr>
+        <tr>
+            <td>Active Ads</td>
+            <td>{{ profile['user:user-active-ad-count'] }}</td>
+        </tr>
+        <tr>
+            <td>Reply Rate</td>
+            <td>{{ profile['user:reply-rate'] + '%' }}</td>
+        </tr>
+        <tr>
+            <td>Responsiveness</td>
+            <td>{{ profile['user:user-responsiveness'] }}</td>
+        </tr>
+        <tr>
+            <td>Total Reviews</td>
+            <td>{{ profile['user:total-reviews'] }}</td>
+        </tr>
+        <tr>
+            <td>Average Review Acore</td>
+            <td>{{ profile['user:average-review-score'] }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

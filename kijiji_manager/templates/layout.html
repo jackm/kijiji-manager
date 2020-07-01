@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% if request.endpoint == 'main.home' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    {% endif %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body class="loggedin">
+    <nav class="navtop">
+        <div>
+            <h1>Kijiji Manager</h1>
+            <a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>Home</a>
+            <a href="{{ url_for('ad.post') }}"><i class="fas fa-pencil-alt"></i>Post</a>
+            <a href="{{ url_for('user.profile') }}"><i class="fas fa-user-circle"></i>Profile</a>
+            <a href="{{ url_for('user.logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div>
+        <ul class="flashes">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

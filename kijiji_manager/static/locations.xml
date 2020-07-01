@@ -1,0 +1,1232 @@
+<loc:locations xmlns:types="http://www.ebayclassifiedsgroup.com/schema/types/v1" xmlns:cat="http://www.ebayclassifiedsgroup.com/schema/category/v1" xmlns:loc="http://www.ebayclassifiedsgroup.com/schema/location/v1" xmlns:ad="http://www.ebayclassifiedsgroup.com/schema/ad/v1" xmlns:pic="http://www.ebayclassifiedsgroup.com/schema/picture/v1" xmlns:user="http://www.ebayclassifiedsgroup.com/schema/user/v1" xmlns:feat="http://www.ebayclassifiedsgroup.com/schema/feature/v1" xmlns:attr="http://www.ebayclassifiedsgroup.com/schema/attribute/v1" xmlns:vid="http://www.ebayclassifiedsgroup.com/schema/video/v1" xmlns:rate="http://www.ebayclassifiedsgroup.com/schema/rate/v1" xmlns:reply="http://www.ebayclassifiedsgroup.com/schema/reply/v1" xmlns:feed="http://www.ebayclassifiedsgroup.com/schema/feed/v1" xmlns:payment="http://www.ebayclassifiedsgroup.com/schema/payment/v1" xmlns:order="http://www.ebayclassifiedsgroup.com/schema/order/v1" xmlns:notif="http://www.ebayclassifiedsgroup.com/schema/notifications/v1" xmlns:counter="http://www.ebayclassifiedsgroup.com/schema/counter/v1" xmlns:flag="http://www.ebayclassifiedsgroup.com/schema/flag/v1" xmlns:sug="http://www.ebayclassifiedsgroup.com/schema/suggestion/v1" xmlns:stat="http://www.ebayclassifiedsgroup.com/schema/stat/v1" xmlns:vrn="http://www.ebayclassifiedsgroup.com/schema/vrn/v1" locale="en_CA" version="1.63">
+	<loc:location id="0">
+		<loc:id-name>kijiji.ca</loc:id-name>
+		<loc:localized-name>Canada</loc:localized-name>
+		<loc:longitude>0.0</loc:longitude>
+		<loc:latitude>0.0</loc:latitude>
+		<loc:location id="9001">
+			<loc:id-name>qc</loc:id-name>
+			<loc:localized-name>Québec</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700059">
+				<loc:id-name>abitibi</loc:id-name>
+				<loc:localized-name>Abitibi-Témiscamingue</loc:localized-name>
+				<loc:longitude>-79.03333</loc:longitude>
+				<loc:latitude>48.25</loc:latitude>
+				<loc:location id="1700060">
+					<loc:id-name>rouyn-noranda</loc:id-name>
+					<loc:localized-name>Rouyn-Noranda</loc:localized-name>
+					<loc:longitude>-79.03333</loc:longitude>
+					<loc:latitude>48.25</loc:latitude>
+				</loc:location>
+				<loc:location id="1700061">
+					<loc:id-name>valdor</loc:id-name>
+					<loc:localized-name>Val-d'Or</loc:localized-name>
+					<loc:longitude>-77.78757</loc:longitude>
+					<loc:latitude>48.103184</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700251">
+				<loc:id-name>baiecomeau</loc:id-name>
+				<loc:localized-name>Baie-Comeau</loc:localized-name>
+				<loc:longitude>-68.15</loc:longitude>
+				<loc:latitude>49.216667</loc:latitude>
+			</loc:location>
+			<loc:location id="1700062">
+				<loc:id-name>chaudiere</loc:id-name>
+				<loc:localized-name>Chaudière-Appalaches</loc:localized-name>
+				<loc:longitude>-71.16666</loc:longitude>
+				<loc:latitude>46.8</loc:latitude>
+				<loc:location id="1700063">
+					<loc:id-name>levis</loc:id-name>
+					<loc:localized-name>Lévis</loc:localized-name>
+					<loc:longitude>-71.16666</loc:longitude>
+					<loc:latitude>46.8</loc:latitude>
+				</loc:location>
+				<loc:location id="1700065">
+					<loc:id-name>stgeorgesdebeauce</loc:id-name>
+					<loc:localized-name>St-Georges-de-Beauce</loc:localized-name>
+					<loc:longitude>-70.666664</loc:longitude>
+					<loc:latitude>46.11667</loc:latitude>
+				</loc:location>
+				<loc:location id="1700064">
+					<loc:id-name>thetfordmines</loc:id-name>
+					<loc:localized-name>Thetford Mines</loc:localized-name>
+					<loc:longitude>-71.3</loc:longitude>
+					<loc:latitude>46.083332</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700284">
+				<loc:id-name>chibougamau</loc:id-name>
+				<loc:localized-name>Chibougamau / Northern Québec</loc:localized-name>
+				<loc:longitude>-74.3697</loc:longitude>
+				<loc:latitude>49.915417</loc:latitude>
+			</loc:location>
+			<loc:location id="1700121">
+				<loc:id-name>drummondville</loc:id-name>
+				<loc:localized-name>Centre-du-Québec</loc:localized-name>
+				<loc:longitude>-72.48411</loc:longitude>
+				<loc:latitude>45.88082</loc:latitude>
+				<loc:location id="1700122">
+					<loc:id-name>drummondville</loc:id-name>
+					<loc:localized-name>Drummondville</loc:localized-name>
+					<loc:longitude>-72.48411</loc:longitude>
+					<loc:latitude>45.88082</loc:latitude>
+				</loc:location>
+				<loc:location id="1700123">
+					<loc:id-name>victoriaville</loc:id-name>
+					<loc:localized-name>Victoriaville</loc:localized-name>
+					<loc:longitude>-71.96667</loc:longitude>
+					<loc:latitude>46.05</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700066">
+				<loc:id-name>gaspesie</loc:id-name>
+				<loc:localized-name>Gaspé</loc:localized-name>
+				<loc:longitude>-64.48176</loc:longitude>
+				<loc:latitude>48.830067</loc:latitude>
+			</loc:location>
+			<loc:location id="1700253">
+				<loc:id-name>granby</loc:id-name>
+				<loc:localized-name>Granby</loc:localized-name>
+				<loc:longitude>-72.72177</loc:longitude>
+				<loc:latitude>45.39799</loc:latitude>
+			</loc:location>
+			<loc:location id="1700283">
+				<loc:id-name>lanaudiere</loc:id-name>
+				<loc:localized-name>Lanaudière</loc:localized-name>
+				<loc:longitude>-73.42559</loc:longitude>
+				<loc:latitude>46.000893</loc:latitude>
+			</loc:location>
+			<loc:location id="1700282">
+				<loc:id-name>laurentides</loc:id-name>
+				<loc:localized-name>Laurentides</loc:localized-name>
+				<loc:longitude>-73.75723</loc:longitude>
+				<loc:latitude>45.853493</loc:latitude>
+			</loc:location>
+			<loc:location id="80002">
+				<loc:id-name>montreal</loc:id-name>
+				<loc:localized-name>Greater Montréal</loc:localized-name>
+				<loc:longitude>-73.55439</loc:longitude>
+				<loc:latitude>45.51228</loc:latitude>
+				<loc:location id="1700278">
+					<loc:id-name>lavalrivenord</loc:id-name>
+					<loc:localized-name>Laval / North Shore</loc:localized-name>
+					<loc:longitude>-73.742714</loc:longitude>
+					<loc:latitude>45.580948</loc:latitude>
+				</loc:location>
+				<loc:location id="1700279">
+					<loc:id-name>longueuilrivesud</loc:id-name>
+					<loc:localized-name>Longueuil / South Shore</loc:localized-name>
+					<loc:longitude>-73.51002</loc:longitude>
+					<loc:latitude>45.538303</loc:latitude>
+				</loc:location>
+				<loc:location id="1700280">
+					<loc:id-name>ouestdelile</loc:id-name>
+					<loc:localized-name>West Island</loc:localized-name>
+					<loc:longitude>-73.73956</loc:longitude>
+					<loc:latitude>45.438953</loc:latitude>
+				</loc:location>
+				<loc:location id="1700281">
+					<loc:id-name>villedemontreal</loc:id-name>
+					<loc:localized-name>City of Montréal</loc:localized-name>
+					<loc:longitude>-73.55439</loc:longitude>
+					<loc:latitude>45.51228</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700124">
+				<loc:id-name>quebec</loc:id-name>
+				<loc:localized-name>Québec City</loc:localized-name>
+				<loc:longitude>-71.21935</loc:longitude>
+				<loc:latitude>46.81274</loc:latitude>
+			</loc:location>
+			<loc:location id="1700250">
+				<loc:id-name>rimouski</loc:id-name>
+				<loc:localized-name>Rimouski / Bas-St-Laurent</loc:localized-name>
+				<loc:longitude>-68.51667</loc:longitude>
+				<loc:latitude>48.43333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700178">
+				<loc:id-name>saguenay</loc:id-name>
+				<loc:localized-name>Saguenay-Lac-Saint-Jean</loc:localized-name>
+				<loc:longitude>-71.06139</loc:longitude>
+				<loc:latitude>48.42894</loc:latitude>
+				<loc:location id="1700180">
+					<loc:id-name>lacstjean</loc:id-name>
+					<loc:localized-name>Lac-Saint-Jean</loc:localized-name>
+					<loc:longitude>-72.083336</loc:longitude>
+					<loc:latitude>48.6</loc:latitude>
+				</loc:location>
+				<loc:location id="1700179">
+					<loc:id-name>saguenay</loc:id-name>
+					<loc:localized-name>Saguenay</loc:localized-name>
+					<loc:longitude>-71.06139</loc:longitude>
+					<loc:latitude>48.42894</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700151">
+				<loc:id-name>saint-hyacinthe</loc:id-name>
+				<loc:localized-name>Saint-Hyacinthe</loc:localized-name>
+				<loc:longitude>-72.9333</loc:longitude>
+				<loc:latitude>45.6333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700252">
+				<loc:id-name>saint-jean-sur-richelieu</loc:id-name>
+				<loc:localized-name>Saint-Jean-sur-Richelieu</loc:localized-name>
+				<loc:longitude>-73.26395</loc:longitude>
+				<loc:latitude>45.304276</loc:latitude>
+			</loc:location>
+			<loc:location id="1700071">
+				<loc:id-name>septiles</loc:id-name>
+				<loc:localized-name>Sept-Îles</loc:localized-name>
+				<loc:longitude>-66.38333</loc:longitude>
+				<loc:latitude>50.2</loc:latitude>
+			</loc:location>
+			<loc:location id="1700156">
+				<loc:id-name>sherbrooke</loc:id-name>
+				<loc:localized-name>Sherbrooke</loc:localized-name>
+				<loc:longitude>-71.88893</loc:longitude>
+				<loc:latitude>45.40326</loc:latitude>
+			</loc:location>
+			<loc:location id="1700147">
+				<loc:id-name>troisrivieres</loc:id-name>
+				<loc:localized-name>Mauricie</loc:localized-name>
+				<loc:longitude>-72.54503</loc:longitude>
+				<loc:latitude>46.34018</loc:latitude>
+				<loc:location id="1700148">
+					<loc:id-name>shawinigan</loc:id-name>
+					<loc:localized-name>Shawinigan</loc:localized-name>
+					<loc:longitude>-72.75192</loc:longitude>
+					<loc:latitude>46.54245</loc:latitude>
+				</loc:location>
+				<loc:location id="1700150">
+					<loc:id-name>troisrivieres</loc:id-name>
+					<loc:localized-name>Trois-Rivières</loc:localized-name>
+					<loc:longitude>-72.54503</loc:longitude>
+					<loc:latitude>46.34018</loc:latitude>
+				</loc:location>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9002">
+			<loc:id-name>novascotia</loc:id-name>
+			<loc:localized-name>Nova Scotia</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700256">
+				<loc:id-name>annapolis</loc:id-name>
+				<loc:localized-name>Annapolis Valley</loc:localized-name>
+				<loc:longitude>-65.51528</loc:longitude>
+				<loc:latitude>44.74167</loc:latitude>
+			</loc:location>
+			<loc:location id="1700257">
+				<loc:id-name>bridgewater</loc:id-name>
+				<loc:localized-name>Bridgewater</loc:localized-name>
+				<loc:longitude>-64.51667</loc:longitude>
+				<loc:latitude>44.36667</loc:latitude>
+			</loc:location>
+			<loc:location id="1700011">
+				<loc:id-name>capebreton</loc:id-name>
+				<loc:localized-name>Cape Breton</loc:localized-name>
+				<loc:longitude>-60.19557</loc:longitude>
+				<loc:latitude>46.13734</loc:latitude>
+			</loc:location>
+			<loc:location id="80010">
+				<loc:id-name>halifax</loc:id-name>
+				<loc:localized-name>Halifax</loc:localized-name>
+				<loc:longitude>-63.57392</loc:longitude>
+				<loc:latitude>44.64616</loc:latitude>
+				<loc:location id="1700107">
+					<loc:id-name>bedford</loc:id-name>
+					<loc:localized-name>Bedford</loc:localized-name>
+					<loc:longitude>-63.66444</loc:longitude>
+					<loc:latitude>44.72889</loc:latitude>
+				</loc:location>
+				<loc:location id="1700321">
+					<loc:id-name>cityofhalifax</loc:id-name>
+					<loc:localized-name>City of Halifax</loc:localized-name>
+					<loc:longitude>-63.575367</loc:longitude>
+					<loc:latitude>44.648895</loc:latitude>
+				</loc:location>
+				<loc:location id="1700108">
+					<loc:id-name>coleharbour</loc:id-name>
+					<loc:localized-name>Cole Harbour</loc:localized-name>
+					<loc:longitude>-63.433334</loc:longitude>
+					<loc:latitude>44.666668</loc:latitude>
+				</loc:location>
+				<loc:location id="1700109">
+					<loc:id-name>dartmouth</loc:id-name>
+					<loc:localized-name>Dartmouth</loc:localized-name>
+					<loc:longitude>-63.56667</loc:longitude>
+					<loc:latitude>44.66667</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700258">
+				<loc:id-name>newglasgow</loc:id-name>
+				<loc:localized-name>New Glasgow</loc:localized-name>
+				<loc:longitude>-62.63333</loc:longitude>
+				<loc:latitude>45.58333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700047">
+				<loc:id-name>truro</loc:id-name>
+				<loc:localized-name>Truro</loc:localized-name>
+				<loc:longitude>-63.28</loc:longitude>
+				<loc:latitude>45.364723</loc:latitude>
+			</loc:location>
+			<loc:location id="1700259">
+				<loc:id-name>yarmouth</loc:id-name>
+				<loc:localized-name>Yarmouth</loc:localized-name>
+				<loc:longitude>-66.12</loc:longitude>
+				<loc:latitude>43.84</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9003">
+			<loc:id-name>alberta</loc:id-name>
+			<loc:localized-name>Alberta</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700234">
+				<loc:id-name>banff</loc:id-name>
+				<loc:localized-name>Banff / Canmore</loc:localized-name>
+				<loc:longitude>-115.571945</loc:longitude>
+				<loc:latitude>51.178055</loc:latitude>
+			</loc:location>
+			<loc:location id="1700199">
+				<loc:id-name>calgary</loc:id-name>
+				<loc:localized-name>Calgary</loc:localized-name>
+				<loc:longitude>-114.06319</loc:longitude>
+				<loc:latitude>51.04507</loc:latitude>
+			</loc:location>
+			<loc:location id="1700202">
+				<loc:id-name>edmonton</loc:id-name>
+				<loc:localized-name>Edmonton Area</loc:localized-name>
+				<loc:longitude>-113.49037</loc:longitude>
+				<loc:latitude>53.54622</loc:latitude>
+				<loc:location id="1700203">
+					<loc:id-name>edmonton</loc:id-name>
+					<loc:localized-name>Edmonton</loc:localized-name>
+					<loc:longitude>-113.49037</loc:longitude>
+					<loc:latitude>53.54622</loc:latitude>
+				</loc:location>
+				<loc:location id="1700205">
+					<loc:id-name>stalbert</loc:id-name>
+					<loc:localized-name>St. Albert</loc:localized-name>
+					<loc:longitude>-113.63333</loc:longitude>
+					<loc:latitude>53.63333</loc:latitude>
+				</loc:location>
+				<loc:location id="1700204">
+					<loc:id-name>strathcona</loc:id-name>
+					<loc:localized-name>Strathcona County</loc:localized-name>
+					<loc:longitude>-113.30889</loc:longitude>
+					<loc:latitude>53.523335</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700232">
+				<loc:id-name>fortmcmurray</loc:id-name>
+				<loc:localized-name>Fort McMurray</loc:localized-name>
+				<loc:longitude>-111.3803</loc:longitude>
+				<loc:latitude>56.72718</loc:latitude>
+			</loc:location>
+			<loc:location id="1700233">
+				<loc:id-name>grandeprairie</loc:id-name>
+				<loc:localized-name>Grande Prairie</loc:localized-name>
+				<loc:longitude>-118.79489</loc:longitude>
+				<loc:latitude>55.17116</loc:latitude>
+			</loc:location>
+			<loc:location id="1700230">
+				<loc:id-name>lethbridge</loc:id-name>
+				<loc:localized-name>Lethbridge</loc:localized-name>
+				<loc:longitude>-112.83374</loc:longitude>
+				<loc:latitude>49.69383</loc:latitude>
+			</loc:location>
+			<loc:location id="1700095">
+				<loc:id-name>lloydminster</loc:id-name>
+				<loc:localized-name>Lloydminster</loc:localized-name>
+				<loc:longitude>-110.0</loc:longitude>
+				<loc:latitude>53.283333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700231">
+				<loc:id-name>medicinehat</loc:id-name>
+				<loc:localized-name>Medicine Hat</loc:localized-name>
+				<loc:longitude>-110.67809</loc:longitude>
+				<loc:latitude>50.04107</loc:latitude>
+			</loc:location>
+			<loc:location id="1700136">
+				<loc:id-name>reddeer</loc:id-name>
+				<loc:localized-name>Red Deer</loc:localized-name>
+				<loc:longitude>-113.81743</loc:longitude>
+				<loc:latitude>52.2623</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9004">
+			<loc:id-name>ontario</loc:id-name>
+			<loc:localized-name>Ontario</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700006">
+				<loc:id-name>barrie</loc:id-name>
+				<loc:localized-name>Barrie</loc:localized-name>
+				<loc:longitude>-79.68632</loc:longitude>
+				<loc:latitude>44.3893</loc:latitude>
+			</loc:location>
+			<loc:location id="1700129">
+				<loc:id-name>belleville</loc:id-name>
+				<loc:localized-name>Belleville Area</loc:localized-name>
+				<loc:longitude>-77.3819</loc:longitude>
+				<loc:latitude>44.16104</loc:latitude>
+				<loc:location id="1700130">
+					<loc:id-name>belleville</loc:id-name>
+					<loc:localized-name>Belleville</loc:localized-name>
+					<loc:longitude>-77.3819</loc:longitude>
+					<loc:latitude>44.16104</loc:latitude>
+				</loc:location>
+				<loc:location id="1700132">
+					<loc:id-name>trenton</loc:id-name>
+					<loc:localized-name>Trenton</loc:localized-name>
+					<loc:longitude>-77.57803</loc:longitude>
+					<loc:latitude>44.09985</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700206">
+				<loc:id-name>brantford</loc:id-name>
+				<loc:localized-name>Brantford</loc:localized-name>
+				<loc:longitude>-80.26174</loc:longitude>
+				<loc:latitude>43.14136</loc:latitude>
+			</loc:location>
+			<loc:location id="1700247">
+				<loc:id-name>brockville</loc:id-name>
+				<loc:localized-name>Brockville</loc:localized-name>
+				<loc:longitude>-75.68438</loc:longitude>
+				<loc:latitude>44.5896</loc:latitude>
+			</loc:location>
+			<loc:location id="1700239">
+				<loc:id-name>chatham-kent</loc:id-name>
+				<loc:localized-name>Chatham-Kent</loc:localized-name>
+				<loc:longitude>-82.18958</loc:longitude>
+				<loc:latitude>42.40444</loc:latitude>
+			</loc:location>
+			<loc:location id="1700133">
+				<loc:id-name>cornwall</loc:id-name>
+				<loc:localized-name>Cornwall</loc:localized-name>
+				<loc:longitude>-74.73569</loc:longitude>
+				<loc:latitude>45.02843</loc:latitude>
+			</loc:location>
+			<loc:location id="1700242">
+				<loc:id-name>guelph</loc:id-name>
+				<loc:localized-name>Guelph</loc:localized-name>
+				<loc:longitude>-80.24787</loc:longitude>
+				<loc:latitude>43.54456</loc:latitude>
+			</loc:location>
+			<loc:location id="80014">
+				<loc:id-name>hamilton</loc:id-name>
+				<loc:localized-name>Hamilton</loc:localized-name>
+				<loc:longitude>-79.88845</loc:longitude>
+				<loc:latitude>43.26099</loc:latitude>
+			</loc:location>
+			<loc:location id="1700237">
+				<loc:id-name>kapuskasing</loc:id-name>
+				<loc:localized-name>Kapuskasing</loc:localized-name>
+				<loc:longitude>-82.40264</loc:longitude>
+				<loc:latitude>49.40962</loc:latitude>
+			</loc:location>
+			<loc:location id="1700249">
+				<loc:id-name>kenora</loc:id-name>
+				<loc:localized-name>Kenora</loc:localized-name>
+				<loc:longitude>-94.48904</loc:longitude>
+				<loc:latitude>49.76588</loc:latitude>
+			</loc:location>
+			<loc:location id="1700181">
+				<loc:id-name>kingston</loc:id-name>
+				<loc:localized-name>Kingston Area</loc:localized-name>
+				<loc:longitude>-76.47933</loc:longitude>
+				<loc:latitude>44.23153</loc:latitude>
+				<loc:location id="1700183">
+					<loc:id-name>kingston</loc:id-name>
+					<loc:localized-name>Kingston</loc:localized-name>
+					<loc:longitude>-76.47933</loc:longitude>
+					<loc:latitude>44.23153</loc:latitude>
+				</loc:location>
+				<loc:location id="1700182">
+					<loc:id-name>napanee</loc:id-name>
+					<loc:localized-name>Napanee</loc:localized-name>
+					<loc:longitude>-76.95175</loc:longitude>
+					<loc:latitude>44.24859</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700209">
+				<loc:id-name>kitchener</loc:id-name>
+				<loc:localized-name>Kitchener Area</loc:localized-name>
+				<loc:longitude>-80.49305</loc:longitude>
+				<loc:latitude>43.45123</loc:latitude>
+				<loc:location id="1700210">
+					<loc:id-name>cambridge</loc:id-name>
+					<loc:localized-name>Cambridge</loc:localized-name>
+					<loc:longitude>-80.31533</loc:longitude>
+					<loc:latitude>43.36141</loc:latitude>
+				</loc:location>
+				<loc:location id="1700212">
+					<loc:id-name>kitchener</loc:id-name>
+					<loc:localized-name>Kitchener / Waterloo</loc:localized-name>
+					<loc:longitude>-80.49305</loc:longitude>
+					<loc:latitude>43.45123</loc:latitude>
+				</loc:location>
+				<loc:location id="1700213">
+					<loc:id-name>stratford</loc:id-name>
+					<loc:localized-name>Stratford</loc:localized-name>
+					<loc:longitude>-80.98333</loc:longitude>
+					<loc:latitude>43.36667</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700240">
+				<loc:id-name>leamington</loc:id-name>
+				<loc:localized-name>Leamington</loc:localized-name>
+				<loc:longitude>-82.58334</loc:longitude>
+				<loc:latitude>42.05</loc:latitude>
+			</loc:location>
+			<loc:location id="1700214">
+				<loc:id-name>london</loc:id-name>
+				<loc:localized-name>London</loc:localized-name>
+				<loc:longitude>-81.24621</loc:longitude>
+				<loc:latitude>42.98689</loc:latitude>
+			</loc:location>
+			<loc:location id="1700078">
+				<loc:id-name>muskoka</loc:id-name>
+				<loc:localized-name>Muskoka</loc:localized-name>
+				<loc:longitude>-79.3</loc:longitude>
+				<loc:latitude>45.03333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700248">
+				<loc:id-name>norfolk</loc:id-name>
+				<loc:localized-name>Norfolk County</loc:localized-name>
+				<loc:longitude>-80.31662</loc:longitude>
+				<loc:latitude>42.87221</loc:latitude>
+			</loc:location>
+			<loc:location id="1700243">
+				<loc:id-name>northbay</loc:id-name>
+				<loc:localized-name>North Bay</loc:localized-name>
+				<loc:longitude>-79.45993</loc:longitude>
+				<loc:latitude>46.30663</loc:latitude>
+			</loc:location>
+			<loc:location id="1700184">
+				<loc:id-name>ottawa</loc:id-name>
+				<loc:localized-name>Ottawa / Gatineau Area</loc:localized-name>
+				<loc:longitude>-75.69189</loc:longitude>
+				<loc:latitude>45.4215</loc:latitude>
+				<loc:location id="1700186">
+					<loc:id-name>gatineau</loc:id-name>
+					<loc:localized-name>Gatineau</loc:localized-name>
+					<loc:longitude>-75.699</loc:longitude>
+					<loc:latitude>45.479</loc:latitude>
+				</loc:location>
+				<loc:location id="1700185">
+					<loc:id-name>ottawa</loc:id-name>
+					<loc:localized-name>Ottawa</loc:localized-name>
+					<loc:longitude>-75.69189</loc:longitude>
+					<loc:latitude>45.4215</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700187">
+				<loc:id-name>owensound</loc:id-name>
+				<loc:localized-name>Owen Sound</loc:localized-name>
+				<loc:longitude>-80.9426</loc:longitude>
+				<loc:latitude>44.56487</loc:latitude>
+			</loc:location>
+			<loc:location id="1700217">
+				<loc:id-name>peterborough</loc:id-name>
+				<loc:localized-name>Peterborough Area</loc:localized-name>
+				<loc:longitude>-78.32131</loc:longitude>
+				<loc:latitude>44.30073</loc:latitude>
+				<loc:location id="1700219">
+					<loc:id-name>kawartha</loc:id-name>
+					<loc:localized-name>Kawartha Lakes</loc:localized-name>
+					<loc:longitude>-78.74007</loc:longitude>
+					<loc:latitude>44.35428</loc:latitude>
+				</loc:location>
+				<loc:location id="1700218">
+					<loc:id-name>peterborough</loc:id-name>
+					<loc:localized-name>Peterborough</loc:localized-name>
+					<loc:longitude>-78.32131</loc:longitude>
+					<loc:latitude>44.30073</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700074">
+				<loc:id-name>renfrew</loc:id-name>
+				<loc:localized-name>Renfrew County Area</loc:localized-name>
+				<loc:longitude>-77.11085</loc:longitude>
+				<loc:latitude>45.82667</loc:latitude>
+				<loc:location id="1700075">
+					<loc:id-name>pembroke</loc:id-name>
+					<loc:localized-name>Pembroke</loc:localized-name>
+					<loc:longitude>-77.11085</loc:longitude>
+					<loc:latitude>45.82667</loc:latitude>
+				</loc:location>
+				<loc:location id="1700076">
+					<loc:id-name>petawawa</loc:id-name>
+					<loc:localized-name>Petawawa</loc:localized-name>
+					<loc:longitude>-77.28298</loc:longitude>
+					<loc:latitude>45.89841</loc:latitude>
+				</loc:location>
+				<loc:location id="1700077">
+					<loc:id-name>renfrew</loc:id-name>
+					<loc:localized-name>Renfrew</loc:localized-name>
+					<loc:longitude>-76.68769</loc:longitude>
+					<loc:latitude>45.4748</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700189">
+				<loc:id-name>sarnia</loc:id-name>
+				<loc:localized-name>Sarnia Area</loc:localized-name>
+				<loc:longitude>-82.40336</loc:longitude>
+				<loc:latitude>42.97877</loc:latitude>
+				<loc:location id="1700190">
+					<loc:id-name>grandbend</loc:id-name>
+					<loc:localized-name>Grand Bend</loc:localized-name>
+					<loc:longitude>-81.75</loc:longitude>
+					<loc:latitude>43.31667</loc:latitude>
+				</loc:location>
+				<loc:location id="1700191">
+					<loc:id-name>sarnia</loc:id-name>
+					<loc:localized-name>Sarnia</loc:localized-name>
+					<loc:longitude>-82.40336</loc:longitude>
+					<loc:latitude>42.97877</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700244">
+				<loc:id-name>saultstemarie</loc:id-name>
+				<loc:localized-name>Sault Ste. Marie</loc:localized-name>
+				<loc:longitude>-84.3333</loc:longitude>
+				<loc:latitude>46.5</loc:latitude>
+			</loc:location>
+			<loc:location id="80016">
+				<loc:id-name>stcatharines</loc:id-name>
+				<loc:localized-name>St. Catharines</loc:localized-name>
+				<loc:longitude>-79.2333</loc:longitude>
+				<loc:latitude>43.1666</loc:latitude>
+			</loc:location>
+			<loc:location id="1700245">
+				<loc:id-name>sudbury</loc:id-name>
+				<loc:localized-name>Sudbury</loc:localized-name>
+				<loc:longitude>-80.98966</loc:longitude>
+				<loc:latitude>46.48959</loc:latitude>
+			</loc:location>
+			<loc:location id="1700126">
+				<loc:id-name>thunderbay</loc:id-name>
+				<loc:localized-name>Thunder Bay</loc:localized-name>
+				<loc:longitude>-89.24548</loc:longitude>
+				<loc:latitude>48.3817</loc:latitude>
+			</loc:location>
+			<loc:location id="1700238">
+				<loc:id-name>timmins</loc:id-name>
+				<loc:localized-name>Timmins</loc:localized-name>
+				<loc:longitude>-81.33564</loc:longitude>
+				<loc:latitude>48.47612</loc:latitude>
+			</loc:location>
+			<loc:location id="1700272">
+				<loc:id-name>toronto</loc:id-name>
+				<loc:localized-name>Toronto (GTA)</loc:localized-name>
+				<loc:longitude>-79.38533</loc:longitude>
+				<loc:latitude>43.64856</loc:latitude>
+				<loc:location id="1700273">
+					<loc:id-name>cityoftoronto</loc:id-name>
+					<loc:localized-name>City of Toronto</loc:localized-name>
+					<loc:longitude>-79.38533</loc:longitude>
+					<loc:latitude>43.64856</loc:latitude>
+				</loc:location>
+				<loc:location id="1700275">
+					<loc:id-name>durham</loc:id-name>
+					<loc:localized-name>Oshawa / Durham Region</loc:localized-name>
+					<loc:longitude>-78.8595</loc:longitude>
+					<loc:latitude>43.88868</loc:latitude>
+				</loc:location>
+				<loc:location id="1700277">
+					<loc:id-name>halton</loc:id-name>
+					<loc:localized-name>Oakville / Halton Region</loc:localized-name>
+					<loc:longitude>-79.93136</loc:longitude>
+					<loc:latitude>43.63928</loc:latitude>
+				</loc:location>
+				<loc:location id="1700276">
+					<loc:id-name>peel</loc:id-name>
+					<loc:localized-name>Mississauga / Peel Region</loc:localized-name>
+					<loc:longitude>-79.64372</loc:longitude>
+					<loc:latitude>43.58828</loc:latitude>
+				</loc:location>
+				<loc:location id="1700274">
+					<loc:id-name>york</loc:id-name>
+					<loc:localized-name>Markham / York Region</loc:localized-name>
+					<loc:longitude>-79.25</loc:longitude>
+					<loc:latitude>43.883335</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700220">
+				<loc:id-name>windsor</loc:id-name>
+				<loc:localized-name>Windsor Region</loc:localized-name>
+				<loc:longitude>-83.03391</loc:longitude>
+				<loc:latitude>42.31782</loc:latitude>
+			</loc:location>
+			<loc:location id="1700241">
+				<loc:id-name>woodstock</loc:id-name>
+				<loc:localized-name>Woodstock</loc:localized-name>
+				<loc:longitude>-80.75656</loc:longitude>
+				<loc:latitude>43.13011</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9005">
+			<loc:id-name>newbrunswick</loc:id-name>
+			<loc:localized-name>New Brunswick</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700260">
+				<loc:id-name>bathurst</loc:id-name>
+				<loc:localized-name>Bathurst</loc:localized-name>
+				<loc:longitude>-65.65</loc:longitude>
+				<loc:latitude>47.6</loc:latitude>
+			</loc:location>
+			<loc:location id="1700261">
+				<loc:id-name>edmundston</loc:id-name>
+				<loc:localized-name>Edmundston</loc:localized-name>
+				<loc:longitude>-68.32535</loc:longitude>
+				<loc:latitude>47.3765</loc:latitude>
+			</loc:location>
+			<loc:location id="1700018">
+				<loc:id-name>fredericton</loc:id-name>
+				<loc:localized-name>Fredericton</loc:localized-name>
+				<loc:longitude>-66.63912</loc:longitude>
+				<loc:latitude>45.96064</loc:latitude>
+			</loc:location>
+			<loc:location id="1700262">
+				<loc:id-name>miramichi</loc:id-name>
+				<loc:localized-name>Miramichi</loc:localized-name>
+				<loc:longitude>-65.18333</loc:longitude>
+				<loc:latitude>47.03333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700001">
+				<loc:id-name>moncton</loc:id-name>
+				<loc:localized-name>Moncton</loc:localized-name>
+				<loc:longitude>-64.77826</loc:longitude>
+				<loc:latitude>46.08836</loc:latitude>
+			</loc:location>
+			<loc:location id="80017">
+				<loc:id-name>saintjohn</loc:id-name>
+				<loc:localized-name>Saint John</loc:localized-name>
+				<loc:longitude>-66.06412</loc:longitude>
+				<loc:latitude>45.27342</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9006">
+			<loc:id-name>manitoba</loc:id-name>
+			<loc:localized-name>Manitoba</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700085">
+				<loc:id-name>brandon</loc:id-name>
+				<loc:localized-name>Brandon Area</loc:localized-name>
+				<loc:longitude>-99.95</loc:longitude>
+				<loc:latitude>49.83333</loc:latitude>
+				<loc:location id="1700086">
+					<loc:id-name>brandon</loc:id-name>
+					<loc:localized-name>Brandon</loc:localized-name>
+					<loc:longitude>-99.95</loc:longitude>
+					<loc:latitude>49.83333</loc:latitude>
+				</loc:location>
+				<loc:location id="1700087">
+					<loc:id-name>portagelaprairie</loc:id-name>
+					<loc:localized-name>Portage la Prairie</loc:localized-name>
+					<loc:longitude>-98.3</loc:longitude>
+					<loc:latitude>49.96667</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700236">
+				<loc:id-name>flinflon</loc:id-name>
+				<loc:localized-name>Flin Flon</loc:localized-name>
+				<loc:longitude>-101.86417</loc:longitude>
+				<loc:latitude>54.768055</loc:latitude>
+			</loc:location>
+			<loc:location id="1700235">
+				<loc:id-name>thompson</loc:id-name>
+				<loc:localized-name>Thompson</loc:localized-name>
+				<loc:longitude>-97.86667</loc:longitude>
+				<loc:latitude>55.75</loc:latitude>
+			</loc:location>
+			<loc:location id="1700192">
+				<loc:id-name>winnipeg</loc:id-name>
+				<loc:localized-name>Winnipeg</loc:localized-name>
+				<loc:longitude>-97.14074</loc:longitude>
+				<loc:latitude>49.89942</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9007">
+			<loc:id-name>bc</loc:id-name>
+			<loc:localized-name>British Columbia</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700296">
+				<loc:id-name>cariboo</loc:id-name>
+				<loc:localized-name>Cariboo Area</loc:localized-name>
+				<loc:longitude>-123.45536</loc:longitude>
+				<loc:latitude>52.40318</loc:latitude>
+				<loc:location id="1700307">
+					<loc:id-name>100milehouse</loc:id-name>
+					<loc:localized-name>100 Mile House</loc:localized-name>
+					<loc:longitude>-121.29501</loc:longitude>
+					<loc:latitude>51.64397</loc:latitude>
+				</loc:location>
+				<loc:location id="1700306">
+					<loc:id-name>quesnel</loc:id-name>
+					<loc:localized-name>Quesnel</loc:localized-name>
+					<loc:longitude>-122.4949</loc:longitude>
+					<loc:latitude>52.981735</loc:latitude>
+				</loc:location>
+				<loc:location id="1700305">
+					<loc:id-name>williamslake</loc:id-name>
+					<loc:localized-name>Williams Lake</loc:localized-name>
+					<loc:longitude>-122.141685</loc:longitude>
+					<loc:latitude>52.141674</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700298">
+				<loc:id-name>comoxvalley</loc:id-name>
+				<loc:localized-name>Comox Valley Area</loc:localized-name>
+				<loc:longitude>-124.99818</loc:longitude>
+				<loc:latitude>49.660656</loc:latitude>
+				<loc:location id="1700316">
+					<loc:id-name>campbellriver</loc:id-name>
+					<loc:localized-name>Campbell River</loc:localized-name>
+					<loc:longitude>-125.27334</loc:longitude>
+					<loc:latitude>50.033123</loc:latitude>
+				</loc:location>
+				<loc:location id="1700315">
+					<loc:id-name>comox</loc:id-name>
+					<loc:localized-name>Comox / Courtenay / Cumberland</loc:localized-name>
+					<loc:longitude>-124.99818</loc:longitude>
+					<loc:latitude>49.660656</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700300">
+				<loc:id-name>cowichan</loc:id-name>
+				<loc:localized-name>Cowichan Valley / Duncan</loc:localized-name>
+				<loc:longitude>-124.031</loc:longitude>
+				<loc:latitude>48.7569</loc:latitude>
+			</loc:location>
+			<loc:location id="1700224">
+				<loc:id-name>cranbrook</loc:id-name>
+				<loc:localized-name>Cranbrook</loc:localized-name>
+				<loc:longitude>-115.76407</loc:longitude>
+				<loc:latitude>49.510197</loc:latitude>
+			</loc:location>
+			<loc:location id="1700139">
+				<loc:id-name>fraservalley</loc:id-name>
+				<loc:localized-name>Fraser Valley</loc:localized-name>
+				<loc:longitude>-122.32885</loc:longitude>
+				<loc:latitude>49.05157</loc:latitude>
+				<loc:location id="1700140">
+					<loc:id-name>abbotsford</loc:id-name>
+					<loc:localized-name>Abbotsford</loc:localized-name>
+					<loc:longitude>-122.32885</loc:longitude>
+					<loc:latitude>49.05157</loc:latitude>
+				</loc:location>
+				<loc:location id="1700141">
+					<loc:id-name>chilliwack</loc:id-name>
+					<loc:localized-name>Chilliwack</loc:localized-name>
+					<loc:longitude>-121.95</loc:longitude>
+					<loc:latitude>49.16667</loc:latitude>
+				</loc:location>
+				<loc:location id="1700320">
+					<loc:id-name>hope</loc:id-name>
+					<loc:localized-name>Hope / Kent</loc:localized-name>
+					<loc:longitude>-121.466415</loc:longitude>
+					<loc:latitude>49.38908</loc:latitude>
+				</loc:location>
+				<loc:location id="1700319">
+					<loc:id-name>mission</loc:id-name>
+					<loc:localized-name>Mission</loc:localized-name>
+					<loc:longitude>-122.31129</loc:longitude>
+					<loc:latitude>49.133713</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700227">
+				<loc:id-name>kamloops</loc:id-name>
+				<loc:localized-name>Kamloops</loc:localized-name>
+				<loc:longitude>-120.33789</loc:longitude>
+				<loc:latitude>50.67612</loc:latitude>
+			</loc:location>
+			<loc:location id="1700228">
+				<loc:id-name>kelowna</loc:id-name>
+				<loc:localized-name>Kelowna</loc:localized-name>
+				<loc:longitude>-119.4966</loc:longitude>
+				<loc:latitude>49.88681</loc:latitude>
+				<loc:location id="1700246">
+					<loc:id-name>penticton</loc:id-name>
+					<loc:localized-name>Penticton</loc:localized-name>
+					<loc:longitude>-119.58187</loc:longitude>
+					<loc:latitude>49.488503</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700263">
+				<loc:id-name>nanaimo</loc:id-name>
+				<loc:localized-name>Nanaimo</loc:localized-name>
+				<loc:longitude>-123.98175</loc:longitude>
+				<loc:latitude>49.190933</loc:latitude>
+			</loc:location>
+			<loc:location id="1700226">
+				<loc:id-name>nelson</loc:id-name>
+				<loc:localized-name>Nelson</loc:localized-name>
+				<loc:longitude>-117.28333</loc:longitude>
+				<loc:latitude>49.48333</loc:latitude>
+			</loc:location>
+			<loc:location id="1700299">
+				<loc:id-name>oceanside</loc:id-name>
+				<loc:localized-name>Port Alberni / Oceanside</loc:localized-name>
+				<loc:longitude>-124.80555</loc:longitude>
+				<loc:latitude>49.233887</loc:latitude>
+				<loc:location id="1700317">
+					<loc:id-name>parksville</loc:id-name>
+					<loc:localized-name>Parksville / Qualicum Beach</loc:localized-name>
+					<loc:longitude>-124.313644</loc:longitude>
+					<loc:latitude>49.31934</loc:latitude>
+				</loc:location>
+				<loc:location id="1700318">
+					<loc:id-name>portalberni</loc:id-name>
+					<loc:localized-name>Port Alberni</loc:localized-name>
+					<loc:longitude>-124.80555</loc:longitude>
+					<loc:latitude>49.233887</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700295">
+				<loc:id-name>peaceriver</loc:id-name>
+				<loc:localized-name>Peace River Area</loc:localized-name>
+				<loc:longitude>-123.16816</loc:longitude>
+				<loc:latitude>56.43744</loc:latitude>
+				<loc:location id="1700304">
+					<loc:id-name>dawsoncreek</loc:id-name>
+					<loc:localized-name>Dawson Creek</loc:localized-name>
+					<loc:longitude>-120.23766</loc:longitude>
+					<loc:latitude>55.75963</loc:latitude>
+				</loc:location>
+				<loc:location id="1700303">
+					<loc:id-name>fortstjohn</loc:id-name>
+					<loc:localized-name>Fort St. John</loc:localized-name>
+					<loc:longitude>-120.84763</loc:longitude>
+					<loc:latitude>56.246464</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700301">
+				<loc:id-name>porthardy</loc:id-name>
+				<loc:localized-name>Port Hardy / Port McNeill</loc:localized-name>
+				<loc:longitude>-127.496666</loc:longitude>
+				<loc:latitude>50.72082</loc:latitude>
+			</loc:location>
+			<loc:location id="1700294">
+				<loc:id-name>powellriver</loc:id-name>
+				<loc:localized-name>Powell River District</loc:localized-name>
+				<loc:longitude>-124.52476</loc:longitude>
+				<loc:latitude>49.835255</loc:latitude>
+			</loc:location>
+			<loc:location id="1700143">
+				<loc:id-name>princegeorge</loc:id-name>
+				<loc:localized-name>Prince George</loc:localized-name>
+				<loc:longitude>-122.74509</loc:longitude>
+				<loc:latitude>53.91235</loc:latitude>
+			</loc:location>
+			<loc:location id="1700302">
+				<loc:id-name>revelstoke</loc:id-name>
+				<loc:localized-name>Revelstoke</loc:localized-name>
+				<loc:longitude>-118.19692</loc:longitude>
+				<loc:latitude>51.00162</loc:latitude>
+			</loc:location>
+			<loc:location id="1700297">
+				<loc:id-name>skeena</loc:id-name>
+				<loc:localized-name>Skeena-Bulkley Area</loc:localized-name>
+				<loc:longitude>-127.16487</loc:longitude>
+				<loc:latitude>54.78827</loc:latitude>
+				<loc:location id="1700314">
+					<loc:id-name>burnslake</loc:id-name>
+					<loc:localized-name>Burns Lake</loc:localized-name>
+					<loc:longitude>-125.76361</loc:longitude>
+					<loc:latitude>54.233414</loc:latitude>
+				</loc:location>
+				<loc:location id="1700313">
+					<loc:id-name>houston</loc:id-name>
+					<loc:localized-name>Houston</loc:localized-name>
+					<loc:longitude>-126.64821</loc:longitude>
+					<loc:latitude>54.398</loc:latitude>
+				</loc:location>
+				<loc:location id="1700310">
+					<loc:id-name>kitimat</loc:id-name>
+					<loc:localized-name>Kitimat</loc:localized-name>
+					<loc:longitude>-128.63835</loc:longitude>
+					<loc:latitude>54.062912</loc:latitude>
+				</loc:location>
+				<loc:location id="1700308">
+					<loc:id-name>princerupert</loc:id-name>
+					<loc:localized-name>Prince Rupert</loc:localized-name>
+					<loc:longitude>-130.32082</loc:longitude>
+					<loc:latitude>54.315037</loc:latitude>
+				</loc:location>
+				<loc:location id="1700311">
+					<loc:id-name>smithers</loc:id-name>
+					<loc:localized-name>Smithers</loc:localized-name>
+					<loc:longitude>-127.16856</loc:longitude>
+					<loc:latitude>54.782356</loc:latitude>
+				</loc:location>
+				<loc:location id="1700309">
+					<loc:id-name>terrace</loc:id-name>
+					<loc:localized-name>Terrace</loc:localized-name>
+					<loc:longitude>-128.60315</loc:longitude>
+					<loc:latitude>54.518192</loc:latitude>
+				</loc:location>
+				<loc:location id="1700312">
+					<loc:id-name>vanderhoof</loc:id-name>
+					<loc:localized-name>Vanderhoof</loc:localized-name>
+					<loc:longitude>-123.80317</loc:longitude>
+					<loc:latitude>54.270447</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700293">
+				<loc:id-name>sunshinecoast</loc:id-name>
+				<loc:localized-name>Sunshine Coast</loc:localized-name>
+				<loc:longitude>-123.7644</loc:longitude>
+				<loc:latitude>49.760437</loc:latitude>
+			</loc:location>
+			<loc:location id="80003">
+				<loc:id-name>vancouver</loc:id-name>
+				<loc:localized-name>Greater Vancouver Area</loc:localized-name>
+				<loc:longitude>-123.11403</loc:longitude>
+				<loc:latitude>49.26044</loc:latitude>
+				<loc:location id="1700291">
+					<loc:id-name>UBC</loc:id-name>
+					<loc:localized-name>UBC</loc:localized-name>
+					<loc:longitude>-123.2494</loc:longitude>
+					<loc:latitude>49.2617</loc:latitude>
+				</loc:location>
+				<loc:location id="1700286">
+					<loc:id-name>burnaby</loc:id-name>
+					<loc:localized-name>Burnaby/New Westminster</loc:localized-name>
+					<loc:longitude>-122.9738</loc:longitude>
+					<loc:latitude>49.2489</loc:latitude>
+				</loc:location>
+				<loc:location id="1700292">
+					<loc:id-name>downtownwestend</loc:id-name>
+					<loc:localized-name>Downtown-West End</loc:localized-name>
+					<loc:longitude>-123.0998</loc:longitude>
+					<loc:latitude>49.2813</loc:latitude>
+				</loc:location>
+				<loc:location id="1700289">
+					<loc:id-name>northshore</loc:id-name>
+					<loc:localized-name>North Shore</loc:localized-name>
+					<loc:longitude>-123.11403</loc:longitude>
+					<loc:latitude>49.26044</loc:latitude>
+				</loc:location>
+				<loc:location id="1700288">
+					<loc:id-name>richmond</loc:id-name>
+					<loc:localized-name>Richmond</loc:localized-name>
+					<loc:longitude>-123.1336</loc:longitude>
+					<loc:latitude>49.1666</loc:latitude>
+				</loc:location>
+				<loc:location id="1700285">
+					<loc:id-name>surrey</loc:id-name>
+					<loc:localized-name>Delta/Surrey/Langley</loc:localized-name>
+					<loc:longitude>-122.828</loc:longitude>
+					<loc:latitude>49.1059</loc:latitude>
+				</loc:location>
+				<loc:location id="1700290">
+					<loc:id-name>tricities</loc:id-name>
+					<loc:localized-name>Tricities/Pitt/Maple</loc:localized-name>
+					<loc:longitude>-122.7685</loc:longitude>
+					<loc:latitude>49.2546</loc:latitude>
+				</loc:location>
+				<loc:location id="1700287">
+					<loc:id-name>vancouver</loc:id-name>
+					<loc:localized-name>Vancouver</loc:localized-name>
+					<loc:longitude>-123.06824</loc:longitude>
+					<loc:latitude>49.31965</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700229">
+				<loc:id-name>vernon</loc:id-name>
+				<loc:localized-name>Vernon</loc:localized-name>
+				<loc:longitude>-119.2738</loc:longitude>
+				<loc:latitude>50.26568</loc:latitude>
+			</loc:location>
+			<loc:location id="1700173">
+				<loc:id-name>victoria</loc:id-name>
+				<loc:localized-name>Victoria</loc:localized-name>
+				<loc:longitude>-123.36451</loc:longitude>
+				<loc:latitude>48.42831</loc:latitude>
+			</loc:location>
+			<loc:location id="1700100">
+				<loc:id-name>whistler</loc:id-name>
+				<loc:localized-name>Whistler</loc:localized-name>
+				<loc:longitude>-122.98333</loc:longitude>
+				<loc:latitude>50.1</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9008">
+			<loc:id-name>newfoundland</loc:id-name>
+			<loc:localized-name>Newfoundland</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700254">
+				<loc:id-name>cornerbrook</loc:id-name>
+				<loc:localized-name>Corner Brook</loc:localized-name>
+				<loc:longitude>-57.933334</loc:longitude>
+				<loc:latitude>48.95</loc:latitude>
+			</loc:location>
+			<loc:location id="1700255">
+				<loc:id-name>gander</loc:id-name>
+				<loc:localized-name>Gander</loc:localized-name>
+				<loc:longitude>-54.55</loc:longitude>
+				<loc:latitude>48.95</loc:latitude>
+			</loc:location>
+			<loc:location id="1700044">
+				<loc:id-name>labrador</loc:id-name>
+				<loc:localized-name>Labrador</loc:localized-name>
+				<loc:longitude>-66.916664</loc:longitude>
+				<loc:latitude>52.95</loc:latitude>
+				<loc:location id="1700045">
+					<loc:id-name>goosebay</loc:id-name>
+					<loc:localized-name>Goose Bay</loc:localized-name>
+					<loc:longitude>-60.416668</loc:longitude>
+					<loc:latitude>53.301945</loc:latitude>
+				</loc:location>
+				<loc:location id="1700046">
+					<loc:id-name>labradorcity</loc:id-name>
+					<loc:localized-name>Labrador City</loc:localized-name>
+					<loc:longitude>-66.916664</loc:longitude>
+					<loc:latitude>52.95</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700113">
+				<loc:id-name>stjohns</loc:id-name>
+				<loc:localized-name>St. John's</loc:localized-name>
+				<loc:longitude>-52.6666</loc:longitude>
+				<loc:latitude>47.55</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9009">
+			<loc:id-name>saskatchewan</loc:id-name>
+			<loc:localized-name>Saskatchewan</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700265">
+				<loc:id-name>laronge</loc:id-name>
+				<loc:localized-name>La Ronge</loc:localized-name>
+				<loc:longitude>-105.3</loc:longitude>
+				<loc:latitude>55.1</loc:latitude>
+			</loc:location>
+			<loc:location id="1700264">
+				<loc:id-name>meadowlake</loc:id-name>
+				<loc:localized-name>Meadow Lake</loc:localized-name>
+				<loc:longitude>-108.43472</loc:longitude>
+				<loc:latitude>54.12972</loc:latitude>
+			</loc:location>
+			<loc:location id="1700266">
+				<loc:id-name>nipawin</loc:id-name>
+				<loc:localized-name>Nipawin</loc:localized-name>
+				<loc:longitude>-104.01667</loc:longitude>
+				<loc:latitude>53.36667</loc:latitude>
+			</loc:location>
+			<loc:location id="1700088">
+				<loc:id-name>princealbert</loc:id-name>
+				<loc:localized-name>Prince Albert</loc:localized-name>
+				<loc:longitude>-105.75</loc:longitude>
+				<loc:latitude>53.2</loc:latitude>
+			</loc:location>
+			<loc:location id="1700194">
+				<loc:id-name>regina</loc:id-name>
+				<loc:localized-name>Regina Area</loc:localized-name>
+				<loc:longitude>-104.59518</loc:longitude>
+				<loc:latitude>50.44801</loc:latitude>
+				<loc:location id="1700195">
+					<loc:id-name>moosejaw</loc:id-name>
+					<loc:localized-name>Moose Jaw</loc:localized-name>
+					<loc:longitude>-105.55</loc:longitude>
+					<loc:latitude>50.4</loc:latitude>
+				</loc:location>
+				<loc:location id="1700196">
+					<loc:id-name>regina</loc:id-name>
+					<loc:localized-name>Regina</loc:localized-name>
+					<loc:longitude>-104.59518</loc:longitude>
+					<loc:latitude>50.44801</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700197">
+				<loc:id-name>saskatoon</loc:id-name>
+				<loc:localized-name>Saskatoon</loc:localized-name>
+				<loc:longitude>-106.65931</loc:longitude>
+				<loc:latitude>52.1305</loc:latitude>
+			</loc:location>
+			<loc:location id="1700093">
+				<loc:id-name>swiftcurrent</loc:id-name>
+				<loc:localized-name>Swift Current</loc:localized-name>
+				<loc:longitude>-107.767</loc:longitude>
+				<loc:latitude>50.283</loc:latitude>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9010">
+			<loc:id-name>territories</loc:id-name>
+			<loc:localized-name>Territories</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700105">
+				<loc:id-name>nunavut</loc:id-name>
+				<loc:localized-name>Nunavut</loc:localized-name>
+				<loc:longitude>-68.51972</loc:longitude>
+				<loc:latitude>63.74861</loc:latitude>
+				<loc:location id="1700106">
+					<loc:id-name>iqaluit</loc:id-name>
+					<loc:localized-name>Iqaluit</loc:localized-name>
+					<loc:longitude>-68.51972</loc:longitude>
+					<loc:latitude>63.74861</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700103">
+				<loc:id-name>nwt</loc:id-name>
+				<loc:localized-name>Northwest Territories</loc:localized-name>
+				<loc:longitude>-114.35</loc:longitude>
+				<loc:latitude>62.45</loc:latitude>
+				<loc:location id="1700104">
+					<loc:id-name>yellowknife</loc:id-name>
+					<loc:localized-name>Yellowknife</loc:localized-name>
+					<loc:longitude>-114.35</loc:longitude>
+					<loc:latitude>62.45</loc:latitude>
+				</loc:location>
+			</loc:location>
+			<loc:location id="1700101">
+				<loc:id-name>yukon</loc:id-name>
+				<loc:localized-name>Yukon</loc:localized-name>
+				<loc:longitude>-135.05</loc:longitude>
+				<loc:latitude>60.71667</loc:latitude>
+				<loc:location id="1700102">
+					<loc:id-name>whitehorse</loc:id-name>
+					<loc:localized-name>Whitehorse</loc:localized-name>
+					<loc:longitude>-135.05</loc:longitude>
+					<loc:latitude>60.71667</loc:latitude>
+				</loc:location>
+			</loc:location>
+		</loc:location>
+		<loc:location id="9011">
+			<loc:id-name>pei</loc:id-name>
+			<loc:localized-name>Prince Edward Island</loc:localized-name>
+			<loc:longitude>0.0</loc:longitude>
+			<loc:latitude>0.0</loc:latitude>
+			<loc:location id="1700118">
+				<loc:id-name>pei</loc:id-name>
+				<loc:localized-name>Prince Edward Island</loc:localized-name>
+				<loc:longitude>-63.12817</loc:longitude>
+				<loc:latitude>46.23659</loc:latitude>
+				<loc:location id="1700119">
+					<loc:id-name>charlottetown</loc:id-name>
+					<loc:localized-name>Charlottetown</loc:localized-name>
+					<loc:longitude>-63.12817</loc:longitude>
+					<loc:latitude>46.23659</loc:latitude>
+				</loc:location>
+				<loc:location id="1700120">
+					<loc:id-name>summerside</loc:id-name>
+					<loc:localized-name>Summerside</loc:localized-name>
+					<loc:longitude>-63.78333</loc:longitude>
+					<loc:latitude>46.4</loc:latitude>
+				</loc:location>
+			</loc:location>
+		</loc:location>
+	</loc:location>
+</loc:locations>

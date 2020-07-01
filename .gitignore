@@ -1,0 +1,9 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Flask instance folder
+instance/*
+
+# Virtualenv
+venv/

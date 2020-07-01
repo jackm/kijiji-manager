@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block title %}Kijiji Manager{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<table id="header"><tr><td><h2>Listings</h2></td><td valign="bottom" align="right"><h2></h2></td></tr></table>
+<div>
+    <p>Welcome back, {{ name }}!</p>
+    <table id="adlist">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Ad ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Views</th>
+            <th>Page</th>
+            <th>Created</th>
+            <th>Expires</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if 'ad:ad' in data['ad:ads'] %}
+        {% set ads = data['ad:ads']['ad:ad'] %}
+
+        {#- If only one ad, make it an array of one member in for loop #}
+        {% if ads|islist == false %}
+            {% set ads = [ads] %}
+        {% endif -%}
+
+        {% for ad in ads %}
+        <tr data-href="ad/{{ ad['@id'] }}">
+            <td align="center"><img src="{{ ad|imgthumbfirst }}"></td>
+            <td align="center">{{ ad['@id'] }}</td>
+            <td>{{ ad['ad:title'] }}</td>
+            <td>{{ ad['cat:category']['cat:id-name'] }}</td>
+            <td align="right">
+            {%- if 'ad:price' in ad -%}
+            {%- if ad['ad:price']['types:price-type']['types:value'] == 'SPECIFIED_AMOUNT' -%}
+                {{ '$' + ad['ad:price']['types:amount'] }}
+            {%- else -%}
+                {{ ad['ad:price']['types:price-type']['types:value'] }}
+            {%- endif -%}
+            {%- endif -%}
+            </td>
+            <td align="center">{{ ad['ad:view-ad-count'] }}</td>
+            <td align="center">{{ ad['ad:rank']|adpage }}</td>
+            <td align="center">{{ ad['ad:start-date-time']|datetime }}</td>
+            <td align="center">{{ ad['ad:end-date-time']|datetime }}</td>
+            <td align="center"><a href="{{ url_for('ad.delete', ad_id=ad['@id']) }}"><i class="fas fa-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+<script>
+$(document).ready(function () {
+    $("#adlist").DataTable();
+
+    // Make each table row clickable and link to specific ad page
+    $("#adlist *[data-href]").click(function () {
+        window.location = $(this).data("href");
+    });
+});
+</script>
+{% endblock %}

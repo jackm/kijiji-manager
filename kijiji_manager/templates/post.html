@@ -1,0 +1,246 @@
+{% extends 'layout.html' %}
+
+{% block title %}Post Ad{% endblock %}
+
+{% block content %}
+{% if step == 'choose_category' %}
+<h2>Post Ad - Choose Category</h2>
+<div>
+    <form id="categories" action="{{ url_for('ad.post') }}" enctype="multipart/form-data" method="post">
+    <table>
+        <tr>
+            <td>Category</td>
+            <td>{{ form.cat1 }} {{ form.cat2 }} {{ form.cat3 }}</td>
+        </tr>
+    </table>
+    {{ form.csrf_token }}
+    <input type="hidden" name="step" value="{{ next_step }}">
+    {{ form.submit }}
+    </form>
+</div>
+<script>
+$(document).ready(function () {
+    let cat1 = $("#cat1");
+    cat1.prop("selectedIndex", 1); // Default to "Buy & Sell"
+
+    let cat2 = $("#cat2");
+    cat2.empty();
+    cat2.hide();
+    cat2.prop("selectedIndex", 0);
+
+    let cat3 = $("#cat3");
+    cat3.empty();
+    cat3.hide();
+    cat3.prop("selectedIndex", 0);
+
+    function update_cat3() {
+        cat3.empty();
+        cat3.hide();
+        $.getJSON("/cat",
+        {
+            "category1": cat1.val(),
+            "category2": cat2.val()
+        },
+        function (data) {
+            $.each(data, function (key, entry) {
+                cat3.append($("<option></option>").attr("value", entry.id).text(entry.name));
+            });
+            if (data.length) {
+                cat3.show();
+            }
+        });
+    }
+    function update_cat2() {
+        cat2.empty();
+        cat2.hide();
+        cat3.empty();
+        cat3.hide();
+        $.getJSON("/cat",
+        {
+            "category1": cat1.val()
+        },
+        function (data) {
+            $.each(data, function (key, entry) {
+                cat2.append($("<option></option>").attr("value", entry.id).text(entry.name));
+            });
+            if (data.length) {
+                cat2.show();
+                update_cat3();
+            }
+        });
+    }
+
+    cat1.change(update_cat2);
+    cat2.change(update_cat3);
+    update_cat2(); // Update second level category on first load
+});
+</script>
+{% elif step == 'fill_attributes' %}
+<h2>Post Ad</h2>
+<div>
+    <form id="attributes" action="{{ url_for('ad.post') }}" enctype="multipart/form-data" method="post">
+    <table>
+        <tr>
+            <td>{{ form.adtype.label }}</td>
+            <td>{{ form.adtype }}</td>
+        </tr>
+        {% for item in attrib_form %}
+        <tr>
+            <td>{{ item.label }}</td>
+            <td>{{ item }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>{{ form.adtitle.label }}</td>
+            <td>{{ form.adtitle}}</td>
+        </tr>
+        <tr>
+            <td>{{ form.description.label }}</td>
+            <td>{{ form.description }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.price.label }}</td>
+            <td>{{ form.pricetype }} {{ form.price }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.loc1.label }}</td>
+            <td>{{ form.loc1 }} {{ form.loc2 }} {{ form.loc3 }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.postalcode.label }}</td>
+            <td>{{ form.postalcode }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.phone.label }}</td>
+            <td>{{ form.phone }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.file1.label }}</td>
+            <td>{{ form.file1 }}
+{{ form.file2 }}
+{{ form.file3 }}
+{{ form.file4 }}
+{{ form.file5 }}
+{{ form.file6 }}
+{{ form.file7 }}
+{{ form.file8 }}
+{{ form.file9 }}
+{{ form.file10 }}</td>
+        </tr>
+    </table>
+    {{ form.csrf_token }}
+    <input type="hidden" name="step" value="{{ next_step }}">
+    {{ form.submit }}
+    </form>
+</div>
+<script>
+$(document).ready(function () {
+    let loc1 = $("#loc1");
+    loc1.prop("selectedIndex", 3); // Default to "Ontario"
+
+    let loc2 = $("#loc2");
+    loc2.empty();
+    loc2.hide();
+    loc2.prop("selectedIndex", 0);
+
+    let loc3 = $("#loc3");
+    loc3.empty();
+    loc3.hide();
+    loc3.prop("selectedIndex", 0);
+
+    function update_loc3() {
+        loc3.empty();
+        loc3.hide();
+        $.getJSON("/loc",
+        {
+            "location1": loc1.val(),
+            "location2": loc2.val()
+        },
+        function (data) {
+            $.each(data, function (key, entry) {
+                loc3.append($("<option></option>").attr("value", entry.id).text(entry.name));
+            });
+            if (data.length) {
+                loc3.show();
+            }
+        });
+    }
+    function update_loc2() {
+        loc2.empty();
+        loc2.hide();
+        loc3.empty();
+        loc3.hide();
+        $.getJSON("/loc",
+        {
+            "location1": loc1.val()
+        },
+        function (data) {
+            $.each(data, function (key, entry) {
+                loc2.append($("<option></option>").attr("value", entry.id).text(entry.name));
+            });
+            if (data.length) {
+                loc2.show();
+                update_loc3();
+            }
+        });
+    }
+
+    loc1.change(update_loc2);
+    loc2.change(update_loc3);
+    update_loc2(); // Update second level location on first load
+
+    $("#pricetype").change(function () {
+        let price = $("#price");
+        if ($(this).val() == "{{ form.pricetype.choices[0][0] }}") {
+            price.prop("required", true);
+            price.show();
+        } else {
+            price.val("");
+            price.prop("required", false);
+            price.hide();
+        }
+    });
+
+    function update_model(element, make) {
+        element.empty();
+        element.hide();
+        $.getJSON("/attrib",
+        {
+            "attrib": {{ attrib }},
+            "value": make
+        },
+        function (data) {
+            $.each(data, function (key, entry) {
+                element.append($("<option></option>").attr("value", entry.id).text(entry.name));
+            });
+            if (data.length) {
+                element.show();
+            }
+        });
+    }
+
+    let carmake = $("#carmake");
+    if (carmake.length) {
+        let carmodel = $("#carmodel");
+        carmodel.empty();
+        carmake.prop("selectedIndex", 0);
+        carmake.change(function () {
+            update_model(carmodel, $(this).val());
+        });
+        update_model(carmodel, carmake.val()); // Update car model on first load
+    }
+
+    let motorcyclesmake = $("#motorcyclesmake");
+    if (motorcyclesmake.length) {
+        let motorcyclesmodel = $("#motorcyclesmodel");
+        motorcyclesmodel.empty();
+        motorcyclesmake.prop("selectedIndex", 0);
+        motorcyclesmake.change(function () {
+            update_model(motorcyclesmodel, $(this).val());
+        });
+        update_model(motorcyclesmodel, motorcyclesmake.val()); // Update motorcycle model on first load
+    }
+});
+</script>
+{% endif %}
+{% endblock %}
