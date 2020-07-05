@@ -3,7 +3,6 @@ import re
 import phonenumbers
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from flask_uploads import UploadSet, IMAGES
 from wtforms import SelectField, StringField, TextAreaField, MultipleFileField, BooleanField, DecimalField, SubmitField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import InputRequired, Optional, Length, NumberRange, Regexp, ValidationError
@@ -88,7 +87,7 @@ class PostForm(FlaskForm):
     #fulladdress = StringField('Full Address')
     phone = StringField('Phone', [PhoneNumber(), Optional()])
 
-    images = UploadSet('images', IMAGES)
+    images = ['jpg', 'jpeg', 'png', 'gif', 'bmp']  # Kijiji supported image formats
     file1 = FileField('Pictures', [FileAllowed(images, 'Must be an image file')])
     file2 = FileField('Pictures', [FileAllowed(images, 'Must be an image file')])
     file3 = FileField('Pictures', [FileAllowed(images, 'Must be an image file')])

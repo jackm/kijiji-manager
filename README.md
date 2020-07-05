@@ -15,7 +15,6 @@ Kijiji Manager requires Python 3.6+.
 Flask
 Flask-WTF
 Flask-Login
-Flask-Uploads
 WTForms
 httpx
 xmltodict
