@@ -4,6 +4,7 @@ from is_safe_url import is_safe_url
 
 from kijiji_manager.models import User
 from kijiji_manager.forms.login import LoginForm
+from kijiji_manager.forms.conversation import ConversationForm
 from kijiji_manager.kijijiapi import KijijiApi, KijijiApiException
 
 user = Blueprint('user', __name__)
@@ -58,3 +59,53 @@ def logout():
 def profile():
     data = KijijiApi().get_profile(current_user.id, current_user.token)
     return render_template('profile.html', data=data)
+
+
+@user.route('/conversations/<int:page>')
+@login_required
+def conversations(page):
+    data = KijijiApi().get_conversation_page(current_user.id, current_user.token, page)
+    return render_template('conversations.html', conversations=data, page=page)
+
+
+@user.route('/conversation/<uid>', methods=['GET', 'POST'])
+@login_required
+def conversation(uid):
+    data = KijijiApi().get_conversation(current_user.id, current_user.token, uid)
+    form = ConversationForm()
+    if form.validate_on_submit():
+        ad_id = data['user:user-conversation']['user:ad-id']
+        owner_id = data['user:user-conversation']['user:ad-owner-id']
+        owner_email = data['user:user-conversation']['user:ad-owner-email']
+        owner_name = data['user:user-conversation']['user:ad-owner-name']
+        replier_id = data['user:user-conversation']['user:ad-replier-id']
+        replier_email = data['user:user-conversation']['user:ad-replier-email']
+        replier_name = data['user:user-conversation']['user:ad-replier-name']
+
+        # Ad has been deleted if owner ID is 'null'
+        # Subject will also say 'Deleted Ad'
+        if owner_id != 'null':
+            reply_message = form.message.data
+            reply_username = None
+            reply_email = None
+            reply_direction = None
+
+            if owner_id == current_user.id:
+                # Replying to our own ad
+                reply_email = owner_email
+                reply_username = owner_name
+                reply_direction = 'buyer'
+            elif replier_id == current_user.id:
+                # Replying to someone else's ad
+                reply_email = replier_email
+                reply_username = replier_name
+                reply_direction = 'owner'
+
+            KijijiApi().post_conversation_reply(current_user.id, current_user.token, uid, ad_id, reply_username, reply_email, reply_message, reply_direction)
+            flash('Reply sent')
+        else:
+            flash('Ad has been deleted, cannot send reply')
+
+    if form.errors:
+        flash(form.errors)
+    return render_template('conversation.html', conversation=data, form=form)

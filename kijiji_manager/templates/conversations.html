@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block title %}Conversations{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<table id="header">
+    <tr>
+        <td><h2>Conversations</h2></td>
+        {% if page > 0 %}
+        <td align="left"><h2><a href="{{ url_for('user.conversations', page=page - 1) }}"><i class="fas fa-chevron-left"></i> Previous</a></h2></td>
+        {% endif %}
+        <td align="right"><h2><a href="{{ url_for('user.conversations', page=page + 1) }}">Next <i class="fas fa-chevron-right"></i></a></h2></td>
+    </tr>
+</table>
+<div>
+    <table id="conversationlist">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Image</th>
+            <th>From</th>
+            <th>Subject</th>
+            <th>Read</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if 'user:user-conversation' in conversations['user:user-conversations'] %}
+        {% for item in conversations['user:user-conversations']['user:user-conversation'] %}
+        <tr data-href="{{ url_for('user.conversation', uid=item['@uid']) }}">
+            <td align="center">{{ item['user:user-message']['user:post-time-stamp']|datetime }}</td>
+            <td align="center">{% if item['user:ad-first-img-url'] %}<img src="{{ item['user:ad-first-img-url'] }}" width="60" height="38">{% endif %}</td>
+            <td>{{ item['user:ad-replier-name'] }}</td>
+            <td>{{ item['user:ad-subject'] }}</td>
+            <td align="center">{{ item['user:user-message']['user:read'] }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+<script>
+$(document).ready(function () {
+    $("#conversationlist").DataTable();
+
+    // Make each table row clickable and link to specific ad page
+    $('#conversationlist *[data-href]').click(function () {
+        window.location = $(this).data("href");
+    });
+});
+</script>
+{% endblock %}

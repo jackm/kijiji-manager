@@ -180,6 +180,29 @@ tbody tr[data-href]:hover {
     background-color: #aca9e0 !important;   /* Override tr background-color from DataTables plugin */
 }
 
+#conversation input[type=button], input[type=submit], input[type=reset] {
+    background-color: #373373;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#conversation tbody tr td:first-child {
+    width: 11%;
+    min-width: 11%;
+    max-width: 11%;
+    word-break: break-all;
+}
+#conversation tbody tr td:nth-child(3) {
+    width: 16%;
+    min-width: 16%;
+    max-width: 16%;
+    word-break: break-all;
+}
+
 #reply tbody tr:nth-child(even) {
     background-color: white;
 }

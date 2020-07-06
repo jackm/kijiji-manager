@@ -227,6 +227,103 @@ Content-Disposition: form-data; name="XML Payload"
         except KeyError:
             raise KijijiApiException(self._error_reason_ebay(doc))
 
+    def get_conversation(self, user_id, token, conversation_id=None):
+        """Get all conversations or single conversation by conversation ID number if given
+
+        :param user_id: user ID number
+        :param token: session token
+        :param conversation_id: conversation ID number
+        :return: response data dict
+        """
+        headers = self._headers_with_auth(user_id, token)
+        url = '/users/{}/conversations'.format(user_id)
+        if conversation_id:
+            url += '/{}?tail=100'.format(conversation_id)
+        else:
+            # Query all ads
+            url += '?size=25'
+
+        r = self.session.get(self.base_url + url, headers=headers)
+
+        doc = self._parse_response(r.text)
+
+        if r.status_code == 200:
+            return doc
+        else:
+            raise KijijiApiException(self._error_reason(doc))
+
+    def get_conversation_page(self, user_id, token, page):
+        """Get conversation by page number
+
+        :param user_id: user ID number
+        :param token: session token
+        :param page: conversation page number
+        :return: response data dict
+        """
+        headers = self._headers_with_auth(user_id, token)
+        url = '/users/{}/conversations'.format(user_id)
+
+        # Query all ads
+        url += '?size=25&page={}'.format(page)
+
+        r = self.session.get(self.base_url + url, headers=headers)
+
+        doc = self._parse_response(r.text)
+
+        if r.status_code == 200:
+            return doc
+        else:
+            raise KijijiApiException(self._error_reason(doc))
+
+    def post_conversation_reply(self, user_id, token, conversation_id, ad_id, username, email, message, direction, phone=None):
+        """Post conversation reply
+
+        :param user_id: user ID number
+        :param token: session token
+        :param conversation_id: conversation ID number
+        :param ad_id: ad ID number
+        :param username: reply username
+        :param email: reply email
+        :param message: reply message
+        :param direction: reply direction; can be either 'owner' if sending to ad owner or 'buyer' if sending to potential ad buyer
+        :param phone: phone number string
+        :return: response data dict
+        """
+        headers = self._headers_with_auth(user_id, token)
+        headers.update({'Content-Type': 'application/xml'})
+
+        # Determine direction
+        # Set to appropriate string value
+        if direction.lower() == 'owner':
+            direction = 'TO_OWNER'
+        elif direction.lower() == 'buyer':
+            direction = 'TO_BUYER'
+        else:
+            raise KijijiApiException('direction parameter must be set to either "owner" or "buyer", not "{}"'.format(direction))
+
+        payload = {'reply:reply-to-ad-conversation': self.xmlns}
+        payload['reply:reply-to-ad-conversation'].update({
+            'reply:ad-id': ad_id,
+            'reply:conversation-id': conversation_id,
+            'reply:reply-username': username,
+            'reply:reply-email': email,
+            'reply:reply-phone': phone,
+            'reply:reply-message': message,
+            'reply:reply-direction': {'types:value': direction},
+        })
+
+        # Payload is an XML string
+        xml = xmltodict.unparse(payload, short_empty_elements=True, pretty=True)
+
+        r = self.session.post(self.base_url + '/replies/reply-to-ad-conversation', headers=headers, data=xml)
+
+        doc = self._parse_response(r.text)
+
+        if r.status_code == 201:
+            return doc
+        else:
+            raise KijijiApiException(self._error_reason(doc))
+
     def _headers_with_auth(self, user_id, token):
         headers = self.headers
         headers.update({

@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}Conversation Details{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<table id="header"><tr><td><h2>Conversation Details</h2></td><td align="right"><h2></h2></td></tr></table>
+<div>
+    <table id="conversation">
+        <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if 'user:user-message' in conversation['user:user-conversation'] %}
+        {% set conversations = conversation['user:user-conversation']['user:user-message'] %}
+
+        {#- If only one entry, make it an array of one member in for loop #}
+        {% if conversations|islist == false %}
+            {% set conversations = [conversations] %}
+        {% endif -%}
+
+        {% for item in conversations %}
+        <tr>
+            <td>{{ item['user:sender-name'] }}</td>
+            <td>{{ item['user:msg-content'] }}</td>
+            <td>{{ item['user:post-time-stamp']|datetime }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <form id="reply" action="{{ url_for('user.conversation', uid=conversation['user:user-conversation']['@uid']) }}" enctype="multipart/form-data" method="post">
+        <table>
+            <tr>
+                <td>{{ form.message.label }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.message }}</td>
+            </tr>
+        </table>
+        {{ form.csrf_token }}
+        {{ form.submit }}
+    </form>
+</div>
+<script>
+$(document).ready(function () {
+    $("#conversation").DataTable();
+});
+</script>
+{% endblock %}
