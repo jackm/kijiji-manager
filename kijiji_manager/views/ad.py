@@ -1,8 +1,10 @@
 import json
 import os
+from time import sleep
 
 import xmltodict
 from flask import Blueprint, flash, render_template, redirect, url_for, session, current_app, request
+from flask_executor import Executor
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField
@@ -10,6 +12,8 @@ from wtforms import StringField, SelectField, BooleanField, IntegerField, DateFi
 from kijiji_manager.common import get_category_data, get_location_data, get_attrib
 from kijiji_manager.forms.post import CategoryForm, PostForm
 from kijiji_manager.kijijiapi import KijijiApi
+
+executor = Executor()
 
 ad = Blueprint('ad', __name__)
 
@@ -320,3 +324,67 @@ def create_picture_payload(form):
                 link = KijijiApi().upload_image(data)
                 payload['pic:pictures']['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
     return payload if picture_added else {}
+
+
+@ad.route('/repost/<ad_id>')
+@login_required
+def repost(ad_id):
+    # Get existing ad
+    user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
+    ad_file = os.path.join(user_dir, ad_id + '.xml')
+
+    if not os.path.isfile(ad_file):
+        flash('Cannot repost, ad file {} does not exist'.format(ad_file))
+        return redirect(url_for('main.home'))
+
+    with open(ad_file, 'r') as f:
+        xml_payload = f.read()
+
+    # Delete existing ad
+    KijijiApi().delete_ad(current_user.id, current_user.token, ad_id)
+    flash('Deleted old ad %s' % ad_id)
+
+    # Delay and then run callback to post ad again
+    future_response = executor.submit(delay, {'payload': xml_payload, 'ad_id': ad_id})
+    future_response.add_done_callback(post_ad_again)
+
+    flash('Reposting ad in background after 3 minute delay... Do not stop the app from running')
+    return redirect(url_for('main.home'))
+
+
+# Delay and pass along any data given
+def delay(data):
+    # Waiting for 3 minutes appears to be enough time for Kijiji to not consider it a duplicate ad
+    sleep(3 * 60)
+    return data
+
+
+# Post ad again using given ad payload in Futures call
+def post_ad_again(future):
+    if future.done():
+        error = future.exception()
+        if error:
+            print('Futures call error: {}'.format(error))
+        else:
+            result = future.result()
+            xml_payload = result['payload']
+            ad_id_orig = result['ad_id']
+
+            # Post ad again
+            ad_id_new = KijijiApi().post_ad(current_user.id, current_user.token, xml_payload)
+            print('Reposted ad, new ID {}'.format(ad_id_new))
+
+            user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
+
+            # Save ad file
+            ad_file_new = os.path.join(user_dir, ad_id_new + '.xml')
+            with open(ad_file_new, 'w') as f:
+                f.write(xml_payload)
+
+            # Delete old ad file
+            ad_file_orig = os.path.join(user_dir, ad_id_orig + '.xml')
+            if os.path.isfile(ad_file_orig):
+                os.remove(ad_file_orig)
+                print('Deleted old ad file for ad {}'.format(ad_id_orig))
+    elif future.cancelled():
+        print('Futures call canceled')

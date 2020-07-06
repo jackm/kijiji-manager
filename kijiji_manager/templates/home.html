@@ -20,6 +20,7 @@
             <th>Page</th>
             <th>Created</th>
             <th>Expires</th>
+            <th>Repost</th>
             <th>Delete</th>
         </tr>
         </thead>
@@ -51,6 +52,7 @@
             <td align="center">{{ ad['ad:rank']|adpage }}</td>
             <td align="center">{{ ad['ad:start-date-time']|datetime }}</td>
             <td align="center">{{ ad['ad:end-date-time']|datetime }}</td>
+            <td align="center"><a href="{{ url_for('ad.repost', ad_id=ad['@id']) }}"><i class="fas fa-reply"></i></a></td>
             <td align="center"><a href="{{ url_for('ad.delete', ad_id=ad['@id']) }}"><i class="fas fa-trash"></i></a></td>
         </tr>
         {% endfor %}

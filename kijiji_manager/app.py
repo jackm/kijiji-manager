@@ -17,6 +17,10 @@ def create_app():
     # Suppress "None" output as string
     app.jinja_env.finalize = lambda x: x if x is not None else ''
 
+    # Flask-Executor
+    from .views.ad import executor as ad_executor
+    ad_executor.init_app(app)
+
     # Blueprints
     from .views.main import main
     from .views.user import user

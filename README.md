@@ -1,6 +1,6 @@
 # Kijiji Manager
 
-Kijiji Manager app for viewing, posting, and deleting your Kijiji ads.
+Kijiji Manager app for viewing, posting, reposting, and deleting your Kijiji ads.
 
 Built using the [Flask](https://flask.palletsprojects.com/) framework with Python 3.6+.
 Completely API driven, with no web scraping. Runs a local webserver which provides the web user interface.
@@ -18,6 +18,7 @@ Kijiji Manager requires Python 3.6+.
 * `Flask`
 * `Flask-WTF`
 * `Flask-Login`
+* `Flask-Executor`
 * `WTForms`
 * `httpx`
 * `xmltodict`
