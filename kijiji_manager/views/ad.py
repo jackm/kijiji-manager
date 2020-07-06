@@ -10,7 +10,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField
 
 from kijiji_manager.common import get_category_data, get_location_data, get_attrib
-from kijiji_manager.forms.post import CategoryForm, PostForm
+from kijiji_manager.forms.post import CategoryForm, PostForm, PostManualForm
 from kijiji_manager.kijijiapi import KijijiApi
 
 executor = Executor()
@@ -31,6 +31,20 @@ def delete(ad_id):
     KijijiApi().delete_ad(current_user.id, current_user.token, ad_id)
     flash('Deleted ad %s' % ad_id)
     return redirect(url_for('main.home'))
+
+
+@ad.route('/post_manual', methods=['GET', 'POST'])
+@login_required
+def post_manual():
+    form = PostManualForm()
+    if form.validate_on_submit():
+        if form.file.data:
+            ad_id = KijijiApi().post_ad(current_user.id, current_user.token, form.file.data.read())
+            flash('Manually posted ad %s' % ad_id)
+
+    if form.errors:
+        flash(form.errors)
+    return render_template('post_manual.html', form=form)
 
 
 @ad.route('/post', methods=['GET', 'POST'])

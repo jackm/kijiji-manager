@@ -100,3 +100,10 @@ class PostForm(FlaskForm):
     file10 = FileField('Pictures', [FileAllowed(images, 'Must be an image file')])
 
     submit = SubmitField('Post Ad')
+
+
+class PostManualForm(FlaskForm):
+    """Ad manual post form"""
+
+    file = FileField('Ad payload file', [FileRequired(), FileAllowed(['xml'], 'Must be an XML file')])
+    submit = SubmitField('Post Ad')
