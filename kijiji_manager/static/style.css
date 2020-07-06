@@ -171,17 +171,17 @@ table {
     width: 100%;
 }
 tbody tr:nth-child(even) {
-    background-color: #f3f4f7
+    background-color: #f3f4f7 !important;   /* Override tr background-color from DataTables plugin */
 }
 tbody tr[data-href] {
     cursor: pointer;
 }
 tbody tr[data-href]:hover {
-    background-color: #aca9e0;
+    background-color: #aca9e0 !important;   /* Override tr background-color from DataTables plugin */
 }
 
 #reply tbody tr:nth-child(even) {
-    background-color: white
+    background-color: white;
 }
 #reply textarea {
     font-size: 16px;
