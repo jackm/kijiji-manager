@@ -278,6 +278,7 @@ def post():
         ad_file = os.path.join(user_dir, ad_id + '.xml')
         with open(ad_file, 'w') as f:
             f.write(xml_payload)
+        flash('Ad {} payload saved to {}'.format(ad_id, ad_file))
 
         return redirect(url_for('main.home'))
 
