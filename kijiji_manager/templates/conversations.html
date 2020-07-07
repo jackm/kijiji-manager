@@ -18,22 +18,22 @@
     <table id="conversationlist">
         <thead>
         <tr>
-            <th>Date</th>
             <th>Image</th>
             <th>From</th>
             <th>Subject</th>
             <th>Read</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
         {% if 'user:user-conversation' in conversations['user:user-conversations'] %}
         {% for item in conversations['user:user-conversations']['user:user-conversation'] %}
         <tr data-href="{{ url_for('user.conversation', uid=item['@uid']) }}">
-            <td align="center">{{ item['user:user-message']['user:post-time-stamp']|datetime }}</td>
             <td align="center">{% if item['user:ad-first-img-url'] %}<img src="{{ item['user:ad-first-img-url'] }}" width="60" height="38">{% endif %}</td>
             <td>{{ item['user:ad-replier-name'] }}</td>
             <td>{{ item['user:ad-subject'] }}</td>
             <td align="center">{{ item['user:user-message']['user:read'] }}</td>
+            <td align="center">{{ item['user:user-message']['user:post-time-stamp']|datetime }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -42,7 +42,9 @@
 </div>
 <script>
 $(document).ready(function () {
-    $("#conversationlist").DataTable();
+    $("#conversationlist").DataTable({
+        "order": [[ 4, "desc" ]] // Default sort "Date" column descending
+    });
 
     // Make each table row clickable and link to specific ad page
     $('#conversationlist *[data-href]').click(function () {

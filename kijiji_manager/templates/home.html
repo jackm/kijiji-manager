@@ -62,7 +62,9 @@
 </div>
 <script>
 $(document).ready(function () {
-    $("#adlist").DataTable();
+    $("#adlist").DataTable({
+        "order": [[ 7, "desc" ]] // Default sort "Created" column descending
+    });
 
     // Make each table row clickable and link to specific ad page
     $("#adlist *[data-href]").click(function () {

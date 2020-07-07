@@ -50,7 +50,9 @@
 </div>
 <script>
 $(document).ready(function () {
-    $("#conversation").DataTable();
+    $("#conversation").DataTable({
+        "order": [[ 2, "desc" ]] // Default sort "Date" column descending
+    });
 });
 </script>
 {% endblock %}
