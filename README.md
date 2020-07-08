@@ -56,6 +56,18 @@ For all subsequent runs, start the app again using `python run.py` and then go t
 You can also leave the app running in the terminal if you wish.
 No background HTTP calls are made unless you refresh or load new pages.
 
+## Screenshots
+
+![Login page](https://user-images.githubusercontent.com/4127823/86979816-3ccf8980-c150-11ea-9b16-1d4a9612ad6b.png)
+
+![Home page](https://user-images.githubusercontent.com/4127823/86979495-7e136980-c14f-11ea-949e-53b4ebe16393.png)
+
+![Show ad page](https://user-images.githubusercontent.com/4127823/86979503-8075c380-c14f-11ea-997b-1ecf84066c2e.png)
+
+![Post ad step 1](https://user-images.githubusercontent.com/4127823/86979508-823f8700-c14f-11ea-963a-4366119303d2.png)
+
+![Post ad step 2](https://user-images.githubusercontent.com/4127823/86979510-8370b400-c14f-11ea-8293-13846c1c8c40.png)
+
 ## Credits
 
 Many of the core architecture concepts have been borrowed from the [Kijiji-Reposter](https://github.com/rybodiddly/Kijiji-Reposter/) project.
