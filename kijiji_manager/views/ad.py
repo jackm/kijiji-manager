@@ -183,6 +183,11 @@ def post():
         attrs_postform = {}
         attrs_attrform = {}
         for key, value in request.form.items():
+            # Ignore 'step' hidden field
+            # Field is only used for tracking multi-step form progress
+            if key == 'step':
+                continue
+
             # Filter out persistent form items (fields in PostForm class) to determine dynamic attributes
             if key in postform_fields:
                 # Gather PostForm items
