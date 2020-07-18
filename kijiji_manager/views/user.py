@@ -103,6 +103,9 @@ def conversation(uid):
 
             KijijiApi().post_conversation_reply(current_user.id, current_user.token, uid, ad_id, reply_username, reply_email, reply_message, reply_direction)
             flash('Reply sent')
+
+            # Redirect to this url, clearing form data and refreshing the page
+            return redirect(url_for('.conversation', uid=uid))
         else:
             flash('Ad has been deleted, cannot send reply')
 
