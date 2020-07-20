@@ -56,7 +56,8 @@ def post():
     step3 = 'submit'
 
     category_form = CategoryForm()
-    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in get_category_data()['cat:categories']['cat:category']['cat:category']]
+    # Exclude 'Services' category
+    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in get_category_data()['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
 
     form = PostForm()
 

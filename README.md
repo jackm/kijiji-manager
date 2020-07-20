@@ -5,7 +5,7 @@ Kijiji Manager app for viewing, posting, reposting, and deleting your Kijiji ads
 Built using the [Flask](https://flask.palletsprojects.com/) framework with Python 3.6+.
 Completely API driven, with no web scraping. Runs a local webserver which provides the web user interface.
 
-Kijiji Manager is able to handle all types of ads under every Kijiji category (although not every ad type has been extensively tested).
+Kijiji Manager is able to handle all types of ads under every Kijiji category, excluding the _Services_ category (although not every ad type has been extensively tested).
 
 If you find any bugs with posting ads, please create a new issue to report it.
 
