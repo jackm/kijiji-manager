@@ -191,7 +191,7 @@ $(document).ready(function () {
 
     $("#pricetype").change(function () {
         let price = $("#price");
-        if ($(this).val() == "{{ form.pricetype.choices[0][0] }}") {
+        if ($(this).val() === "{{ form.pricetype.choices[0][0] }}") {
             price.prop("required", true);
             price.show();
         } else {
