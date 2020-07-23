@@ -47,7 +47,7 @@ $(function () {
     });
 
     // Make each table row clickable and link to specific ad page
-    $('#conversationlist *[data-href]').click(function () {
+    $("#conversationlist *[data-href]").on("click", function () {
         window.location = $(this).data("href");
     });
 });

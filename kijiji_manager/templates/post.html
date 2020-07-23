@@ -70,8 +70,8 @@ $(function (events, handler) {
         });
     }
 
-    cat1.change(update_cat2);
-    cat2.change(update_cat3);
+    cat1.on("change", update_cat2);
+    cat2.on("change", update_cat3);
     update_cat2(); // Update second level category on first load
 });
 </script>
@@ -185,11 +185,11 @@ $(function () {
         });
     }
 
-    loc1.change(update_loc2);
-    loc2.change(update_loc3);
+    loc1.on("change", update_loc2);
+    loc2.on("change", update_loc3);
     update_loc2(); // Update second level location on first load
 
-    $("#pricetype").change(function () {
+    $("#pricetype").on("change", function () {
         let price = $("#price");
         if ($(this).val() === "{{ form.pricetype.choices[0][0] }}") {
             price.prop("required", true);
@@ -224,7 +224,7 @@ $(function () {
         let carmodel = $("#carmodel");
         carmodel.empty();
         carmake.prop("selectedIndex", 0);
-        carmake.change(function () {
+        carmake.on("change", function () {
             update_model(carmodel, $(this).val());
         });
         update_model(carmodel, carmake.val()); // Update car model on first load
@@ -235,7 +235,7 @@ $(function () {
         let motorcyclesmodel = $("#motorcyclesmodel");
         motorcyclesmodel.empty();
         motorcyclesmake.prop("selectedIndex", 0);
-        motorcyclesmake.change(function () {
+        motorcyclesmake.on("change", function () {
             update_model(motorcyclesmodel, $(this).val());
         });
         update_model(motorcyclesmodel, motorcyclesmake.val()); // Update motorcycle model on first load

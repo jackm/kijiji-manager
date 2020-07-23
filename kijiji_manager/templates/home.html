@@ -71,7 +71,7 @@ $(function () {
     });
 
     // Make each table row clickable and link to specific ad page
-    $("#adlist *[data-href]").click(function () {
+    $("#adlist *[data-href]").on("click", function () {
         window.location = $(this).data("href");
     });
 });
