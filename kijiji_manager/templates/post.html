@@ -19,7 +19,7 @@
     </form>
 </div>
 <script>
-$(document).ready(function () {
+$(function (events, handler) {
     let cat1 = $("#cat1");
     cat1.prop("selectedIndex", 1); // Default to "Buy & Sell"
 
@@ -134,7 +134,7 @@ $(document).ready(function () {
     </form>
 </div>
 <script>
-$(document).ready(function () {
+$(function () {
     let loc1 = $("#loc1");
     loc1.prop("selectedIndex", 3); // Default to "Ontario"
 
