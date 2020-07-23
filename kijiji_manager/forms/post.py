@@ -3,8 +3,7 @@ import re
 import phonenumbers
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import SelectField, StringField, TextAreaField, MultipleFileField, BooleanField, DecimalField, SubmitField
-from wtforms.fields.html5 import DateField, TimeField
+from wtforms import SelectField, StringField, TextAreaField, DecimalField, SubmitField
 from wtforms.validators import InputRequired, Optional, Length, NumberRange, Regexp, ValidationError
 
 
