@@ -34,9 +34,9 @@
         {% endif -%}
 
         {% for ad in ads %}
-        <tr data-href="ad/{{ ad['@id'] }}">
+        <tr data-href="{{ url_for('ad.show', ad_id=ad['@id']) }}">
             <td align="center"><img src="{{ ad|imgthumbfirst }}"></td>
-            <td align="center"><a href="ad/{{ ad['@id'] }}">{{ ad['@id'] }}</a></td>
+            <td align="center"><a href="{{ url_for('ad.show', ad_id=ad['@id']) }}">{{ ad['@id'] }}</a></td>
             <td>{{ ad['ad:title'] }}</td>
             <td>{{ ad['cat:category']['cat:id-name'] }}</td>
             <td align="right">
