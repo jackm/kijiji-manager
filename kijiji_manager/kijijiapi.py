@@ -20,7 +20,10 @@ class KijijiApi:
         if session:
             self.session = session
         else:
-            self.session = httpx
+            # Kijiji sometimes takes a bit longer to respond to API requests
+            # e.g. for loading conversations
+            timeout = httpx.Timeout(15.0, connect_timeout=30.0)
+            self.session = httpx.Client(timeout=timeout)
 
         # Base API URL
         self.base_url = 'https://mingle.kijiji.ca/api'
