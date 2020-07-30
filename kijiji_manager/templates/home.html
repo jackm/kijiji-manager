@@ -36,7 +36,7 @@
         {% for ad in ads %}
         <tr data-href="ad/{{ ad['@id'] }}">
             <td align="center"><img src="{{ ad|imgthumbfirst }}"></td>
-            <td align="center">{{ ad['@id'] }}</td>
+            <td align="center"><a href="ad/{{ ad['@id'] }}">{{ ad['@id'] }}</a></td>
             <td>{{ ad['ad:title'] }}</td>
             <td>{{ ad['cat:category']['cat:id-name'] }}</td>
             <td align="right">
