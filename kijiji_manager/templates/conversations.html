@@ -32,7 +32,7 @@
             <td align="center">{% if item['user:ad-first-img-url'] %}<img src="{{ item['user:ad-first-img-url'] }}" width="60" height="38">{% endif %}</td>
             <td>{{ item['user:ad-replier-name'] }}</td>
             <td>{{ item['user:ad-subject'] }}</td>
-            <td align="center">{{ item['user:user-message']['user:read'] }}</td>
+            <td align="center">{% if item['user:user-message']['user:read'] == 'true' %}<i class="fas fa-check"></i>{% elif item['user:user-message']['user:read'] == 'false' %}<i class="fas fa-envelope">{% endif %}</i></td>
             <td align="center">{{ item['user:user-message']['user:post-time-stamp']|datetime }}</td>
         </tr>
         {% endfor %}
@@ -43,7 +43,7 @@
 <script>
 $(function () {
     $("#conversationlist").DataTable({
-        "order": [[ 4, "desc" ]] // Default sort "Date" column descending
+        "order": [[ 5, "desc" ]] // Default sort "Date" column descending
     });
 
     // Make each table row clickable and link to specific ad page
