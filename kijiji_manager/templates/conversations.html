@@ -22,6 +22,7 @@
             <th>From</th>
             <th>Subject</th>
             <th>Read</th>
+            <th>User Blocked</th>
             <th>Date</th>
         </tr>
         </thead>
@@ -33,6 +34,7 @@
             <td>{{ item['user:ad-replier-name'] }}</td>
             <td>{{ item['user:ad-subject'] }}</td>
             <td align="center">{% if item['user:user-message']['user:read'] == 'true' %}<i class="fas fa-check"></i>{% elif item['user:user-message']['user:read'] == 'false' %}<i class="fas fa-envelope">{% endif %}</i></td>
+            <td align="center">{% if item['user:flagged-seller'] == 'true' or item['user:flagged-buyer'] == 'true' %}<i class="fas fa-flag"></i>{% endif %}</td>
             <td align="center">{{ item['user:user-message']['user:post-time-stamp']|datetime }}</td>
         </tr>
         {% endfor %}
