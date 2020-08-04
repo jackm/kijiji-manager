@@ -34,9 +34,9 @@ class KijijiApi:
             'Accept-Language': 'en-CA',
             'Accept-Encoding': 'gzip',
             'User-Agent': 'Kijiji 12.9.0 (iPhone; iOS 13.4.1; en_CA)',
-            'X-ecg-ver': '1.67',
-            'X-ecg-udid': 'D1E2FB5C-5133-48CB-A2B7-618D4231CC33',
-            'X-ecg-ab-test-group': '',
+            'X-ECG-VER': '1.67',
+            'X-ECG-UDID': 'D1E2FB5C-5133-48CB-A2B7-618D4231CC33',
+            'X-ECG-AB-TEST-GROUP': '',
         }
 
         # Common XML namespaces for HTTP POST request payloads
@@ -330,7 +330,7 @@ Content-Disposition: form-data; name="XML Payload"
     def _headers_with_auth(self, user_id, token):
         headers = self.headers
         headers.update({
-            'X-ecg-authorization-user': 'id="{}", token="{}"'.format(user_id, token),
+            'X-ECG-Authorization-User': 'id="{}", token="{}"'.format(user_id, token),
         })
         return headers
 
