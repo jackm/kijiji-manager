@@ -35,8 +35,6 @@ class KijijiApi:
             'Accept-Encoding': 'gzip',
             'User-Agent': 'Kijiji 12.9.0 (iPhone; iOS 13.4.1; en_CA)',
             'X-ECG-VER': '1.67',
-            'X-ECG-UDID': 'D1E2FB5C-5133-48CB-A2B7-618D4231CC33',
-            'X-ECG-AB-TEST-GROUP': '',
         }
 
         # Common XML namespaces for HTTP POST request payloads
