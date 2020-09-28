@@ -254,7 +254,7 @@ Content-Disposition: form-data; name="XML Payload"
             raise KijijiApiException(self._error_reason(doc))
 
     def get_conversation_page(self, user_id, token, page):
-        """Get conversation by page number
+        """Get conversation by page number.
 
         :param user_id: user ID number
         :param token: session token
