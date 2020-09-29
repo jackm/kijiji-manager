@@ -281,7 +281,7 @@ def post():
         if not os.path.exists(user_dir):
             os.makedirs(user_dir)
         ad_file = os.path.join(user_dir, ad_id + '.xml')
-        with open(ad_file, 'w') as f:
+        with open(ad_file, 'w', encoding='utf-8') as f:
             f.write(xml_payload)
         flash('Ad {} payload saved to {}'.format(ad_id, ad_file))
 
@@ -357,7 +357,7 @@ def repost(ad_id):
         flash('Cannot repost, ad file {} does not exist'.format(ad_file))
         return redirect(url_for('main.home'))
 
-    with open(ad_file, 'r') as f:
+    with open(ad_file, 'r', encoding='utf-8') as f:
         xml_payload = f.read()
 
     # Delete existing ad
@@ -398,7 +398,7 @@ def post_ad_again(future):
 
             # Save ad file
             ad_file_new = os.path.join(user_dir, ad_id_new + '.xml')
-            with open(ad_file_new, 'w') as f:
+            with open(ad_file_new, 'w', encoding='utf-8') as f:
                 f.write(xml_payload)
 
             # Delete old ad file
