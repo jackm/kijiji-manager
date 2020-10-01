@@ -154,6 +154,14 @@ body.loggedin {
     padding: 5px;
     margin: 0 0 10px 0;
 }
+.content .button a {
+    background-color: #373373;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    margin: 4px 2px;
+}
 
 a {
     color: #373373;

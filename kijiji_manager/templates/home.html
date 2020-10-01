@@ -7,7 +7,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
 <table id="header"><tr><td><h2>Listings</h2></td><td valign="bottom" align="right"><h2></h2></td></tr></table>
 <div>
-    <p>Welcome back, {{ name }}!</p>
+    <p>Welcome back, {{ name }}!<span class="button" style="float:right;"><a href="{{ url_for('ad.repost_all') }}">Repost all ads <i class="fas fa-reply"></i></a></span></p>
     <table id="adlist">
         <thead>
         <tr>

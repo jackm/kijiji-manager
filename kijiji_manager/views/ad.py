@@ -408,3 +408,15 @@ def post_ad_again(future):
                 print('Deleted old ad file for ad {}'.format(ad_id_orig))
     elif future.cancelled():
         print('Futures call canceled')
+
+
+@ad.route('/repost_all')
+@login_required
+def repost_all():
+    # Get all existing ads
+    data = KijijiApi().get_ad(current_user.id, current_user.token)
+
+    for ad_id in [ad['@id'] for ad in data['ad:ads']['ad:ad']]:
+        repost(ad_id)
+
+    return redirect(url_for('main.home'))
