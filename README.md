@@ -60,7 +60,7 @@ No background HTTP calls are made unless you refresh or load new pages.
 
 ![Login page](https://user-images.githubusercontent.com/4127823/86979816-3ccf8980-c150-11ea-9b16-1d4a9612ad6b.png)
 
-![Home page](https://user-images.githubusercontent.com/4127823/86979495-7e136980-c14f-11ea-949e-53b4ebe16393.png)
+![Home page](https://user-images.githubusercontent.com/4127823/94874784-dee5d180-0420-11eb-802c-2cb8c55f7bb4.png)
 
 ![Show ad page](https://user-images.githubusercontent.com/4127823/86979503-8075c380-c14f-11ea-997b-1ecf84066c2e.png)
 
