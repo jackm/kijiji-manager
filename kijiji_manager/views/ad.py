@@ -6,7 +6,7 @@ from flask import Blueprint, flash, render_template, redirect, url_for, session,
 from flask_executor import Executor
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField
+from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField, SelectMultipleField, widgets
 from wtforms.validators import InputRequired, Optional
 
 from kijiji_manager.common import get_category_data, get_location_data, get_attrib
@@ -114,10 +114,11 @@ def post():
                 for attrib in attribs:
                     # Attribute has not been deprecated and is write supported (i.e. able to post to ad)
                     if attrib['@deprecated'] == 'false' and attrib['@write'] != 'unsupported':
-                        item = {'label': {attrib['@name']: attrib['@localized-label']}}
-
-                        # Record if attribute is required or optional
-                        item.update({'required': attrib['@write'] == 'required'})
+                        item = {
+                            'label': {attrib['@name']: attrib['@localized-label']},
+                            'required': attrib['@write'] == 'required',  # Record if attribute is required or optional
+                            'sub-type': attrib.get('@sub-type', None),  # Some attributes have a sub-type
+                        }
 
                         if attrib['@type'] == 'ENUM':
                             item.update({'choices': {}})
@@ -188,7 +189,7 @@ def post():
         postform_fields = list(vars(PostForm())['_fields'].keys())
         attrs_postform = {}
         attrs_attrform = {}
-        for key, value in request.form.items():
+        for key, value in request.form.items(multi=True):
             # Ignore 'step' hidden field
             # Field is only used for tracking multi-step form progress
             if key == 'step':
@@ -200,7 +201,13 @@ def post():
                 attrs_postform[key] = value
             else:
                 # Gather AttributeForm items
-                attrs_attrform[key] = value
+
+                # Some attributes are multi-valued when key appears more than once
+                if key in attrs_attrform:
+                    # Append onto existing via comma-separated value
+                    attrs_attrform[key] = ','.join([attrs_attrform[key], value])
+                else:
+                    attrs_attrform[key] = value
 
         # Build attributes payload
         attributes_payload = {}
@@ -294,6 +301,13 @@ def post():
         return redirect(url_for('main.home'))
 
 
+class MultiCheckboxField(SelectMultipleField):
+    """A multiple-select, except displays a list of checkboxes"""
+
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
 # Build dynamic attribute form
 # TODO: Find a better method
 #  https://stackoverflow.com/q/28375565
@@ -309,6 +323,11 @@ def create_attribute_form(types):
                     validators.append(InputRequired() if data['required'] else Optional())
 
                 if field_type == SelectField:
+
+                    # Use multi-checkbox field when sub-type is multi-valued
+                    if data['sub-type'] == 'MULTI_VALUED':
+                        field_type = MultiCheckboxField
+
                     choices = [c for c in data['choices'].items()]
                     setattr(obj, field_id, field_type(title, validators=validators, choices=choices))
                 else:
