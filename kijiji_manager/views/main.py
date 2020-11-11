@@ -7,6 +7,7 @@ from flask_login import login_required, current_user
 from kijiji_manager.kijijiapi import KijijiApi
 
 main = Blueprint('main', __name__)
+kijiji_api = KijijiApi()
 
 
 @main.route('/')
@@ -20,7 +21,7 @@ def index():
 @main.route('/home')
 @login_required
 def home():
-    data = KijijiApi().get_ad(current_user.id, current_user.token)
+    data = kijiji_api.get_ad(current_user.id, current_user.token)
     return render_template('home.html', name=current_user.name, data=data)
 
 

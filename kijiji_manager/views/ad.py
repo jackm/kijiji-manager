@@ -12,22 +12,22 @@ from kijiji_manager.common import get_category_data, get_location_data, get_attr
 from kijiji_manager.forms.post import CategoryForm, PostForm, PostManualForm
 from kijiji_manager.kijijiapi import KijijiApi
 
-executor = Executor()
-
 ad = Blueprint('ad', __name__)
+kijiji_api = KijijiApi()
+executor = Executor()
 
 
 @ad.route('/ad/<ad_id>')
 @login_required
 def show(ad_id):
-    data = KijijiApi().get_ad(current_user.id, current_user.token, ad_id)
+    data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
     return render_template('ad.html', data=data)
 
 
 @ad.route('/delete/<ad_id>')
 @login_required
 def delete(ad_id):
-    KijijiApi().delete_ad(current_user.id, current_user.token, ad_id)
+    kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
     flash('Deleted ad %s' % ad_id)
     return redirect(url_for('main.home'))
 
@@ -38,7 +38,7 @@ def post_manual():
     form = PostManualForm()
     if form.validate_on_submit():
         if form.file.data:
-            ad_id = KijijiApi().post_ad(current_user.id, current_user.token, form.file.data.read())
+            ad_id = kijiji_api.post_ad(current_user.id, current_user.token, form.file.data.read())
             flash('Manually posted ad %s' % ad_id)
 
     if form.errors:
@@ -273,7 +273,7 @@ def post():
         xml_payload = xmltodict.unparse(response_payload, short_empty_elements=True, pretty=True)
 
         # Submit final payload
-        ad_id = KijijiApi().post_ad(current_user.id, current_user.token, xml_payload)
+        ad_id = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
         flash('Ad %s posted!' % ad_id)
 
         # Save ad payload
@@ -341,7 +341,7 @@ def create_picture_payload(form):
             data = getattr(form, field).data
             if data:
                 picture_added = True
-                link = KijijiApi().upload_image(data)
+                link = kijiji_api.upload_image(data)
                 payload['pic:pictures']['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
     return payload if picture_added else {}
 
@@ -361,7 +361,7 @@ def repost(ad_id):
         xml_payload = f.read()
 
     # Delete existing ad
-    KijijiApi().delete_ad(current_user.id, current_user.token, ad_id)
+    kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
     flash('Deleted old ad %s' % ad_id)
 
     # Delay and then run callback to post ad again
@@ -391,7 +391,7 @@ def post_ad_again(future):
             ad_id_orig = result['ad_id']
 
             # Post ad again
-            ad_id_new = KijijiApi().post_ad(current_user.id, current_user.token, xml_payload)
+            ad_id_new = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
             print('Reposted ad, new ID {}'.format(ad_id_new))
 
             user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
@@ -414,7 +414,7 @@ def post_ad_again(future):
 @login_required
 def repost_all():
     # Get all existing ads
-    data = KijijiApi().get_ad(current_user.id, current_user.token)
+    data = kijiji_api.get_ad(current_user.id, current_user.token)
 
     for ad_id in [ad['@id'] for ad in data['ad:ads']['ad:ad']]:
         repost(ad_id)

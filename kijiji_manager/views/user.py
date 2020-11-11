@@ -8,6 +8,7 @@ from kijiji_manager.forms.conversation import ConversationForm
 from kijiji_manager.kijijiapi import KijijiApi, KijijiApiException
 
 user = Blueprint('user', __name__)
+kijiji_api = KijijiApi()
 
 
 @user.route('/login', methods=['GET', 'POST'])
@@ -22,8 +23,8 @@ def login():
 
         # Get user ID, token and user display name from Kijiji
         try:
-            user_id, token = KijijiApi().login(email, password)
-            display_name = KijijiApi().get_profile(user_id, token)['user:user-profile']['user:user-display-name']
+            user_id, token = kijiji_api.login(email, password)
+            display_name = kijiji_api.get_profile(user_id, token)['user:user-profile']['user:user-display-name']
         except KijijiApiException as e:
             flash(e)
             return render_template('login.html', form=form)
@@ -57,21 +58,21 @@ def logout():
 @user.route('/profile')
 @login_required
 def profile():
-    data = KijijiApi().get_profile(current_user.id, current_user.token)
+    data = kijiji_api.get_profile(current_user.id, current_user.token)
     return render_template('profile.html', data=data)
 
 
 @user.route('/conversations/<int:page>')
 @login_required
 def conversations(page):
-    data = KijijiApi().get_conversation_page(current_user.id, current_user.token, page)
+    data = kijiji_api.get_conversation_page(current_user.id, current_user.token, page)
     return render_template('conversations.html', conversations=data, page=page)
 
 
 @user.route('/conversation/<uid>', methods=['GET', 'POST'])
 @login_required
 def conversation(uid):
-    data = KijijiApi().get_conversation(current_user.id, current_user.token, uid)
+    data = kijiji_api.get_conversation(current_user.id, current_user.token, uid)
     form = ConversationForm()
     if form.validate_on_submit():
         ad_id = data['user:user-conversation']['user:ad-id']
@@ -101,7 +102,7 @@ def conversation(uid):
                 reply_username = replier_name
                 reply_direction = 'owner'
 
-            KijijiApi().post_conversation_reply(current_user.id, current_user.token, uid, ad_id, reply_username, reply_email, reply_message, reply_direction)
+            kijiji_api.post_conversation_reply(current_user.id, current_user.token, uid, ad_id, reply_username, reply_email, reply_message, reply_direction)
             flash('Reply sent')
 
             # Redirect to this url, clearing form data and refreshing the page
