@@ -7,6 +7,7 @@ from flask_executor import Executor
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField
+from wtforms.validators import InputRequired, Optional
 
 from kijiji_manager.common import get_category_data, get_location_data, get_attrib
 from kijiji_manager.forms.post import CategoryForm, PostForm, PostManualForm
@@ -115,6 +116,9 @@ def post():
                     if attrib['@deprecated'] == 'false' and attrib['@write'] != 'unsupported':
                         item = {'label': {attrib['@name']: attrib['@localized-label']}}
 
+                        # Record if attribute is required or optional
+                        item.update({'required': attrib['@write'] == 'required'})
+
                         if attrib['@type'] == 'ENUM':
                             item.update({'choices': {}})
                             if 'attr:supported-value' in attrib:
@@ -161,16 +165,18 @@ def post():
         return render_template('post.html', form=form, step=step2, next_step=step3, attrib_form=attrib_form, attrib=category_choice)
 
     elif request.form['step'] == step3:
-        if not form.validate_on_submit():
-            flash(form.errors)
+        # Restore dynamic form data
+        if not form.adtype.choices:
+            form.adtype.choices = session.get('adtype.choices', [])
+        if not form.loc1.choices:
+            form.loc1.choices = session.get('loc1.choices', [])
+        attrib_form = create_attribute_form(session.get('attrib_types'))
 
-            # Restore dynamic form data
-            if not form.adtype.choices:
-                form.adtype.choices = session.get('adtype.choices', [])
-            if not form.loc1.choices:
-                form.loc1.choices = session.get('loc1.choices', [])
-            attrib_form = create_attribute_form(session.get('attrib_types'))
-
+        if not form.validate_on_submit() or not attrib_form.validate_on_submit():
+            if form.errors:
+                flash(form.errors)
+            if attrib_form.errors:
+                flash(attrib_form.errors)
             return render_template('post.html', form=form, step=step2, next_step=step3, attrib_form=attrib_form, attrib=session.get('category'))
 
         # Get most significant location ID from given set of locations in previous step form
@@ -297,11 +303,16 @@ def create_attribute_form(types):
     def insert_attr(obj, field_type, data):
         try:
             for field_id, title in data['label'].items():
+                validators = []
+
+                if 'required' in data:
+                    validators.append(InputRequired() if data['required'] else Optional())
+
                 if field_type == SelectField:
                     choices = [c for c in data['choices'].items()]
-                    setattr(obj, field_id, field_type(title, choices=choices))
+                    setattr(obj, field_id, field_type(title, validators=validators, choices=choices))
                 else:
-                    setattr(obj, field_id, field_type(title))
+                    setattr(obj, field_id, field_type(title, validators=validators))
         except KeyError:
             pass
 
