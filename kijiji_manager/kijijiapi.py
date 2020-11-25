@@ -163,15 +163,10 @@ class KijijiApi:
         :return: full image URL
         """
 
-        # Separate set of headers
+        # Image upload host uses a separate set of headers
         headers = {
-            'Host': 'api.ebay.com',
-            'Accept': '*/*',
-            'Accept-Language': 'en-ca',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Connection': 'keep-alive',
             'Content-Type': 'multipart/form-data; boundary=----FormBoundary7MA4YWxkTrZu0gW',
-            'User-Agent': 'Kijiji/35739.100 CFNetwork/1121.2.2 Darwin/19.3.0',
+            'User-Agent': 'okhttp/4.9.0',
             'X-EBAY-API-CALL-NAME': 'UploadSiteHostedPictures',
         }
 
