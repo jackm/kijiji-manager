@@ -174,27 +174,32 @@ class KijijiApi:
             'X-EBAY-API-CALL-NAME': 'UploadSiteHostedPictures',
         }
 
-        # TODO: Use xmltodict.unparse to create XML payload
-        # TODO: Force set "name" subfield to "Kijiji CA Image" in Content-Disposition header of image data?
-        #  Content-Disposition: form-data; name="Kijiji CA Image"; filename="image.jpg"
-        #  Content-Type: image/jpeg
+        # First multipart form body
+        body = xmltodict.unparse({'UploadSiteHostedPicturesRequest': {
+            '@xmlns': 'urn:ebay:apis:eBLBaseComponents',
+            'RequesterCredentials': {
+                'ebl:eBayAuthToken': {
+                    '@xmlns:ebl': 'urn:ebay:apis:eBLBaseComponents',
+                    '#text': 'AgAAAA**AQAAAA**aAAAAA**794AVA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFloGkCpeKpwidj6x9nY+seQ**j8wBAA**AAMAAA**Dcq42e67om1UK0nk3SitvstDX+8xtEjuOgRWkML+CoPeyWHuYrwlJN5vO00GuY3f4WSQTxu+S/9FVYHjdrjOMGOrMdcuNTwOO+rGtiY/Tkt0r5bQu74ss4Ljep0XG50U+nN57H0LMloGUb7qM78tyfG7lZp08LSfa1bwrOXXqBpLGcA2tg+y+6IrVl6MMRVQurWHQR1UVnE2hhmJghsGb2KYF9jrw+Sh1DYjaYvV4vbPN/G6CtBjCyq8Y02Mli9LmBwZAmzJ5lBEysYGDAd0cYZJQJdel/jpOSC6yDH6hJ2VTmqkAhFObNWf5zJi1I1NHJU857r9Mfj16xiC4BQXTLk/e3Ka4bfwkQKtAZWYBp5H17xC/IOU3Z+4UBQaGo3br7ST0rD5BbDRDFobWLAaLy9vG6+KrWQWMciwRJ1yJb9Kl2TH0cJnLq34LBcS2nT8wQKl3Mv0PyKXdj/LTOgxmIGEKQVOVQQr/zejJ8Zk4jEsKwRatwrEN1fc83ZAhdIzftmhk+HPfa5C5m97EoPucu+v+ftVXgfdvA6zqOREJUtxQakAWXsTHJ8xVFPvnt/OtFv9AAtKQ8dBzGQfyadU5ppQqLR5r7C5us9OalJxwvdw87R6Xadhq+eJZIa5xnBIjcOmP4z6wsnHbPldB4MHh5wdnm5qj+PReJMXLpx5XznjmjhmAV6CTbmA4+iNCBwu9qchqOg8tyN0OFmeTUelptAmCl0eXa6KMVHWLvwORQYsbOg55T5f+8UrzqNhc9Ce',
+                },
+            },
+            'PictureName': 'Kijiji CA Image',
+            'PictureSet': 'Supersize',
+            'ExtensionInDays': '365',
+        }})
+
         payload = """--{boundary}
 Content-Disposition: form-data; name="XML Payload"
 Content-Transfer-Encoding: binary
 Content-Type: multipart/form-data; charset=utf-8
-Content-Length: 1267
+Content-Length: {length}
 
-<?xml version="1.0" encoding="utf-8"?>
-<UploadSiteHostedPicturesRequest xmlns="urn:ebay:apis:eBLBaseComponents">
-<RequesterCredentials>
-<ebl:eBayAuthToken xmlns:ebl="urn:ebay:apis:eBLBaseComponents">AgAAAA**AQAAAA**aAAAAA**794AVA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFloGkCpeKpwidj6x9nY+seQ**j8wBAA**AAMAAA**Dcq42e67om1UK0nk3SitvstDX+8xtEjuOgRWkML+CoPeyWHuYrwlJN5vO00GuY3f4WSQTxu+S/9FVYHjdrjOMGOrMdcuNTwOO+rGtiY/Tkt0r5bQu74ss4Ljep0XG50U+nN57H0LMloGUb7qM78tyfG7lZp08LSfa1bwrOXXqBpLGcA2tg+y+6IrVl6MMRVQurWHQR1UVnE2hhmJghsGb2KYF9jrw+Sh1DYjaYvV4vbPN/G6CtBjCyq8Y02Mli9LmBwZAmzJ5lBEysYGDAd0cYZJQJdel/jpOSC6yDH6hJ2VTmqkAhFObNWf5zJi1I1NHJU857r9Mfj16xiC4BQXTLk/e3Ka4bfwkQKtAZWYBp5H17xC/IOU3Z+4UBQaGo3br7ST0rD5BbDRDFobWLAaLy9vG6+KrWQWMciwRJ1yJb9Kl2TH0cJnLq34LBcS2nT8wQKl3Mv0PyKXdj/LTOgxmIGEKQVOVQQr/zejJ8Zk4jEsKwRatwrEN1fc83ZAhdIzftmhk+HPfa5C5m97EoPucu+v+ftVXgfdvA6zqOREJUtxQakAWXsTHJ8xVFPvnt/OtFv9AAtKQ8dBzGQfyadU5ppQqLR5r7C5us9OalJxwvdw87R6Xadhq+eJZIa5xnBIjcOmP4z6wsnHbPldB4MHh5wdnm5qj+PReJMXLpx5XznjmjhmAV6CTbmA4+iNCBwu9qchqOg8tyN0OFmeTUelptAmCl0eXa6KMVHWLvwORQYsbOg55T5f+8UrzqNhc9Ce</ebl:eBayAuthToken>
-</RequesterCredentials>
-<PictureName>Kijiji CA Image</PictureName>
-<PictureSet>Supersize</PictureSet>
-<ExtensionInDays>365</ExtensionInDays>
-</UploadSiteHostedPicturesRequest>
+{body}
 --{boundary}
-""".format(boundary=boundary).encode('utf-8')
+""".format(boundary=boundary, body=body, length=len(body)).encode('utf-8')
+        # TODO: Force set "name" subfield to "Kijiji CA Image" in Content-Disposition header of image data?
+        #  Content-Disposition: form-data; name="Kijiji CA Image"; filename="image.jpg"
+        #  Content-Type: image/jpeg
         payload += bytes(data.headers.__str__(), 'utf-8')
         payload += data.read()
         payload += '\n--{boundary}--\n'.format(boundary=boundary).encode('utf-8')
