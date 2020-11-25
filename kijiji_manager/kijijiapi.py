@@ -1,3 +1,4 @@
+import uuid
 from xml.parsers.expat import ExpatError, errors
 
 import httpx
@@ -163,9 +164,12 @@ class KijijiApi:
         :return: full image URL
         """
 
+        # Generate random multipart form boundary value
+        boundary = uuid.uuid4()
+
         # Image upload host uses a separate set of headers
         headers = {
-            'Content-Type': 'multipart/form-data; boundary=----FormBoundary7MA4YWxkTrZu0gW',
+            'Content-Type': 'multipart/form-data; boundary={boundary}'.format(boundary=boundary),
             'User-Agent': 'okhttp/4.9.0',
             'X-EBAY-API-CALL-NAME': 'UploadSiteHostedPictures',
         }
@@ -174,8 +178,11 @@ class KijijiApi:
         # TODO: Force set "name" subfield to "Kijiji CA Image" in Content-Disposition header of image data?
         #  Content-Disposition: form-data; name="Kijiji CA Image"; filename="image.jpg"
         #  Content-Type: image/jpeg
-        payload = """------FormBoundary7MA4YWxkTrZu0gW
+        payload = """--{boundary}
 Content-Disposition: form-data; name="XML Payload"
+Content-Transfer-Encoding: binary
+Content-Type: multipart/form-data; charset=utf-8
+Content-Length: 1267
 
 <?xml version="1.0" encoding="utf-8"?>
 <UploadSiteHostedPicturesRequest xmlns="urn:ebay:apis:eBLBaseComponents">
@@ -186,15 +193,11 @@ Content-Disposition: form-data; name="XML Payload"
 <PictureSet>Supersize</PictureSet>
 <ExtensionInDays>365</ExtensionInDays>
 </UploadSiteHostedPicturesRequest>
-
-------FormBoundary7MA4YWxkTrZu0gW
-""".encode('utf-8')
+--{boundary}
+""".format(boundary=boundary).encode('utf-8')
         payload += bytes(data.headers.__str__(), 'utf-8')
         payload += data.read()
-        payload += """
-
-------FormBoundary7MA4YWxkTrZu0gW--
-""".encode('utf-8')
+        payload += '\n--{boundary}--\n'.format(boundary=boundary).encode('utf-8')
 
         r = self.session.post('https://api.ebay.com/ws/api.dll', headers=headers, data=payload)
 
