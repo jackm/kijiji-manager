@@ -1,4 +1,3 @@
-import uuid
 from xml.parsers.expat import ExpatError, errors
 
 import httpx
@@ -160,51 +159,47 @@ class KijijiApi:
     def upload_image(self, data):
         """Upload image using eBay API
 
+        API reference https://developer.ebay.com/devzone/xml/docs/reference/ebay/UploadSiteHostedPictures.html
+
         :param data: werkzeug.FileStorage type image object
         :return: full image URL
         """
 
-        # Generate random multipart form boundary value
-        boundary = uuid.uuid4()
+        # eBay XML API production gateway URI
+        api_endpoint = 'https://api.ebay.com/ws/api.dll'
+
+        # eBay auth token used by Kijiji
+        token = 'AgAAAA**AQAAAA**aAAAAA**794AVA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFloGkCpeKpwidj6x9nY+seQ**j8wBAA**AAMAAA**Dcq42e67om1UK0nk3SitvstDX+8xtEjuOgRWkML+CoPeyWHuYrwlJN5vO00GuY3f4WSQTxu+S/9FVYHjdrjOMGOrMdcuNTwOO+rGtiY/Tkt0r5bQu74ss4Ljep0XG50U+nN57H0LMloGUb7qM78tyfG7lZp08LSfa1bwrOXXqBpLGcA2tg+y+6IrVl6MMRVQurWHQR1UVnE2hhmJghsGb2KYF9jrw+Sh1DYjaYvV4vbPN/G6CtBjCyq8Y02Mli9LmBwZAmzJ5lBEysYGDAd0cYZJQJdel/jpOSC6yDH6hJ2VTmqkAhFObNWf5zJi1I1NHJU857r9Mfj16xiC4BQXTLk/e3Ka4bfwkQKtAZWYBp5H17xC/IOU3Z+4UBQaGo3br7ST0rD5BbDRDFobWLAaLy9vG6+KrWQWMciwRJ1yJb9Kl2TH0cJnLq34LBcS2nT8wQKl3Mv0PyKXdj/LTOgxmIGEKQVOVQQr/zejJ8Zk4jEsKwRatwrEN1fc83ZAhdIzftmhk+HPfa5C5m97EoPucu+v+ftVXgfdvA6zqOREJUtxQakAWXsTHJ8xVFPvnt/OtFv9AAtKQ8dBzGQfyadU5ppQqLR5r7C5us9OalJxwvdw87R6Xadhq+eJZIa5xnBIjcOmP4z6wsnHbPldB4MHh5wdnm5qj+PReJMXLpx5XznjmjhmAV6CTbmA4+iNCBwu9qchqOg8tyN0OFmeTUelptAmCl0eXa6KMVHWLvwORQYsbOg55T5f+8UrzqNhc9Ce'
 
         # Image upload host uses a separate set of headers
         headers = {
-            'Content-Type': 'multipart/form-data; boundary={boundary}'.format(boundary=boundary),
             'User-Agent': 'okhttp/4.9.0',
             'X-EBAY-API-CALL-NAME': 'UploadSiteHostedPictures',
         }
 
-        # First multipart form body
-        body = xmltodict.unparse({'UploadSiteHostedPicturesRequest': {
-            '@xmlns': 'urn:ebay:apis:eBLBaseComponents',
-            'RequesterCredentials': {
-                'ebl:eBayAuthToken': {
-                    '@xmlns:ebl': 'urn:ebay:apis:eBLBaseComponents',
-                    '#text': 'AgAAAA**AQAAAA**aAAAAA**794AVA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFloGkCpeKpwidj6x9nY+seQ**j8wBAA**AAMAAA**Dcq42e67om1UK0nk3SitvstDX+8xtEjuOgRWkML+CoPeyWHuYrwlJN5vO00GuY3f4WSQTxu+S/9FVYHjdrjOMGOrMdcuNTwOO+rGtiY/Tkt0r5bQu74ss4Ljep0XG50U+nN57H0LMloGUb7qM78tyfG7lZp08LSfa1bwrOXXqBpLGcA2tg+y+6IrVl6MMRVQurWHQR1UVnE2hhmJghsGb2KYF9jrw+Sh1DYjaYvV4vbPN/G6CtBjCyq8Y02Mli9LmBwZAmzJ5lBEysYGDAd0cYZJQJdel/jpOSC6yDH6hJ2VTmqkAhFObNWf5zJi1I1NHJU857r9Mfj16xiC4BQXTLk/e3Ka4bfwkQKtAZWYBp5H17xC/IOU3Z+4UBQaGo3br7ST0rD5BbDRDFobWLAaLy9vG6+KrWQWMciwRJ1yJb9Kl2TH0cJnLq34LBcS2nT8wQKl3Mv0PyKXdj/LTOgxmIGEKQVOVQQr/zejJ8Zk4jEsKwRatwrEN1fc83ZAhdIzftmhk+HPfa5C5m97EoPucu+v+ftVXgfdvA6zqOREJUtxQakAWXsTHJ8xVFPvnt/OtFv9AAtKQ8dBzGQfyadU5ppQqLR5r7C5us9OalJxwvdw87R6Xadhq+eJZIa5xnBIjcOmP4z6wsnHbPldB4MHh5wdnm5qj+PReJMXLpx5XznjmjhmAV6CTbmA4+iNCBwu9qchqOg8tyN0OFmeTUelptAmCl0eXa6KMVHWLvwORQYsbOg55T5f+8UrzqNhc9Ce',
+        # First multipart form data
+        xml_payload = {
+            'UploadSiteHostedPicturesRequest': {
+                '@xmlns': 'urn:ebay:apis:eBLBaseComponents',
+                'RequesterCredentials': {
+                    'ebl:eBayAuthToken': {
+                        '@xmlns:ebl': 'urn:ebay:apis:eBLBaseComponents',
+                        '#text': token,
+                    },
                 },
-            },
-            'PictureName': 'Kijiji CA Image',
-            'PictureSet': 'Supersize',
-            'ExtensionInDays': '365',
-        }})
+                'PictureName': 'Kijiji CA Image',
+                'PictureSet': 'Supersize',
+                'ExtensionInDays': '365',
+            }
+        }
 
-        payload = """--{boundary}
-Content-Disposition: form-data; name="XML Payload"
-Content-Transfer-Encoding: binary
-Content-Type: multipart/form-data; charset=utf-8
-Content-Length: {length}
+        # Multipart form data
+        files = {
+            'XML Payload': (None, xmltodict.unparse(xml_payload)),
+            'Image': (data.filename, data.read(), data.content_type),
+        }
 
-{body}
---{boundary}
-""".format(boundary=boundary, body=body, length=len(body)).encode('utf-8')
-        # TODO: Force set "name" subfield to "Kijiji CA Image" in Content-Disposition header of image data?
-        #  Content-Disposition: form-data; name="Kijiji CA Image"; filename="image.jpg"
-        #  Content-Type: image/jpeg
-        payload += bytes(data.headers.__str__(), 'utf-8')
-        payload += data.read()
-        payload += '\n--{boundary}--\n'.format(boundary=boundary).encode('utf-8')
-
-        r = self.session.post('https://api.ebay.com/ws/api.dll', headers=headers, data=payload)
+        r = self.session.post(api_endpoint, headers=headers, files=files)
 
         doc = self._parse_response(r.text)
 
