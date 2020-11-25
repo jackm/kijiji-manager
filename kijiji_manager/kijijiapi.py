@@ -36,20 +36,6 @@ class KijijiApi:
             'X-ECG-VER': '1.67',
         }
 
-        # Common XML namespaces for HTTP POST request payloads
-        self.xmlns = {
-            '@xmlns:types': 'http://www.ebayclassifiedsgroup.com/schema/types/v1',
-            '@xmlns:cat': 'http://www.ebayclassifiedsgroup.com/schema/category/v1',
-            '@xmlns:loc': 'http://www.ebayclassifiedsgroup.com/schema/location/v1',
-            '@xmlns:ad': 'http://www.ebayclassifiedsgroup.com/schema/ad/v1',
-            '@xmlns:attr': 'http://www.ebayclassifiedsgroup.com/schema/attribute/v1',
-            '@xmlns:pic': 'http://www.ebayclassifiedsgroup.com/schema/picture/v1',
-            '@xmlns:user': 'http://www.ebayclassifiedsgroup.com/schema/user/v1',
-            '@xmlns:rate': 'http://www.ebayclassifiedsgroup.com/schema/rate/v1',
-            '@xmlns:reply': 'http://www.ebayclassifiedsgroup.com/schema/reply/v1',
-            '@locale': 'en-CA',
-        }
-
     def login(self, username, password):
         """Login to Kijiji
 
@@ -301,16 +287,19 @@ Content-Disposition: form-data; name="XML Payload"
         else:
             raise KijijiApiException('direction parameter must be set to either "owner" or "buyer", not "{}"'.format(direction))
 
-        payload = {'reply:reply-to-ad-conversation': self.xmlns}
-        payload['reply:reply-to-ad-conversation'].update({
-            'reply:ad-id': ad_id,
-            'reply:conversation-id': conversation_id,
-            'reply:reply-username': username,
-            'reply:reply-email': email,
-            'reply:reply-phone': phone,
-            'reply:reply-message': message,
-            'reply:reply-direction': {'types:value': direction},
-        })
+        payload = {
+            'reply:reply-to-ad-conversation': {
+                '@xmlns:reply': 'http://www.ebayclassifiedsgroup.com/schema/reply/v1',
+                '@xmlns:types': 'http://www.ebayclassifiedsgroup.com/schema/types/v1',
+                'reply:ad-id': ad_id,
+                'reply:conversation-id': conversation_id,
+                'reply:reply-username': username,
+                'reply:reply-email': email,
+                'reply:reply-phone': phone,
+                'reply:reply-message': message,
+                'reply:reply-direction': {'types:value': direction},
+            }
+        }
 
         # Payload is an XML string
         xml = xmltodict.unparse(payload, short_empty_elements=True, pretty=True)
