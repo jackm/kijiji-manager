@@ -30,9 +30,8 @@ class KijijiApi:
 
         # Common HTTP header fields
         self.headers = {
-            'Accept': '*/*',
+            'Accept': 'application/xml',
             'Accept-Language': 'en-CA',
-            'Accept-Encoding': 'gzip',
             'User-Agent': 'Kijiji 12.9.0 (iPhone; iOS 13.4.1; en_CA)',
             'X-ECG-VER': '1.67',
         }
