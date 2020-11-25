@@ -356,7 +356,7 @@ Content-Disposition: form-data; name="XML Payload"
     def _error_reason_ebay(doc):
         try:
             error = doc['UploadSiteHostedPicturesResponse']['Errors']
-            message = "{} {}".format(error['ShortMessage'], error['LongMessage'])
+            message = "{}: {} {}".format(error['SeverityCode'], error['ShortMessage'], error['LongMessage'])
         except (TypeError, KeyError):
             return 'Unknown eBay API error'
         return message
