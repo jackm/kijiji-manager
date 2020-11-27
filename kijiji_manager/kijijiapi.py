@@ -11,8 +11,8 @@ class KijijiApiException(Exception):
 class KijijiApi:
     """API for interfacing with Kijiji site
 
-    This class is stateless and does not manage user logins on its own
-    Must login first to use methods that require a user ID and token
+    This class is stateless and does not manage user logins on its own.
+    Must login first to use methods that require a user ID and token.
 
     Methods raise KijijiApiException on errors
     """
@@ -68,6 +68,7 @@ class KijijiApi:
 
     def get_ad(self, user_id, token, ad_id=None):
         """Get existing ad(s)
+
         If ad_id is left unspecified, query all ads
 
         :param user_id: user ID number
@@ -131,6 +132,8 @@ class KijijiApi:
 
     def post_ad(self, user_id, token, data):
         """Post new ad
+
+        No input validation is performed; incorrect inputs are expected to be reported back by Kijiji API after attempting to post
 
         :param user_id: user ID number
         :param token: session token
