@@ -123,7 +123,13 @@ def post():
                         if attrib['@type'] == 'ENUM':
                             item.update({'choices': {}})
                             if 'attr:supported-value' in attrib:
-                                for value in attrib['attr:supported-value']:
+                                values = attrib['attr:supported-value']
+
+                                # Force to list if only one value
+                                if not isinstance(values, list):
+                                    values = [values]
+
+                                for value in values:
                                     item['choices'].update({value['#text']: value['@localized-label']})
                             attrib_types['enums'].append(item)
 
