@@ -9,7 +9,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField, SelectMultipleField, widgets
 from wtforms.validators import InputRequired, Optional
 
-from kijiji_manager.common import get_category_data, get_location_data, get_attrib
 from kijiji_manager.forms.post import CategoryForm, PostForm, PostManualForm
 from kijiji_manager.kijijiapi import KijijiApi
 
@@ -57,7 +56,7 @@ def post():
 
     category_form = CategoryForm()
     # Exclude 'Services' category
-    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in get_category_data()['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
+    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
 
     form = PostForm()
 
@@ -76,7 +75,7 @@ def post():
         # Get most significant category ID from given set of categories in previous step form
         category_choice = (lambda x1, x2, x3: x3 if x3 else x2 if x2 else x1)(category_form.cat1.data, category_form.cat2.data, category_form.cat3.data)
         session['category'] = category_choice
-        data = get_attrib(category_choice)
+        data = kijiji_api.get_attributes(current_user.id, current_user.token, category_choice)
 
         # Update supported ad type choices
         try:
@@ -86,7 +85,7 @@ def post():
             flash('No supported ad types available')
 
         # Location options
-        locations = get_location_data()
+        locations = kijiji_api.get_locations(current_user.id, current_user.token)
         try:
             location_list = [(loc['@id'], loc['loc:localized-name']) for loc in locations['loc:locations']['loc:location']['loc:location']]
         except KeyError:
