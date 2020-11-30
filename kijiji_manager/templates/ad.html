@@ -25,9 +25,9 @@
             {%- if 'ad:price' in ad -%}
             {%- if ad['ad:price']['types:price-type']['types:value'] == 'SPECIFIED_AMOUNT' -%}
             {%- if 'types:currency-iso-code' in ad['ad:price'] -%}
-                {{ ad['ad:price']['types:currency-iso-code']['types:value']['@localized-label'] + ad['ad:price']['types:amount'] }}
+                {{ ad['ad:price']['types:currency-iso-code']['types:value']['@localized-label'] }}{{ ad['ad:price']['types:amount'] }}
             {%- else -%}
-                {{ '$' + ad['ad:price']['types:amount'] }}
+                {{ '$%s' % ad['ad:price']['types:amount'] if ad['ad:price']['types:amount'] is not none else '' }}
             {%- endif -%}
             {%- else -%}
                 {{ ad['ad:price']['types:price-type']['types:value'] }}

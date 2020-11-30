@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td>Reply Rate</td>
-            <td>{{ profile['user:reply-rate'] + '%' }}</td>
+            <td>{{ '%s%%' % profile['user:reply-rate'] if profile['user:reply-rate'] is not none else '' }}</td>
         </tr>
         <tr>
             <td>Responsiveness</td>
