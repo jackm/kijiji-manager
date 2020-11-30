@@ -22,7 +22,7 @@ class KijijiApi:
         else:
             # Kijiji sometimes takes a bit longer to respond to API requests
             # e.g. for loading conversations
-            timeout = httpx.Timeout(30.0, connect_timeout=30.0)
+            timeout = httpx.Timeout(30.0, connect=30.0)
             self.session = httpx.Client(timeout=timeout)
 
         # Base API URL
