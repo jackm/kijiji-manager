@@ -239,7 +239,7 @@ def post():
                 'ad:account-id': current_user.id,
                 'ad:email': current_user.email,
                 'ad:poster-contact-email': current_user.email,
-                'ad:poster-contact-name': None,
+                # 'ad:poster-contact-name': None,  # Not sent by Kijiji app
                 'ad:phone': attrs_postform['phone'],
                 'ad:ad-address': {
                     'types:radius': 400,
@@ -353,7 +353,7 @@ def create_attribute_payload(form):
             value = 'false'
 
         payload['attr:attribute'].append({
-            '@type': '',
+            # '@type': '',  # Not sent by Kijiji app
             '@localized-label': '',
             '@name': key,
             'attr:value': value,
