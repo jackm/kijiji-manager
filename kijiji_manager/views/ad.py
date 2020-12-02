@@ -55,8 +55,7 @@ def post():
     step3 = 'submit'
 
     category_form = CategoryForm()
-    # Exclude 'Services' category
-    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
+    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']['cat:category']]
 
     form = PostForm()
 
