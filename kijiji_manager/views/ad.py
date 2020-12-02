@@ -349,6 +349,10 @@ def create_attribute_payload(form):
             value = 'true'
         elif value is False or value == 'n':
             value = 'false'
+        elif key.startswith('date'):
+            # Special handling for date type attributes
+            # TODO: Include attribute type in form field rather than trusting that attribute will begin with the string 'date'
+            value += 'T00:00:00Z'  # Date value expected to be a datetime string in ISO 8601 format
 
         payload['attr:attribute'].append({
             # '@type': '',  # Not sent by Kijiji app
