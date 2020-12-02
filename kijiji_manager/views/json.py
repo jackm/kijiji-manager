@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
+from flask_login import login_required, current_user
 
-from kijiji_manager.common import get_category_data, get_location_data, get_attrib
+from kijiji_manager.kijijiapi import KijijiApi
 
 json = Blueprint('json', __name__)
+kijiji_api = KijijiApi()
 
 
 # Return JSON list of subcategories under given category ID
@@ -11,9 +13,10 @@ json = Blueprint('json', __name__)
 # Returns an empty list if no subcategories exist under the given category ID,
 # or given category ID(s) are not found
 @json.route('/cat')
+@login_required
 def get_category():
     # Start at category ID 0 ('All Categories')
-    data = get_category_data()['cat:categories']['cat:category']
+    data = kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']
 
     # Top level categories
     categories = _get_subcategories(data)
@@ -56,9 +59,10 @@ def _get_subcategories(data):
 # Returns an empty list if no sublocations exist under the given location ID,
 # or given location ID(s) are not found
 @json.route('/loc')
+@login_required
 def get_location():
     # Start at location ID 0 ('Canada')
-    data = get_location_data()['loc:locations']['loc:location']
+    data = kijiji_api.get_locations(current_user.id, current_user.token)['loc:locations']['loc:location']
 
     locations = data['loc:location']
 
@@ -94,6 +98,7 @@ def get_location():
 # Returns an empty list if no dependent attributes exist under the given attribute ID,
 # or given attribute ID is not found
 @json.route('/attrib')
+@login_required
 def get_supported_values():
     # Get parameters from query string
     attrib_id = request.args.get('attrib')
@@ -101,7 +106,7 @@ def get_supported_values():
 
     attribs = []
     if attrib_id:
-        data = get_attrib(attrib_id)
+        data = kijiji_api.get_attributes(current_user.id, current_user.token, attrib_id)
         if data:
             if 'attr:dependent-attributes' in data['ad:ad']:
                 # Start at list of all dependent attributes

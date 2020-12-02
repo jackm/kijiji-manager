@@ -9,7 +9,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, IntegerField, DateField, SelectMultipleField, widgets
 from wtforms.validators import InputRequired, Optional
 
-from kijiji_manager.common import get_category_data, get_location_data, get_attrib
 from kijiji_manager.forms.post import CategoryForm, PostForm, PostManualForm
 from kijiji_manager.kijijiapi import KijijiApi
 
@@ -57,7 +56,7 @@ def post():
 
     category_form = CategoryForm()
     # Exclude 'Services' category
-    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in get_category_data()['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
+    category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']['cat:category'] if cat['cat:id-name'] != 'Services']
 
     form = PostForm()
 
@@ -76,7 +75,7 @@ def post():
         # Get most significant category ID from given set of categories in previous step form
         category_choice = (lambda x1, x2, x3: x3 if x3 else x2 if x2 else x1)(category_form.cat1.data, category_form.cat2.data, category_form.cat3.data)
         session['category'] = category_choice
-        data = get_attrib(category_choice)
+        data = kijiji_api.get_attributes(current_user.id, current_user.token, category_choice)
 
         # Update supported ad type choices
         try:
@@ -86,7 +85,7 @@ def post():
             flash('No supported ad types available')
 
         # Location options
-        locations = get_location_data()
+        locations = kijiji_api.get_locations(current_user.id, current_user.token)
         try:
             location_list = [(loc['@id'], loc['loc:localized-name']) for loc in locations['loc:locations']['loc:location']['loc:location']]
         except KeyError:
@@ -215,81 +214,55 @@ def post():
                 else:
                     attrs_attrform[key] = value
 
-        # Build attributes payload
-        attributes_payload = {}
-        if attrs_attrform:
-            attributes_payload = {'attr:attributes': {'attr:attribute': []}}
-            for key, value in attrs_attrform.items():
-                # Boolean attribute values must be a string of 'true' or 'false'
-                if value is True or value == 'y':
-                    value = 'true'
-                elif value is False or value == 'n':
-                    value = 'false'
-
-                attributes_payload['attr:attributes']['attr:attribute'].append({
-                    '@type': '',
-                    '@localized-label': '',
-                    '@name': key,
-                    'attr:value': value,
-                })
-
         # Begin assembling entire payload
-        response_payload = {
+        # All of the keys in the following dict are always present in every ad post payload,
+        # however some may be left empty if not used
+        payload = {
             'ad:ad': {
-                '@xmlns:types': 'http://www.ebayclassifiedsgroup.com/schema/types/v1',
+                '@xmlns:ad': 'http://www.ebayclassifiedsgroup.com/schema/ad/v1',
                 '@xmlns:cat': 'http://www.ebayclassifiedsgroup.com/schema/category/v1',
                 '@xmlns:loc': 'http://www.ebayclassifiedsgroup.com/schema/location/v1',
-                '@xmlns:ad': 'http://www.ebayclassifiedsgroup.com/schema/ad/v1',
                 '@xmlns:attr': 'http://www.ebayclassifiedsgroup.com/schema/attribute/v1',
+                '@xmlns:types': 'http://www.ebayclassifiedsgroup.com/schema/types/v1',
                 '@xmlns:pic': 'http://www.ebayclassifiedsgroup.com/schema/picture/v1',
+                '@xmlns:vid': 'http://www.ebayclassifiedsgroup.com/schema/video/v1',
                 '@xmlns:user': 'http://www.ebayclassifiedsgroup.com/schema/user/v1',
-                '@xmlns:rate': 'http://www.ebayclassifiedsgroup.com/schema/rate/v1',
-                '@xmlns:reply': 'http://www.ebayclassifiedsgroup.com/schema/reply/v1',
-                '@locale': 'en-CA',
+                '@xmlns:feature': 'http://www.ebayclassifiedsgroup.com/schema/feature/v1',
+                '@id': '',
+                'cat:category': {'@id': session['category']},
+                'loc:locations': {'loc:location': {'@id': location_choice}},
+                'ad:ad-type': {'ad:value': attrs_postform['adtype']},
+                'ad:title': attrs_postform['adtitle'],
+                'ad:description': attrs_postform['description'],
+                'ad:price': {'types:price-type': {'types:value': attrs_postform['pricetype']}},
+                'ad:account-id': current_user.id,
+                'ad:email': current_user.email,
+                'ad:poster-contact-email': current_user.email,
+                # 'ad:poster-contact-name': None,  # Not sent by Kijiji app
+                'ad:phone': attrs_postform['phone'],
+                'ad:ad-address': {
+                    'types:radius': 400,
+                    'types:latitude': None,
+                    'types:longitude': None,
+                    'types:full-address': None,
+                    'types:zip-code': attrs_postform['postalcode'],
+                },
+                'attr:attributes': create_attribute_payload(attrs_attrform),
+                'pic:pictures': create_picture_payload(form),
+                'vid:videos': None,
+                'ad:adSlots': None,
+                'ad:listing-tags': None,
             }
         }
-        for key, value in attrs_postform.items():
-            if key == 'adtype':
-                response_payload['ad:ad'].update({'ad:ad-type': {'ad:value': value}})
-            elif key == 'adtitle':
-                response_payload['ad:ad'].update({'ad:title': value})
-            elif key == 'description':
-                response_payload['ad:ad'].update({'ad:description': value})
-            elif key == 'postalcode':
-                if 'ad:ad-address' not in response_payload['ad:ad']:
-                    response_payload['ad:ad'].update({'ad:ad-address': {}})
-                response_payload['ad:ad']['ad:ad-address'].update({'types:zip-code': value})
-            elif key == 'fulladdress':  # Yet to be implemented
-                if 'ad:ad-address' not in response_payload['ad:ad']:
-                    response_payload['ad:ad'].update({'ad:ad-address': {}})
-                response_payload['ad:ad']['ad:ad-address'].update({'types:full-address': value})
-            elif key == 'pricetype':
-                if 'ad:price' not in response_payload['ad:ad']:
-                    response_payload['ad:ad'].update({'ad:price': {}})
-                response_payload['ad:ad']['ad:price'].update({'types:price-type': {'types:value': value}})
-            elif key == 'price':
-                if 'ad:price' not in response_payload['ad:ad']:
-                    response_payload['ad:ad'].update({'ad:price': {}})
-                response_payload['ad:ad']['ad:price'].update({'types:amount': value})
-        if location_choice:
-            response_payload['ad:ad'].update({'loc:locations': {'loc:location': {'@id': location_choice}}})
-        if session['category']:
-            response_payload['ad:ad'].update({'cat:category': {'@id': session['category']}})
-        if current_user.id:
-            response_payload['ad:ad'].update({'ad:account-id': current_user.id})
-        if current_user.email:
-            response_payload['ad:ad'].update({'ad:email': current_user.email})
-        if current_user.name:
-            response_payload['ad:ad'].update({'ad:poster-contact-name': current_user.name})
-        if attributes_payload:
-            response_payload['ad:ad'].update(attributes_payload)
 
-        # Create picture payload
-        pictures_payload = create_picture_payload(form)
-        if pictures_payload:
-            response_payload['ad:ad'].update(pictures_payload)
+        # Set price if dollar amount given
+        if attrs_postform['price']:
+            payload['ad:ad']['ad:price'].update({
+                'types:amount': attrs_postform['price'],
+                'types:currency-iso-code': {'types:value': 'CAD'},  # Assume Canadian dollars
+            })
 
-        xml_payload = xmltodict.unparse(response_payload, short_empty_elements=True, pretty=True)
+        xml_payload = xmltodict.unparse(payload, short_empty_elements=True)
 
         # Submit final payload
         ad_id = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
@@ -368,18 +341,35 @@ def create_attribute_form(types):
     return AttributeForm()
 
 
+# Build attributes payload dict
+def create_attribute_payload(form):
+    payload = {'attr:attribute': []}
+    for key, value in form.items():
+        # Boolean attribute values must be a string of 'true' or 'false'
+        if value is True or value == 'y':
+            value = 'true'
+        elif value is False or value == 'n':
+            value = 'false'
+
+        payload['attr:attribute'].append({
+            # '@type': '',  # Not sent by Kijiji app
+            '@localized-label': '',
+            '@name': key,
+            'attr:value': value,
+        })
+    return payload if len(payload['attr:attribute']) else {}
+
+
 # Build picture payload dict from form.file* fields
 def create_picture_payload(form):
-    payload = {'pic:pictures': {'pic:picture': []}}
-    picture_added = False
+    payload = {'pic:picture': []}
     for field in vars(PostForm())['_fields'].keys():
         if field.startswith('file'):
             data = getattr(form, field).data
             if data:
-                picture_added = True
                 link = kijiji_api.upload_image(data)
-                payload['pic:pictures']['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
-    return payload if picture_added else {}
+                payload['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
+    return payload if len(payload['pic:picture']) else {}
 
 
 @ad.route('/repost/<ad_id>')
