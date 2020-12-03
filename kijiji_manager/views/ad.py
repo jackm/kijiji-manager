@@ -272,9 +272,6 @@ class KijijiDateField(DateField):
 
 
 # Build dynamic attribute form
-# TODO: Find a better method
-#  https://stackoverflow.com/q/28375565
-#  https://stackoverflow.com/a/57548509/7781935
 def create_attribute_form(types):
     # Insert field attribute to form object
     def insert_attr(obj, field_type, data, **kwargs):
