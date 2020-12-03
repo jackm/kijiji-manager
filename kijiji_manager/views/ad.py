@@ -292,7 +292,7 @@ class MultiCheckboxField(SelectMultipleField):
 #  https://stackoverflow.com/a/57548509/7781935
 def create_attribute_form(types):
     # Insert field attribute to form object
-    def insert_attr(obj, field_type, data):
+    def insert_attr(obj, field_type, data, **kwargs):
         try:
             for field_id, title in data['label'].items():
                 validators = []
@@ -307,9 +307,9 @@ def create_attribute_form(types):
                         field_type = MultiCheckboxField
 
                     choices = [c for c in data['choices'].items()]
-                    setattr(obj, field_id, field_type(title, validators=validators, choices=choices))
+                    setattr(obj, field_id, field_type(title, validators=validators, choices=choices, **kwargs))
                 else:
-                    setattr(obj, field_id, field_type(title, validators=validators))
+                    setattr(obj, field_id, field_type(title, validators=validators, **kwargs))
         except KeyError:
             pass
 
@@ -328,7 +328,7 @@ def create_attribute_form(types):
             insert_attr(AttributeForm, IntegerField, item)
 
         for item in types.get('dates', []):
-            insert_attr(AttributeForm, DateField, item)
+            insert_attr(AttributeForm, DateField, item, render_kw={'placeholder': 'YYYY-MM-DD'})
 
         for item in types.get('bools', []):
             insert_attr(AttributeForm, BooleanField, item)
