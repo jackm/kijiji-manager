@@ -51,9 +51,11 @@ def post_manual():
 @login_required
 def post():
     # Multi-step form
-    step1 = 'choose_category'
-    step2 = 'fill_attributes'
-    step3 = 'submit'
+    step = [
+        'choose_category',
+        'fill_attributes',
+        'submit',
+    ]
 
     category_form = CategoryForm()
     category_form.cat1.choices = [(cat['@id'], cat['cat:id-name']) for cat in kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']['cat:category']]
@@ -63,9 +65,9 @@ def post():
     if 'step' not in request.form:
         # Step 1: Choose ad category
 
-        return render_template('post.html', form=category_form, step=step1, next_step=step2)
+        return render_template('post.html', form=category_form, step=step[0], next_step=step[1])
 
-    elif request.form['step'] == step2:
+    elif request.form['step'] == step[1]:
         # Step 2: Fill in ad attributes
 
         if not category_form.validate_on_submit():
@@ -168,9 +170,9 @@ def post():
         attrib_form = create_attribute_form(attrib_types)
         session['attrib_types'] = attrib_types
 
-        return render_template('post.html', form=form, step=step2, next_step=step3, attrib_form=attrib_form, attrib=category_choice)
+        return render_template('post.html', form=form, step=step[1], next_step=step[2], attrib_form=attrib_form, attrib=category_choice)
 
-    elif request.form['step'] == step3:
+    elif request.form['step'] == step[2]:
         # Restore dynamic form data
         if not form.adtype.choices:
             form.adtype.choices = session.get('adtype.choices', [])
@@ -183,7 +185,7 @@ def post():
                 flash(form.errors)
             if attrib_form.errors:
                 flash(attrib_form.errors)
-            return render_template('post.html', form=form, step=step2, next_step=step3, attrib_form=attrib_form, attrib=session.get('category'))
+            return render_template('post.html', form=form, step=step[1], next_step=step[2], attrib_form=attrib_form, attrib=session.get('category'))
 
         # Get most significant location ID from given set of locations in previous step form
         # Default to 'Canada' => '0' if none given
