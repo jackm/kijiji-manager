@@ -188,31 +188,6 @@ def post():
         # Default to 'Canada' => '0' if none given
         location_choice = (lambda x1, x2, x3: x3 if x3 else x2 if x2 else x1 if x1 else '0')(form.loc1.data, form.loc2.data, form.loc3.data)
 
-        # Get submitted form items
-        # Split form items into persistent form item and remaining items
-        postform_fields = list(vars(PostForm())['_fields'].keys())
-        attrs_postform = {}
-        attrs_attrform = {}
-        for key, value in request.form.items(multi=True):
-            # Ignore 'step' hidden field
-            # Field is only used for tracking multi-step form progress
-            if key == 'step':
-                continue
-
-            # Filter out persistent form items (fields in PostForm class) to determine dynamic attributes
-            if key in postform_fields:
-                # Gather PostForm items
-                attrs_postform[key] = value
-            else:
-                # Gather AttributeForm items
-
-                # Some attributes are multi-valued when key appears more than once
-                if key in attrs_attrform:
-                    # Append onto existing via comma-separated value
-                    attrs_attrform[key] = ','.join([attrs_attrform[key], value])
-                else:
-                    attrs_attrform[key] = value
-
         # Begin assembling entire payload
         # All of the keys in the following dict are always present in every ad post payload,
         # however some may be left empty if not used
@@ -230,24 +205,24 @@ def post():
                 '@id': '',
                 'cat:category': {'@id': session['category']},
                 'loc:locations': {'loc:location': {'@id': location_choice}},
-                'ad:ad-type': {'ad:value': attrs_postform['adtype']},
-                'ad:title': attrs_postform['adtitle'],
-                'ad:description': attrs_postform['description'],
-                'ad:price': {'types:price-type': {'types:value': attrs_postform['pricetype']}},
+                'ad:ad-type': {'ad:value': form.adtype.data},
+                'ad:title': form.adtitle.data,
+                'ad:description': form.description.data,
+                'ad:price': {'types:price-type': {'types:value': form.pricetype.data}},
                 'ad:account-id': current_user.id,
                 'ad:email': current_user.email,
                 'ad:poster-contact-email': current_user.email,
                 # 'ad:poster-contact-name': None,  # Not sent by Kijiji app
-                'ad:phone': attrs_postform['phone'],
+                'ad:phone': form.phone.data,
                 'ad:ad-address': {
                     'types:radius': 400,
                     'types:latitude': None,
                     'types:longitude': None,
                     'types:full-address': None,
-                    'types:zip-code': attrs_postform['postalcode'],
+                    'types:zip-code': form.postalcode.data,
                 },
-                'attr:attributes': create_attribute_payload(attrs_attrform),
-                'pic:pictures': create_picture_payload(form),
+                'attr:attributes': create_attribute_payload(attrib_form.data),
+                'pic:pictures': create_picture_payload(form.data),
                 'vid:videos': None,
                 'ad:adSlots': None,
                 'ad:listing-tags': None,
@@ -255,9 +230,9 @@ def post():
         }
 
         # Set price if dollar amount given
-        if attrs_postform['price']:
+        if form.price.data:
             payload['ad:ad']['ad:price'].update({
-                'types:amount': attrs_postform['price'],
+                'types:amount': form.price.data,
                 'types:currency-iso-code': {'types:value': 'CAD'},  # Assume Canadian dollars
             })
 
@@ -341,18 +316,30 @@ def create_attribute_form(types):
 
 
 # Build attributes payload dict
-def create_attribute_payload(form):
+def create_attribute_payload(data):
+    def isnumber(x):
+        try:
+            float(x)
+            return True
+        except (TypeError, ValueError):
+            return False
+
     payload = {'attr:attribute': []}
-    for key, value in form.items():
-        # Boolean attribute values must be a string of 'true' or 'false'
+    for key, value in data.items():
+        # Skip empty attributes, except numbers which could be falsy
+        if not value and not isnumber(value):
+            continue
+
+        # Boolean attributes must be a string of 'true' or 'false'
         if value is True or value == 'y':
             value = 'true'
         elif value is False or value == 'n':
             value = 'false'
-        elif key.startswith('date'):
-            # Special handling for date type attributes
-            # TODO: Include attribute type in form field rather than trusting that attribute will begin with the string 'date'
-            value += 'T00:00:00Z'  # Date value expected to be a datetime string in ISO 8601 format
+
+        # Multi-valued attributes are lists
+        if isinstance(value, list):
+            # Convert to string of comma-separated values
+            value = ','.join(value)
 
         payload['attr:attribute'].append({
             # '@type': '',  # Not sent by Kijiji app
@@ -363,15 +350,13 @@ def create_attribute_payload(form):
     return payload if len(payload['attr:attribute']) else {}
 
 
-# Build picture payload dict from form.file* fields
-def create_picture_payload(form):
+# Build picture payload dict from file* fields
+def create_picture_payload(data):
     payload = {'pic:picture': []}
-    for field in vars(PostForm())['_fields'].keys():
-        if field.startswith('file'):
-            data = getattr(form, field).data
-            if data:
-                link = kijiji_api.upload_image(data)
-                payload['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
+    for key, value in data.items():
+        if key.startswith('file') and value:
+            link = kijiji_api.upload_image(value)
+            payload['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
     return payload if len(payload['pic:picture']) else {}
 
 
