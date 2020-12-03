@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from time import sleep
 
 import xmltodict
@@ -256,9 +257,18 @@ def post():
 
 class MultiCheckboxField(SelectMultipleField):
     """A multiple-select, except displays a list of checkboxes"""
-
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
+
+
+class KijijiDateField(DateField):
+    """A date field, except appends a time to the value after"""
+    def process_formdata(self, valuelist):
+        super().process_formdata(valuelist)
+        if self.data:
+            # Append static time to date value
+            # Kijiji date values expected to be a datetime string in ISO 8601 format but the time portion is not actually used
+            self.data = datetime.combine(self.data, datetime.min.time()).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 # Build dynamic attribute form
@@ -303,7 +313,7 @@ def create_attribute_form(types):
             insert_attr(AttributeForm, IntegerField, item)
 
         for item in types.get('dates', []):
-            insert_attr(AttributeForm, DateField, item, render_kw={'placeholder': 'YYYY-MM-DD'})
+            insert_attr(AttributeForm, KijijiDateField, item, render_kw={'placeholder': 'YYYY-MM-DD'})
 
         for item in types.get('bools', []):
             insert_attr(AttributeForm, BooleanField, item)
