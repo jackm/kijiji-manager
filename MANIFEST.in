@@ -1,0 +1,4 @@
+include LICENSE
+recursive-include kijiji_manager/static *
+recursive-include kijiji_manager/templates *
+include instance/config.py
