@@ -1,6 +1,7 @@
-from flask import Flask, flash, redirect, url_for, request
+from flask import Flask, flash, redirect, url_for, request, render_template
 from flask_login import LoginManager
 
+from .kijijiapi import KijijiApiException
 from .models import User
 
 
@@ -30,6 +31,12 @@ def create_app():
     app.register_blueprint(user)
     app.register_blueprint(ad)
     app.register_blueprint(json)
+
+    # Handle KijijiApi exceptions
+    # Print error message rather than showing a generic 500 Internal Server Error
+    @app.errorhandler(KijijiApiException)
+    def handle_exceptions(e):
+        return render_template('error.html', message=e)
 
     # Flask-Login
     login_manager = LoginManager()
