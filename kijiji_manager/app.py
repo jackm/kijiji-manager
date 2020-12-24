@@ -1,11 +1,17 @@
 from flask import Flask, flash, redirect, url_for, request, render_template
 from flask_login import LoginManager
+from werkzeug.serving import WSGIRequestHandler
 
 from .kijijiapi import KijijiApiException
 from .models import User
 
 
 def create_app():
+
+    # Use HTTP/1.1
+    # Shouldn't be strictly necessary it has some extra niceties such as automatic keepalive
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
+
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_pyfile('config.py')
