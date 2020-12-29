@@ -37,6 +37,9 @@ setup(
         'is-safe-url',
         'phonenumbers',
     ],
+    entry_points={
+        'console_scripts': ['kijiji-manager=kijiji_manager.cli:run']
+    },
     include_package_data=True,
     zip_safe=False,
 )

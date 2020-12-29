@@ -22,7 +22,7 @@ def create_app(config=None):
     except FileNotFoundError:
         config_sample = os.path.join(os.path.dirname(__file__), 'kijiji-manager-sample.cfg')
         print("Unable to load your config file.\n"
-              "Put one named '{}' in the Flask instance folder at the path below.\n"
+              "Either specify one with the `-c` flag, or put one named '{}' in the Flask instance folder at the path below.\n"
               "You may have to create the instance folder if it doesn't already exist.\n".format(config_name))
         print("Sample config: {}".format(config_sample))
         print("Instance folder: {}".format(app.instance_path))

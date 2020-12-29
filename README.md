@@ -48,7 +48,8 @@ Kijiji Manager requires Python 3.6+.
 1. Edit the secret key variable on the first line in `instance/kijiji-manager.cfg` to a random value
     * To generate a random value you can run the following and copy the output:\
       `python -c "import secrets; print(secrets.token_urlsafe(16))"`
-1. Run the app from a shell/terminal: `python run.py`
+1. Run the app from a shell/terminal: `python -m kijiji_manager` or `kijiji-manager -c instance/kijiji-manager.cfg`
+    * Append `--help` to see all possible command line arguments
 1. Open a browser and go to http://localhost:5000/ or http://127.0.0.1:5000/
     * Cookies must be enabled in order to log in
 1. Login using an existing Kijiji account
