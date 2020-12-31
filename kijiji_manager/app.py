@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, flash, redirect, url_for, request, render_template
 from flask_login import LoginManager
 from werkzeug.serving import WSGIRequestHandler
@@ -6,7 +8,7 @@ from .kijijiapi import KijijiApiException
 from .models import User
 
 
-def create_app():
+def create_app(config=None):
 
     # Use HTTP/1.1
     # Shouldn't be strictly necessary it has some extra niceties such as automatic keepalive
@@ -14,7 +16,26 @@ def create_app():
 
     app = Flask(__name__, instance_relative_config=True)
 
-    app.config.from_pyfile('config.py')
+    config_name = 'kijiji-manager.cfg'
+
+    if config:
+        config_path = os.path.abspath(config)
+    else:
+        # Load from `instance` folder
+        config_path = config_name
+
+    try:
+        app.config.from_pyfile(config_path)
+    except FileNotFoundError:
+        config_sample = os.path.join(os.path.dirname(__file__), 'kijiji-manager-sample.cfg')
+        print("Unable to load your config file.\n"
+              "Either specify one with the `-c` flag, or put one named '{}' in the Flask instance folder at the path below.\n"
+              "You may have to create the instance folder if it doesn't already exist.\n".format(config_name))
+        print("Sample config: {}".format(config_sample))
+        print("Instance folder: {}".format(app.instance_path))
+        raise
+
+    # Favicon route rule
     app.add_url_rule('/favicon.ico', 'favicon', lambda: app.send_static_file('favicon.ico'))
 
     # Trim newlines and leading whitespace around template tags

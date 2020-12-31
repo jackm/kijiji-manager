@@ -41,12 +41,15 @@ Kijiji Manager requires Python 3.6+.
        * If using a virtualenv, you must source the `venv/bin/activate` script each time you start a new shell, otherwise the installed Python packages will not be available
        * If using Windows, the activate script will be at `venv/Scripts/Activate` instead
        * See the Python [virtual environments tutorial](https://docs.python.org/3.6/tutorial/venv.html) for more information
-    1. Install dependencies\
-       `pip install -r requirements.txt`
-1. Edit the secret key variable on the first line in [`instance/config.py`](instance/config.py) to a random value
+    1. Install the kijiji-manager package from the current directory\
+       `pip install .`
+1. Copy the sample config file at [`kijiji_manager/kijiji-manager-sample.cfg`](kijiji_manager/kijiji-manager-sample.cfg) and rename it to `kijiji-manager.cfg`, putting it in the instance folder
+    * Create a folder named `instance` at the root of this repository if it does not exist
+1. Edit the secret key variable on the first line in `instance/kijiji-manager.cfg` to a random value
     * To generate a random value you can run the following and copy the output:\
       `python -c "import secrets; print(secrets.token_urlsafe(16))"`
-1. Run the app from a shell/terminal: `python run.py`
+1. Run the app from a shell/terminal: `python -m kijiji_manager` or `kijiji-manager -c instance/kijiji-manager.cfg`
+    * Append `--help` to see all possible command line arguments
 1. Open a browser and go to http://localhost:5000/ or http://127.0.0.1:5000/
     * Cookies must be enabled in order to log in
 1. Login using an existing Kijiji account
