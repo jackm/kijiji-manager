@@ -387,18 +387,20 @@ def repost(ad_id):
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
     flash('Deleted old ad %s' % ad_id)
 
+    # Waiting for 3 minutes appears to be enough time for Kijiji to not consider it a duplicate ad
+    delay_minutes = 3
+
     # Delay and then run callback to post ad again
-    future_response = executor.submit(delay, {'payload': xml_payload, 'ad_id': ad_id})
+    future_response = executor.submit(delay, delay_minutes * 60, {'payload': xml_payload, 'ad_id': ad_id})
     future_response.add_done_callback(post_ad_again)
 
-    flash('Reposting ad in background after 3 minute delay... Do not stop the app from running')
+    flash('Reposting ad in background after {} minute delay... Do not stop the app from running'.format(delay_minutes))
     return redirect(url_for('main.home'))
 
 
 # Delay and pass along any data given
-def delay(data):
-    # Waiting for 3 minutes appears to be enough time for Kijiji to not consider it a duplicate ad
-    sleep(3 * 60)
+def delay(secs, data):
+    sleep(secs)
     return data
 
 
