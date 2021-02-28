@@ -21,13 +21,6 @@ class KijijiApi:
     Methods raise KijijiApiException on errors
     """
     def __init__(self, session=None):
-        if session:
-            self.session = session
-        else:
-            # Kijiji sometimes takes a bit longer to respond to API requests
-            # e.g. for loading conversations
-            timeout = httpx.Timeout(30.0, connect=30.0)
-            self.session = httpx.Client(timeout=timeout)
 
         # Base API URL
         self.base_url = 'https://mingle.kijiji.ca/api'
@@ -40,6 +33,20 @@ class KijijiApi:
             'X-ECG-VER': '1.84',
         }
 
+        if session:
+            if not isinstance(session, httpx.Client):
+                raise KijijiApiException("'session' kwarg must be an httpx.Client object")
+
+            self.session = session
+
+            # Append common headers
+            self.session.headers = self.headers
+        else:
+            # Kijiji sometimes takes a bit longer to respond to API requests
+            # e.g. for loading conversations
+            timeout = httpx.Timeout(30.0, connect=30.0)
+            self.session = httpx.Client(timeout=timeout, headers=self.headers)
+
     def login(self, username, password):
         """Login to Kijiji
 
@@ -47,8 +54,7 @@ class KijijiApi:
         :param password: login password
         :return: Tuple of user ID and session token
         """
-        headers = self.headers
-        headers.update({'Content-Type': 'application/x-www-form-urlencoded'})
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         payload = {
             'username': username,
             'password': password,
@@ -373,12 +379,9 @@ class KijijiApi:
         else:
             raise KijijiApiException(self._error_reason(doc))
 
-    def _headers_with_auth(self, user_id, token):
-        headers = self.headers
-        headers.update({
-            'X-ECG-Authorization-User': 'id="{}", token="{}"'.format(user_id, token),
-        })
-        return headers
+    @staticmethod
+    def _headers_with_auth(user_id, token):
+        return {'X-ECG-Authorization-User': 'id="{}", token="{}"'.format(user_id, token)}
 
     @staticmethod
     def _parse_response(text):
