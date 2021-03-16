@@ -55,7 +55,7 @@ Kijiji Manager requires Python 3.6+.
 1. Login using an existing Kijiji account
     * You must register for a new account on [kijiji.ca](https://www.kijiji.ca/) if you do not yet have one
 
-For all subsequent runs, start the app again using `python run.py` and then go to the web interface in your browser.
+For all subsequent runs, start the app again using `python -m kijiji_manager` or `kijiji-manager -c instance/kijiji-manager.cfg` and then go to the web interface in your browser.
 You can also leave the app running in the terminal if you wish.
 No background HTTP calls are made unless you refresh or load new pages.
 
