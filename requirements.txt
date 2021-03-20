@@ -17,7 +17,7 @@ idna==2.10
 immutables==0.14
 is-safe-url==1.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 phonenumbers==8.12.13
 rfc3986==1.4.0
