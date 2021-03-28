@@ -9,7 +9,7 @@ class KijijiApiException(Exception):
         self.msg = msg
 
     def __str__(self):
-        return "KijijiApiException: {}".format(self.msg)
+        return f"KijijiApiException: {self.msg}"
 
 
 class KijijiApi:
@@ -61,7 +61,7 @@ class KijijiApi:
             'socialAutoRegistration': 'false',
         }
 
-        r = self.session.post(self.base_url + '/users/login', headers=headers, data=payload)
+        r = self.session.post(f'{self.base_url}/users/login', headers=headers, data=payload)
 
         doc = self._parse_response(r.text)
 
@@ -71,7 +71,7 @@ class KijijiApi:
                 email = doc['user:user-logins']['user:user-login']['user:email']
                 token = doc['user:user-logins']['user:user-login']['user:token']
             except KeyError as e:
-                raise KijijiApiException("User ID and/or user token not found in response text: {}".format(e))
+                raise KijijiApiException(f"User ID and/or user token not found in response text: {e}")
             return user_id, token
         else:
             raise KijijiApiException(self._error_reason(doc))
@@ -87,16 +87,16 @@ class KijijiApi:
         :return: response data dict
         """
         headers = self._headers_with_auth(user_id, token)
-        url = '/users/{}/ads'.format(user_id)
+        url = f'{self.base_url}/users/{user_id}/ads'
         if ad_id:
-            url += '/{}'.format(ad_id)
+            url += f'/{ad_id}'
         else:
             # Query all ads
             url += '?size=50' \
                    '&page=0' \
                    '&_in=id,title,price,ad-type,locations,ad-status,category,pictures,start-date-time,features-active,view-ad-count,user-id,phone,email,rank,ad-address,phone-click-count,map-view-count,ad-source-id,ad-channel-id,contact-methods,attributes,link,description,feature-group-active,end-date-time,extended-info,highest-price'
 
-        r = self.session.get(self.base_url + url, headers=headers)
+        r = self.session.get(url, headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -114,7 +114,7 @@ class KijijiApi:
         """
         headers = self._headers_with_auth(user_id, token)
 
-        r = self.session.get(self.base_url + '/users/{}/profile'.format(user_id), headers=headers)
+        r = self.session.get(f'{self.base_url}/users/{user_id}/profile', headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -132,7 +132,7 @@ class KijijiApi:
         """
         headers = self._headers_with_auth(user_id, token)
 
-        r = self.session.get(self.base_url + '/categories', headers=headers)
+        r = self.session.get(f'{self.base_url}/categories', headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -150,7 +150,7 @@ class KijijiApi:
         """
         headers = self._headers_with_auth(user_id, token)
 
-        r = self.session.get(self.base_url + '/locations', headers=headers)
+        r = self.session.get(f'{self.base_url}/locations', headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -169,7 +169,7 @@ class KijijiApi:
         """
         headers = self._headers_with_auth(user_id, token)
 
-        r = self.session.get(self.base_url + '/ads/metadata/{}'.format(attr_id), headers=headers)
+        r = self.session.get(f'{self.base_url}/ads/metadata/{attr_id}', headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -188,7 +188,7 @@ class KijijiApi:
         """
         headers = self._headers_with_auth(user_id, token)
 
-        r = self.session.delete(self.base_url + '/users/{}/ads/{}'.format(user_id, ad_id), headers=headers)
+        r = self.session.delete(f'{self.base_url}/users/{user_id}/ads/{ad_id}', headers=headers)
 
         if r.status_code == 204:
             return True
@@ -211,7 +211,7 @@ class KijijiApi:
         # Expects data to be in correct XML format
         xml = data
 
-        r = self.session.post(self.base_url + '/users/{}/ads'.format(user_id), headers=headers, data=xml)
+        r = self.session.post(f'{self.base_url}/users/{user_id}/ads', headers=headers, data=xml)
 
         doc = self._parse_response(r.text)
 
@@ -219,7 +219,7 @@ class KijijiApi:
             try:
                 ad_id = doc['ad:ad']['@id']
             except KeyError as e:
-                raise KijijiApiException("User ID and/or user token not found in response text: {}".format(e))
+                raise KijijiApiException(f"User ID and/or user token not found in response text: {e}")
             return ad_id
         else:
             raise KijijiApiException(self._error_reason(doc))
@@ -288,14 +288,14 @@ class KijijiApi:
         :return: response data dict
         """
         headers = self._headers_with_auth(user_id, token)
-        url = '/users/{}/conversations'.format(user_id)
+        url = f'{self.base_url}/users/{user_id}/conversations'
         if conversation_id:
-            url += '/{}?tail=100'.format(conversation_id)
+            url += f'/{conversation_id}?tail=100'
         else:
             # Query all ads
             url += '?size=25'
 
-        r = self.session.get(self.base_url + url, headers=headers)
+        r = self.session.get(url, headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -313,12 +313,12 @@ class KijijiApi:
         :return: response data dict
         """
         headers = self._headers_with_auth(user_id, token)
-        url = '/users/{}/conversations'.format(user_id)
+        url = f'{self.base_url}/users/{user_id}/conversations'
 
         # Query all ads
-        url += '?size=25&page={}'.format(page)
+        url += f'?size=25&page={page}'
 
-        r = self.session.get(self.base_url + url, headers=headers)
+        r = self.session.get(url, headers=headers)
 
         doc = self._parse_response(r.text)
 
@@ -351,7 +351,7 @@ class KijijiApi:
         elif direction.lower() == 'buyer':
             direction = 'TO_BUYER'
         else:
-            raise KijijiApiException('direction parameter must be set to either "owner" or "buyer", not "{}"'.format(direction))
+            raise KijijiApiException(f'direction parameter must be set to either "owner" or "buyer", not "{direction}"')
 
         payload = {
             'reply:reply-to-ad-conversation': {
@@ -370,7 +370,7 @@ class KijijiApi:
         # Payload is an XML string
         xml = xmltodict.unparse(payload, short_empty_elements=True, pretty=True)
 
-        r = self.session.post(self.base_url + '/replies/reply-to-ad-conversation', headers=headers, data=xml)
+        r = self.session.post(f'{self.base_url}/replies/reply-to-ad-conversation', headers=headers, data=xml)
 
         doc = self._parse_response(r.text)
 
@@ -381,14 +381,14 @@ class KijijiApi:
 
     @staticmethod
     def _headers_with_auth(user_id, token):
-        return {'X-ECG-Authorization-User': 'id="{}", token="{}"'.format(user_id, token)}
+        return {'X-ECG-Authorization-User': f'id="{user_id}", token="{token}"'}
 
     @staticmethod
     def _parse_response(text):
         try:
             doc = xmltodict.parse(text)
         except ExpatError as e:
-            raise KijijiApiException("Unable to parse text: {}".format(errors.messages[e.code]))
+            raise KijijiApiException(f"Unable to parse text: {errors.messages[e.code]}")
         return doc
 
     @staticmethod
@@ -407,7 +407,7 @@ class KijijiApi:
     def _error_reason_ebay(doc):
         try:
             error = doc['UploadSiteHostedPicturesResponse']['Errors']
-            message = "{}: {} {}".format(error['SeverityCode'], error['ShortMessage'], error['LongMessage'])
+            message = f"{error['SeverityCode']}: {error['ShortMessage']} {error['LongMessage']}"
         except (TypeError, KeyError):
             return 'Unknown eBay API error'
         return message

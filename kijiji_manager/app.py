@@ -29,10 +29,10 @@ def create_app(config=None):
     except FileNotFoundError:
         config_sample = os.path.join(os.path.dirname(__file__), 'kijiji-manager-sample.cfg')
         print("Unable to load your config file.\n"
-              "Either specify one with the `-c` flag, or put one named '{}' in the Flask instance folder at the path below.\n"
-              "You may have to create the instance folder if it doesn't already exist.\n".format(config_name))
-        print("Sample config: {}".format(config_sample))
-        print("Instance folder: {}".format(app.instance_path))
+              f"Either specify one with the `-c` flag, or put one named '{config_name}' in the Flask instance folder at the path below.\n"
+              "You may have to create the instance folder if it doesn't already exist.\n")
+        print(f"Sample config: {config_sample}")
+        print(f"Instance folder: {app.instance_path}")
         raise
 
     # Favicon route rule

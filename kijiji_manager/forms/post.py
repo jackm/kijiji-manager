@@ -18,7 +18,7 @@ class RequiredIfFieldEqualTo(InputRequired):
     def __call__(self, form, field):
         other_field = form._fields.get(self.other_field_name)
         if other_field is None:
-            raise ValidationError('No field named "%s" in form' % self.other_field_name)
+            raise ValidationError(f'No field named "{self.other_field_name}" in form')
         if other_field.data == self.value:
             super().__call__(form, field)
 

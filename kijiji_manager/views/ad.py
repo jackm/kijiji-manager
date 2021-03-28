@@ -29,7 +29,7 @@ def show(ad_id):
 @login_required
 def delete(ad_id):
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
-    flash('Deleted ad %s' % ad_id)
+    flash(f'Deleted ad {ad_id}')
     return redirect(url_for('main.home'))
 
 
@@ -40,7 +40,7 @@ def post_manual():
     if form.validate_on_submit():
         if form.file.data:
             ad_id = kijiji_api.post_ad(current_user.id, current_user.token, form.file.data.read())
-            flash('Manually posted ad %s' % ad_id)
+            flash(f'Manually posted ad {ad_id}')
 
     if form.errors:
         flash(form.errors)
@@ -243,16 +243,16 @@ def post():
 
         # Submit final payload
         ad_id = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
-        flash('Ad %s posted!' % ad_id)
+        flash(f'Ad {ad_id} posted!')
 
         # Save ad payload
         user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
         if not os.path.exists(user_dir):
             os.makedirs(user_dir)
-        ad_file = os.path.join(user_dir, ad_id + '.xml')
+        ad_file = os.path.join(user_dir, f'{ad_id}.xml')
         with open(ad_file, 'w', encoding='utf-8') as f:
             f.write(xml_payload)
-        flash('Ad {} payload saved to {}'.format(ad_id, ad_file))
+        flash(f'Ad {ad_id} payload saved to {ad_file}')
 
         return redirect(url_for('main.home'))
 
@@ -374,10 +374,10 @@ def create_picture_payload(data):
 def repost(ad_id):
     # Get existing ad
     user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
-    ad_file = os.path.join(user_dir, ad_id + '.xml')
+    ad_file = os.path.join(user_dir, f'{ad_id}.xml')
 
     if not os.path.isfile(ad_file):
-        flash('Cannot repost, ad file {} does not exist'.format(ad_file))
+        flash(f'Cannot repost, ad file {ad_file} does not exist')
         return redirect(url_for('main.home'))
 
     with open(ad_file, 'r', encoding='utf-8') as f:
@@ -385,7 +385,7 @@ def repost(ad_id):
 
     # Delete existing ad
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
-    flash('Deleted old ad %s' % ad_id)
+    flash(f'Deleted old ad {ad_id}')
 
     # Waiting for 3 minutes appears to be enough time for Kijiji to not consider it a duplicate ad
     delay_minutes = 3
@@ -394,7 +394,7 @@ def repost(ad_id):
     future_response = executor.submit(delay, delay_minutes * 60, {'payload': xml_payload, 'ad_id': ad_id})
     future_response.add_done_callback(post_ad_again)
 
-    flash('Reposting ad in background after {} minute delay... Do not stop the app from running'.format(delay_minutes))
+    flash(f'Reposting ad in background after {delay_minutes} minute delay... Do not stop the app from running')
     return redirect(url_for('main.home'))
 
 
@@ -409,7 +409,7 @@ def post_ad_again(future):
     if future.done():
         error = future.exception()
         if error:
-            print('Futures call error: {}'.format(error))
+            print(f'Futures call error: {error}')
         else:
             result = future.result()
             xml_payload = result['payload']
@@ -417,20 +417,20 @@ def post_ad_again(future):
 
             # Post ad again
             ad_id_new = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
-            print('Reposted ad, new ID {}'.format(ad_id_new))
+            print(f'Reposted ad, new ID {ad_id_new}')
 
             user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
 
             # Save ad file
-            ad_file_new = os.path.join(user_dir, ad_id_new + '.xml')
+            ad_file_new = os.path.join(user_dir, f'{ad_id_new}.xml')
             with open(ad_file_new, 'w', encoding='utf-8') as f:
                 f.write(xml_payload)
 
             # Delete old ad file
-            ad_file_orig = os.path.join(user_dir, ad_id_orig + '.xml')
+            ad_file_orig = os.path.join(user_dir, f'{ad_id_orig}.xml')
             if os.path.isfile(ad_file_orig):
                 os.remove(ad_file_orig)
-                print('Deleted old ad file for ad {}'.format(ad_id_orig))
+                print(f'Deleted old ad file for ad {ad_id_orig}')
     elif future.cancelled():
         print('Futures call canceled')
 
