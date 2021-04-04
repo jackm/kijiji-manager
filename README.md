@@ -59,6 +59,20 @@ For all subsequent runs, start the app again using `python -m kijiji_manager` or
 You can also leave the app running in the terminal if you wish.
 No background HTTP calls are made unless you refresh or load new pages.
 
+## Command line arguments
+
+```bash
+usage: kijiji-manager [-h] [-c CONFIG] [-b BIND] [-p PORT] [-d]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        path to config file
+  -b BIND, --bind BIND  interface to bind to (default: localhost)
+  -p PORT, --port PORT  port to bind to (default: 5000)
+  -d, --debug           enable debugging
+```
+
 ## Screenshots
 
 ![Login page](https://user-images.githubusercontent.com/4127823/86979816-3ccf8980-c150-11ea-9b16-1d4a9612ad6b.png)
