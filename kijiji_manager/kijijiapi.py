@@ -272,7 +272,10 @@ class KijijiApi:
         doc = self._parse_response(r.text)
 
         try:
-            if r.status_code == 200 and doc['UploadSiteHostedPicturesResponse']['Ack'] == 'Success':
+            ack_code = doc['UploadSiteHostedPicturesResponse']['Ack']
+
+            # API acknowledgement code of success or warning both indicate that the call request was successful
+            if r.status_code == 200 and (ack_code == 'Success' or ack_code == 'Warning'):
                 return doc['UploadSiteHostedPicturesResponse']['SiteHostedPictureDetails']['FullURL']
             else:
                 raise KijijiApiException(self._error_reason_ebay(doc))
