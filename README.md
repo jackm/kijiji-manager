@@ -35,10 +35,12 @@ Kijiji Manager requires Python 3.6+.
        ```
     1. Create a new virtualenv (optional but highly recommended)
        ```
-       python -m venv venv
+       python3 -m venv venv
        source venv/bin/activate
        ```
-       * If using a virtualenv, you must source the `venv/bin/activate` script each time you start a new shell, otherwise the installed Python packages will not be available
+       * When using a virtualenv, you must source the `venv/bin/activate` script each time you start a new shell, otherwise the installed Python packages will not be available
+       * If using a Debian based Linux distro, and the _venv_ Python library is not found or if there is an error about missing _ensurepip_, you will have to apt install `python3-venv` first
+       * If using Windows, you may have to use the `py` command in place of `python` or `python3`
        * If using Windows, the activate script will be at `venv/Scripts/Activate` instead
        * See the Python [virtual environments tutorial](https://docs.python.org/3.6/tutorial/venv.html) for more information
     1. Install the kijiji-manager package from the current directory\
