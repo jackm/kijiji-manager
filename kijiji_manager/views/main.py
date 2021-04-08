@@ -86,4 +86,7 @@ def get_ad_url(data):
 # Convert ad rank to page number
 @main.app_template_filter('adpage')
 def get_ad_page_number(data):
-    return int(math.ceil(int(data) / 20))
+    try:
+        return int(math.ceil(int(data) / 20))
+    except (TypeError, ValueError):
+        return None
