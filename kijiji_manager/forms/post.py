@@ -43,10 +43,16 @@ class PhoneNumber:
 
     def __call__(self, form, field):
         try:
+            # Try parsing number in E.164 format
             p = phonenumbers.parse(field.data)
-            if not phonenumbers.is_valid_number(p):
-                raise ValueError()
-        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+        except phonenumbers.phonenumberutil.NumberParseException:
+            try:
+                # Try parsing number for Canada region
+                p = phonenumbers.parse(field.data, "CA")
+            except phonenumbers.phonenumberutil.NumberParseException:
+                raise ValidationError(self.message)
+
+        if not phonenumbers.is_valid_number(p):
             raise ValidationError(self.message)
 
 
