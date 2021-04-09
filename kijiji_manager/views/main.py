@@ -37,10 +37,11 @@ def islist(data):
 def format_datetime(date, fmt=None):
     if fmt is None:
         fmt = '%Y-%m-%dT%H:%M:%S.%f'
+
     try:
         date = date.replace('Z', '')  # Strip out trailing zone designator if present
         return datetime.strptime(date, fmt)
-    except ValueError:
+    except (ValueError, AttributeError):
         return None
 
 
@@ -77,7 +78,12 @@ def get_img_thumb_first(data):
 # Get public website ad url
 @main.app_template_filter('adurl')
 def get_ad_url(data):
-    links = data['ad:link']
+    try:
+        links = data['ad:link']
+    except (TypeError, KeyError):
+        # No url in ad
+        return None
+
     for link in links:
         if link['@rel'] == 'self-public-website':
             return link['@href']
