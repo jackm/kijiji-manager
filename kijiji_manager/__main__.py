@@ -1,6 +1,11 @@
 import argparse
+import os
 
 from .app import create_app
+
+# Flask app variable used when starting WSGI server
+# Get config file argument via environment variable
+app = create_app(os.environ.get('CONFIG_FILE', None))
 
 
 def main():
