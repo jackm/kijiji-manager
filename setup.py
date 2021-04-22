@@ -38,7 +38,7 @@ setup(
         'phonenumbers',
     ],
     entry_points={
-        'console_scripts': ['kijiji-manager=kijiji_manager.cli:run']
+        'console_scripts': ['kijiji-manager=kijiji_manager.__main__:main']
     },
     include_package_data=True,
     zip_safe=False,

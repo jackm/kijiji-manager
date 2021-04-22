@@ -75,6 +75,38 @@ optional arguments:
   -d, --debug           enable debugging
 ```
 
+## Docker container
+
+A [Dockerfile](Dockerfile) is provided as well as a [docker-compose.yml](docker-compose.yml) file to allow running this app within a [Docker](https://docs.docker.com/) container.
+At minimum this method will require [Docker to be installed](https://docs.docker.com/get-docker/).
+
+Using this method does not require installing any Python packages locally - the whole app will be installed and run within an isolated container.
+
+You should still create a `instance/kijiji-manager.cfg` file containing a randomly generated secret key within the instance folder (steps 2 and 3 of _Installation_).
+By default, the web interface will still be reachable at http://localhost:5000/ or http://127.0.0.1:5000/.
+
+If you want to provide a custom config file path other than `instance/kijiji-manager.cfg`, this can be done by setting the `CONFIG_FILE` environment variable when running the container.
+
+### Docker Compose
+
+Docker Compose is an additional tool that can be used to easily deploy app containers.
+In this case, Docker Compose is used to automatically build and run the app container. 
+
+Run `docker-compose up` from the root of this repository.
+
+If changes are made to the _kijiji_manager_ package, you will have to run `docker-compose up --build` instead to force rebuild the container image.
+
+### Without Docker Compose
+
+If you do not want to use Docker Compose, you can build the container image and then run the container using the following commands from the root of this repository:
+
+```
+docker build -t kijiji-manager .
+docker run --rm --name kijiji-manager -p 5000:80 -v "$(pwd)"/instance:/app/instance kijiji-manager
+```
+
+Append the `--detach` option to the `docker run` command to run the container in the background (detached mode).
+
 ## Screenshots
 
 ![Login page](https://user-images.githubusercontent.com/4127823/86979816-3ccf8980-c150-11ea-9b16-1d4a9612ad6b.png)
