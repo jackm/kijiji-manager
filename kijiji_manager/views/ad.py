@@ -180,6 +180,12 @@ def post():
             form.loc1.choices = session.get('loc1.choices', [])
         attrib_form = create_attribute_form(session.get('attrib_types'))
 
+        # Update dynamic car or motorcycle model choices
+        if hasattr(attrib_form, 'carmake') and hasattr(attrib_form, 'carmodel'):
+            attrib_form.carmodel.choices = get_vehicle_model_choices(session.get('category'), attrib_form.carmake.data)
+        if hasattr(attrib_form, 'motorcyclesmake') and hasattr(attrib_form, 'motorcyclesmodel'):
+            attrib_form.motorcyclesmodel.choices = get_vehicle_model_choices(session.get('category'), attrib_form.motorcyclesmake.data)
+
         if not form.validate_on_submit() or not attrib_form.validate_on_submit():
             if form.errors:
                 flash(form.errors)
@@ -322,6 +328,25 @@ def create_attribute_form(types):
             insert_attr(AttributeForm, SelectField, item)
 
     return AttributeForm()
+
+
+# Get dynamic car or motorcycle model choices
+# Return choices as list of tuples
+def get_vehicle_model_choices(attrib_id, value):
+    choices = []
+    data = kijiji_api.get_attributes(current_user.id, current_user.token, attrib_id)
+    if data:
+        if 'attr:dependent-attributes' in data['ad:ad']:
+            # Start at list of all dependent attributes
+            data = data['ad:ad']['attr:dependent-attributes']['attr:dependent-attribute']['attr:dependent-supported-value']
+
+            if value:
+                for attr in data:
+                    if attr['attr:supported-value']['#text'] == value:
+                        # Supported subvalues
+                        for subval in attr['attr:dependent-attribute']['attr:supported-value']:
+                            choices.append((subval['#text'], subval['@localized-label']))
+    return choices
 
 
 # Build attributes payload dict
