@@ -27,13 +27,13 @@ setup(
 
     python_requires='>=3.6',
     install_requires=[
-        'Flask>=1.1.0',
-        'Flask-WTF>=0.14.1',
+        'Flask~=2.0.0',
+        'Flask-WTF~=0.15.0',
         'Flask-Login',
         'Flask-Executor',
-        'WTForms>=2.3.0',
-        'httpx>=0.19.0',
-        'xmltodict>=0.11.0',
+        'WTForms~=2.3.0',
+        'httpx~=0.19.0',
+        'xmltodict~=0.11',
         'is-safe-url',
         'phonenumbers',
     ],
