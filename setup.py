@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='kijiji-manager',
-    version='0.1.3',
+    version='0.1.4',
     author='jackm',
     author_email='jackm@ehelion.com',
     description='App for viewing, posting, reposting, and deleting your Kijiji ads',
