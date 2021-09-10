@@ -263,7 +263,7 @@ class KijijiApi:
 
         # Multipart form data
         files = {
-            'XML Payload': (None, xmltodict.unparse(xml_payload)),
+            'XML Payload': (None, xmltodict.unparse(xml_payload).encode()),
             'Image': (data.filename, data.read(), data.content_type),
         }
 
