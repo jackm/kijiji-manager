@@ -96,6 +96,16 @@ def post():
         form.loc1.choices = location_list
         session['loc1.choices'] = form.loc1.choices
 
+        # Default form values from config file
+        try:
+            form.adtitle.data = str(current_app.config.get('DEFAULT_AD_TITLE', ''))
+            form.description.data = str(current_app.config.get('DEFAULT_AD_DESCRIPTION', ''))
+            form.price.data = float(current_app.config.get('DEFAULT_AD_PRICE', 0))
+            form.postalcode.data = str(current_app.config.get('DEFAULT_POSTAL_CODE', ''))
+            form.phone.data = str(current_app.config.get('DEFAULT_PHONE', ''))
+        except (TypeError, ValueError) as e:
+            flash(f'Unable to parse value from config file: {e}')
+
         # Begin parsing attributes xml for selected category
         attrib_types = {
             'enums': [],

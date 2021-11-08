@@ -75,6 +75,34 @@ optional arguments:
   -d, --debug           enable debugging
 ```
 
+## Default form values
+
+Default values for certain form fields can be chosen by adding any of the following variables to their `instance/kijiji-manager.cfg` config file:
+
+* `DEFAULT_AD_TITLE`
+* `DEFAULT_AD_DESCRIPTION`
+* `DEFAULT_AD_PRICE`
+* `DEFAULT_POSTAL_CODE`
+* `DEFAULT_PHONE`
+* `DEFAULT_LOCATION2_CONTAINS`
+  * Select second location tier by checking if location label contains given string value; case sensitive
+* `DEFAULT_LOCATION3_CONTAINS`
+  * Select third location tier (if required) by checking if location label contains given string value; case sensitive
+
+Note that these config values are only read once during startup - you will need to restart the app for any changes to take effect.
+
+e.g.
+
+```
+DEFAULT_AD_TITLE = 'This is a test ad title'
+DEFAULT_AD_DESCRIPTION = 'This is a test ad description'
+DEFAULT_AD_PRICE = 149.99
+DEFAULT_POSTAL_CODE = 'A1A 1A1'
+DEFAULT_PHONE = '555-5555'
+DEFAULT_LOCATION2_CONTAINS = 'Toronto'
+DEFAULT_LOCATION3_CONTAINS = 'Markham'
+```
+
 ## Docker container
 
 A [Dockerfile](Dockerfile) is provided as well as a [docker-compose.yml](docker-compose.yml) file to allow running this app within a [Docker](https://docs.docker.com/) container.

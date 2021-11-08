@@ -162,6 +162,10 @@ $(function () {
             });
             if (data.length) {
                 loc3.show();
+                {% set loc3_contains = config.get('DEFAULT_LOCATION3_CONTAINS') %}
+                {% if loc3_contains %}
+                loc3.find("option:contains('{{ loc3_contains }}')").prop("selected", true);
+                {% endif %}
             }
         });
     }
@@ -180,6 +184,10 @@ $(function () {
             });
             if (data.length) {
                 loc2.show();
+                {% set loc2_contains = config.get('DEFAULT_LOCATION2_CONTAINS') %}
+                {% if loc2_contains %}
+                loc2.find("option:contains('{{ loc2_contains }}')").prop("selected", true);
+                {% endif %}
                 update_loc3();
             }
         });
