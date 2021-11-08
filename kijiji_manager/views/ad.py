@@ -97,12 +97,23 @@ def post():
         session['loc1.choices'] = form.loc1.choices
 
         # Default form values from config file
+        default_ad_title = current_app.config.get('DEFAULT_AD_TITLE')
+        default_ad_desc = current_app.config.get('DEFAULT_AD_DESCRIPTION')
+        default_ad_price = current_app.config.get('DEFAULT_AD_PRICE')
+        default_postalcode = current_app.config.get('DEFAULT_POSTAL_CODE')
+        default_phone = current_app.config.get('DEFAULT_PHONE')
         try:
-            form.adtitle.data = str(current_app.config.get('DEFAULT_AD_TITLE', ''))
-            form.description.data = str(current_app.config.get('DEFAULT_AD_DESCRIPTION', ''))
-            form.price.data = float(current_app.config.get('DEFAULT_AD_PRICE', 0))
-            form.postalcode.data = str(current_app.config.get('DEFAULT_POSTAL_CODE', ''))
-            form.phone.data = str(current_app.config.get('DEFAULT_PHONE', ''))
+            # Only apply default values if one was given
+            if default_ad_title:
+                form.adtitle.data = str(default_ad_title)
+            if default_ad_desc:
+                form.description.data = str(default_ad_desc)
+            if default_ad_price:
+                form.price.data = float(default_ad_price)
+            if default_postalcode:
+                form.postalcode.data = str(default_postalcode)
+            if default_phone:
+                form.phone.data = str(default_phone)
         except (TypeError, ValueError) as e:
             flash(f'Unable to parse value from config file: {e}')
 
