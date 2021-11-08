@@ -85,9 +85,9 @@ Default values for certain form fields can be chosen by adding any of the follow
 * `DEFAULT_POSTAL_CODE`
 * `DEFAULT_PHONE`
 * `DEFAULT_LOCATION2_CONTAINS`
-  * Select second location tier by checking if location label contains given string value; case sensitive
+  * Select second location tier by checking if location label contains given string value; case-insensitive
 * `DEFAULT_LOCATION3_CONTAINS`
-  * Select third location tier (if required) by checking if location label contains given string value; case sensitive
+  * Select third location tier (if required) by checking if location label contains given string value; case-insensitive
 
 Note that these config values are only read once during startup - you will need to restart the app for any changes to take effect.
 

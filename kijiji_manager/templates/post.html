@@ -135,6 +135,13 @@ $(function () {
 </div>
 <script>
 $(function () {
+    // Custom selector for case insenitive .contains filter
+    // https://stackoverflow.com/a/8747204
+    // http://jquery-howto.blogspot.com/2009/06/jquery-custom-selectors-with-parameters.html
+    $.expr[':'].icontains = function (obj, index, meta) {
+        return ($(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) >= 0);
+    };
+
     let loc1 = $("#loc1");
     loc1.prop("selectedIndex", 3); // Default to "Ontario"
 
@@ -164,7 +171,7 @@ $(function () {
                 loc3.show();
                 {% set loc3_contains = config.get('DEFAULT_LOCATION3_CONTAINS') %}
                 {% if loc3_contains %}
-                loc3.find("option:contains('{{ loc3_contains }}')").prop("selected", true);
+                loc3.find("option:icontains('{{ loc3_contains }}')").prop("selected", true);
                 {% endif %}
             }
         });
@@ -186,7 +193,7 @@ $(function () {
                 loc2.show();
                 {% set loc2_contains = config.get('DEFAULT_LOCATION2_CONTAINS') %}
                 {% if loc2_contains %}
-                loc2.find("option:contains('{{ loc2_contains }}')").prop("selected", true);
+                loc2.find("option:icontains('{{ loc2_contains }}')").prop("selected", true);
                 {% endif %}
                 update_loc3();
             }
