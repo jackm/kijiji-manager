@@ -39,9 +39,9 @@
             <td>{{ item['user:ad-subject'] }}</td>
             <td align="center">
                 {% if item['user:user-message']['user:read'] == 'true' %}
-                <i class="fas fa-check"></i>
+                <i class="fas fa-check" title="Read"></i>
                 {% elif item['user:user-message']['user:read'] == 'false' %}
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-envelope" title="Unread"></i>
                 {% endif %}
             </td>
             <td align="center">
