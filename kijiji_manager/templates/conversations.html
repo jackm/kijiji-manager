@@ -38,10 +38,12 @@
             <td>{{ item['user:ad-replier-name'] }}</td>
             <td>{{ item['user:ad-subject'] }}</td>
             <td align="center">
+                {% if 'user:user-message' in item %}
                 {% if item['user:user-message']['user:read'] == 'true' %}
                 <i class="fas fa-check" title="Read"></i>
                 {% elif item['user:user-message']['user:read'] == 'false' %}
                 <i class="fas fa-envelope" title="Unread"></i>
+                {% endif %}
                 {% endif %}
             </td>
             <td align="center">
@@ -50,7 +52,9 @@
                 {% endif %}
             </td>
             <td align="center">
+                {% if 'user:user-message' in item %}
                 {{ item['user:user-message']['user:post-time-stamp']|datetime }}
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
