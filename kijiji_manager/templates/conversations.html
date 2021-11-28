@@ -28,7 +28,14 @@
         </thead>
         <tbody>
         {% if 'user:user-conversation' in conversations['user:user-conversations'] %}
-        {% for item in conversations['user:user-conversations']['user:user-conversation'] %}
+        {% set conversations = conversations['user:user-conversations']['user:user-conversation'] %}
+
+        {#- If only one entry, make it an array of one member in for loop #}
+        {% if conversations|islist == false %}
+            {% set conversations = [conversations] %}
+        {% endif -%}
+
+        {% for item in conversations %}
         <tr data-href="{{ url_for('user.conversation', uid=item['@uid']) }}">
             <td align="center">
                 {% if item['user:ad-first-img-url'] %}
