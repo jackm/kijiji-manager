@@ -238,6 +238,7 @@ class KijijiApi:
 
         # eBay auth token used by Kijiji
         token = 'AgAAAA**AQAAAA**aAAAAA**y9arYQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6MHloakAZGGqQSdj6x9nY+seQ**j8wBAA**AAMAAA**XCyjvCgYtZFhE1DSKsy4Fhz8o9eiKRNMtKr/P1ltxsz2B9XZgQOhlI0lG8NUmFbnltvBo5GsIYrQ56N/lZW8/yzmUczzl87c+iDF1GBH+La4WuDnGOTMlg2gLbroX7gw87xBvRaaUPRP7ZaLzhO6MRbGrTByZf/C+VphIZ5tzsUHJvxvjsgAuEaQ/vTvNfrd23FKJ8CgBt7tcK0YEJM0uBwgTzcACe2XnUKZF2f5C8AeS6z5vH5U9rf7r0CZ6BG5o2sD9umOJYCm9VimQbI/7+FCQNsqcV8erS1sng9/0fIHVk9wgfYF0yTWn0Qn8Q/Vc3jBbIAPqWKRlm2tSdjYwV8hVRNOhe7EfyHt+cpPpU6GwngeZc3+lH4eyl83443wlbRv3IWuH+eB9rdhRg1J1UIfBN5R4O1CdHPDLzRBBgduMTSB5RVHJP4cEFQL2uycW2LJq6HAFcqt3qW2mF6HdQZ8nHa3FuN7cESK4hoxJ2JABLAGHwFEDZNDlCr0gFSBZ5ajni92yxUB9h2MkBD2gMHf8qZGqHCIQVNBnEs81Dq+BK0Qc1FLaYtxQaWErTq4nOd76SkKE7uqqK4IRAhJ/hcyeqPBFSe5bNyNtiSE1g9ff0g1KaV9n5Zry6rJEr9/gOunTiTN9qLDpf2sYlD3tJL3cCSsgLCZlpAMt3+YXDmK6Fx1UA5BQAg5UIeWr1QrE4w/YEKfbD3zdf7Ww5/qIhw5trjdqvbh6Z9tHq9YGBu+wUm4AA0hHdMGa7acgU7L'
+        
         # Image upload host uses a separate set of headers
         headers = {
             'User-Agent': 'okhttp/4.9.0',
