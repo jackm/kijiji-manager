@@ -219,7 +219,7 @@ def post():
         location_choice = (lambda x1, x2, x3: x3 if x3 else x2 if x2 else x1 if x1 else '0')(form.loc1.data, form.loc2.data, form.loc3.data)
         
         # Generate Geo Location Data
-        location = geo_location(form.postalcode.data)
+        location = kijiji_api.geo_location(form.postalcode.data)
         
         # Begin assembling entire payload
         # All of the keys in the following dict are always present in every ad post payload,
