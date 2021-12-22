@@ -384,7 +384,7 @@ class KijijiApi:
             raise KijijiApiException(self._error_reason(doc))
     
     def geo_location(postal_code):
-        postalcode = checkPostalCodeLength(postal_code)
+        postalcode = check_postal_code_length(postal_code)
         try:
             nomi = pgeocode.Nominatim('ca')
             location = nomi.query_postal_code(postal_code)
@@ -393,7 +393,7 @@ class KijijiApi:
         else:
             return location
         
-    def checkPostalCodeLength(postal_code):
+    def check_postal_code_length(postal_code):
         if len(postal_code) == 6:
             section1 = postal_code[:3]
             section2 = postal_code[3:6]
