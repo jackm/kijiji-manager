@@ -384,7 +384,8 @@ class KijijiApi:
             raise KijijiApiException(self._error_reason(doc))
     
     def geo_location(self, postal_code):
-        postalcode = self.check_postal_code_length(postal_code)
+        # pgeocode.Nominatim.query_postal_code only uses the first three characters to do the lookup for Canadian postal codes
+        postalcode = postal_code[:3]
         try:
             nomi = pgeocode.Nominatim('ca')
             location = nomi.query_postal_code(postalcode)
