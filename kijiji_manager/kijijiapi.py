@@ -392,14 +392,6 @@ class KijijiApi:
             raise KijijiApiException('Error acquiring geo location data')
         else:
             return location
-        
-    def check_postal_code_length(self, postal_code):
-        if len(postal_code) == 6:
-            section1 = postal_code[:3]
-            section2 = postal_code[3:6]
-            return section1 + ' ' + section2
-        else:
-            return postal_code
     
     @staticmethod
     def _headers_with_auth(user_id, token):
