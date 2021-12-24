@@ -217,7 +217,10 @@ def post():
         # Get most significant location ID from given set of locations in previous step form
         # Default to 'Canada' => '0' if none given
         location_choice = (lambda x1, x2, x3: x3 if x3 else x2 if x2 else x1 if x1 else '0')(form.loc1.data, form.loc2.data, form.loc3.data)
-
+        
+        # Generate Geo Location Data
+        location = kijiji_api.geo_location(form.postalcode.data)
+        
         # Begin assembling entire payload
         # All of the keys in the following dict are always present in every ad post payload,
         # however some may be left empty if not used
@@ -246,8 +249,8 @@ def post():
                 'ad:phone': form.phone.data,
                 'ad:ad-address': {
                     'types:radius': 400,
-                    'types:latitude': None,
-                    'types:longitude': None,
+                    'types:latitude': location.latitude,
+                    'types:longitude': location.longitude,
                     'types:full-address': None,
                     'types:zip-code': form.postalcode.data,
                 },
