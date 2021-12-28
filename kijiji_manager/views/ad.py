@@ -257,6 +257,7 @@ def post():
                     'types:full-address': form.fulladdress.data,
                     'types:zip-code': form.postalcode.data,
                 },
+                'ad:visible-on-map': 'true',  # appears to make no difference if set to 'true' or 'false'
                 'attr:attributes': create_attribute_payload(attrib_form.data),
                 'pic:pictures': create_picture_payload(form.data),
                 'vid:videos': None,
