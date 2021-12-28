@@ -36,6 +36,7 @@ setup(
         'xmltodict~=0.11',
         'is-safe-url',
         'phonenumbers',
+        'pgeocode',
     ],
     entry_points={
         'console_scripts': ['kijiji-manager=kijiji_manager.__main__:main']
