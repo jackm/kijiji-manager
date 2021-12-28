@@ -71,7 +71,7 @@ class CategoryForm(FlaskForm):
 class PostForm(FlaskForm):
     """Ad post form"""
 
-    adtype = SelectField('Ad Type', choices=[], validate_choice=False)
+    adtype = SelectField('Ad Type', validate_choice=False)
     adtitle = StringField('Ad Title', [InputRequired(), Length(min=8, max=64, message='Title must be between %(min)d and %(max)d characters')])
     description = TextAreaField('Description', [InputRequired(), Length(min=10, message='Description must be %(min)d or more characters')])
 
