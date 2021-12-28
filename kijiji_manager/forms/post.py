@@ -71,7 +71,7 @@ class CategoryForm(FlaskForm):
 class PostForm(FlaskForm):
     """Ad post form"""
 
-    adtype = SelectField('Ad Type', validate_choice=False)
+    adtype = SelectField('Ad Type')
     adtitle = StringField('Ad Title', [InputRequired(), Length(min=8, max=64, message='Title must be between %(min)d and %(max)d characters')])
     description = TextAreaField('Description', [InputRequired(), Length(min=10, message='Description must be %(min)d or more characters')])
 
@@ -84,7 +84,7 @@ class PostForm(FlaskForm):
     pricetype = SelectField('Price Type', choices=pricetype_choices)
     price = DecimalField('Price', [RequiredIfFieldEqualTo('pricetype', pricetype_choices[0][0]), NumberRange(min=1), Optional()])
 
-    loc1 = SelectField('Location', validate_choice=False)
+    loc1 = SelectField('Location')
     loc2 = SelectField(choices=[], validate_choice=False)
     loc3 = SelectField(choices=[], validate_choice=False)
     postalcode = StringField('Postal Code', [InputRequired(), PostalCode()])
