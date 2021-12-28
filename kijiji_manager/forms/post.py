@@ -88,8 +88,7 @@ class PostForm(FlaskForm):
     loc2 = SelectField(choices=[], validate_choice=False)
     loc3 = SelectField(choices=[], validate_choice=False)
     postalcode = StringField('Postal Code', [InputRequired(), PostalCode()])
-    # TODO: Implement full address field
-    #fulladdress = StringField('Full Address')
+    fulladdress = StringField('Full Address')
     phone = StringField('Phone', [PhoneNumber(), Optional()])
 
     images = ['jpg', 'jpeg', 'png', 'gif', 'bmp']  # Kijiji supported image formats

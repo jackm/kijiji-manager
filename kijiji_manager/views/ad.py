@@ -251,7 +251,7 @@ def post():
                     'types:radius': 400,
                     'types:latitude': location.latitude,
                     'types:longitude': location.longitude,
-                    'types:full-address': None,
+                    'types:full-address': form.fulladdress.data,
                     'types:zip-code': form.postalcode.data,
                 },
                 'attr:attributes': create_attribute_payload(attrib_form.data),
