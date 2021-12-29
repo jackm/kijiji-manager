@@ -101,6 +101,7 @@ def post():
         default_ad_desc = current_app.config.get('DEFAULT_AD_DESCRIPTION')
         default_ad_price = current_app.config.get('DEFAULT_AD_PRICE')
         default_postalcode = current_app.config.get('DEFAULT_POSTAL_CODE')
+        default_fulladdress = current_app.config.get('DEFAULT_FULL_ADDRESS')
         default_phone = current_app.config.get('DEFAULT_PHONE')
         try:
             # Only apply default values if one was given
@@ -112,6 +113,8 @@ def post():
                 form.price.data = float(default_ad_price)
             if default_postalcode:
                 form.postalcode.data = str(default_postalcode)
+            if default_fulladdress:
+                form.fulladdress.data = str(default_fulladdress)
             if default_phone:
                 form.phone.data = str(default_phone)
         except (TypeError, ValueError) as e:

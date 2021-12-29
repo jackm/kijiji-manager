@@ -83,6 +83,7 @@ Default values for certain form fields can be chosen by adding any of the follow
 * `DEFAULT_AD_DESCRIPTION`
 * `DEFAULT_AD_PRICE`
 * `DEFAULT_POSTAL_CODE`
+* `DEFAULT_FULL_ADDRESS`
 * `DEFAULT_PHONE`
 * `DEFAULT_LOCATION2_CONTAINS`
   * Select second location tier by checking if location label contains given string value; case-insensitive
@@ -98,6 +99,7 @@ DEFAULT_AD_TITLE = 'This is a test ad title'
 DEFAULT_AD_DESCRIPTION = 'This is a test ad description'
 DEFAULT_AD_PRICE = 149.99
 DEFAULT_POSTAL_CODE = 'A1A 1A1'
+DEFAULT_FULL_ADDRESS = '123 Main St.'
 DEFAULT_PHONE = '555-5555'
 DEFAULT_LOCATION2_CONTAINS = 'Toronto'
 DEFAULT_LOCATION3_CONTAINS = 'Markham'
