@@ -62,8 +62,8 @@ class CategoryForm(FlaskForm):
     # Only validate top level category choice
     # Subcategory choices are dynamic
     cat1 = SelectField('Category', [InputRequired()])
-    cat2 = SelectField(validate_choice=False)
-    cat3 = SelectField(validate_choice=False)
+    cat2 = SelectField(choices=[], validate_choice=False)
+    cat3 = SelectField(choices=[], validate_choice=False)
 
     submit = SubmitField('Next')
 
@@ -85,8 +85,8 @@ class PostForm(FlaskForm):
     price = DecimalField('Price', [RequiredIfFieldEqualTo('pricetype', pricetype_choices[0][0]), NumberRange(min=1), Optional()])
 
     loc1 = SelectField('Location', validate_choice=False)
-    loc2 = SelectField(validate_choice=False)
-    loc3 = SelectField(validate_choice=False)
+    loc2 = SelectField(choices=[], validate_choice=False)
+    loc3 = SelectField(choices=[], validate_choice=False)
     postalcode = StringField('Postal Code', [InputRequired(), PostalCode()])
     # TODO: Implement full address field
     #fulladdress = StringField('Full Address')
