@@ -39,8 +39,19 @@ def post_manual():
     form = PostManualForm()
     if form.validate_on_submit():
         if form.file.data:
-            ad_id = kijiji_api.post_ad(current_user.id, current_user.token, form.file.data.read())
+            xml_payload = form.file.data.read()
+
+            ad_id = kijiji_api.post_ad(current_user.id, current_user.token, xml_payload)
             flash(f'Manually posted ad {ad_id}')
+
+            # Save ad payload
+            user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
+            if not os.path.exists(user_dir):
+                os.makedirs(user_dir)
+            ad_file = os.path.join(user_dir, f'{ad_id}.xml')
+            with open(ad_file, 'wb') as f:
+                f.write(xml_payload)
+            flash(f'Ad {ad_id} payload saved to {ad_file}')
 
     if form.errors:
         flash(form.errors)
