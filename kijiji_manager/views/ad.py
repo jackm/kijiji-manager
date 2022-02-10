@@ -49,7 +49,7 @@ def post_manual():
             if not os.path.exists(user_dir):
                 os.makedirs(user_dir)
             ad_file = os.path.join(user_dir, f'{ad_id}.xml')
-            with open(ad_file, 'wb') as f:
+            with open(ad_file, 'w', encoding='utf-8') as f:
                 f.write(xml_payload)
             flash(f'Ad {ad_id} payload saved to {ad_file}')
 
