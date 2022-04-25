@@ -6,11 +6,7 @@ import xmltodict
 
 
 class KijijiApiException(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-
-    def __str__(self):
-        return f"KijijiApiException: {self.msg}"
+    """KijijiApi class exception"""
 
 
 class KijijiApi:
