@@ -24,6 +24,7 @@ Kijiji Manager requires Python 3.6+.
 * `xmltodict`
 * `is-safe-url`
 * `phonenumbers`
+* `pgeocode`
 
 ## Installation
 
