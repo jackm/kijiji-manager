@@ -385,8 +385,8 @@ class KijijiApi:
         try:
             nomi = pgeocode.Nominatim('ca')
             location = nomi.query_postal_code(postalcode)
-        except:
-            raise KijijiApiException('Error acquiring geo location data')
+        except Exception as e:
+            raise KijijiApiException(f'Error acquiring geo location data: {e}')
         else:
             return location
     
