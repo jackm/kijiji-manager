@@ -10,3 +10,5 @@ RUN pip install -r /app/requirements.txt
 
 # Module containing Flask app variable
 ENV MODULE_NAME=kijiji_manager.__main__
+
+COPY gunicorn_conf.py /app/gunicorn_conf.py
