@@ -264,7 +264,8 @@ class KijijiApi:
             'Image': (data.filename, data.read(), data.content_type),
         }
 
-        r = self.session.post(api_endpoint, headers=headers, files=files)
+        # Increase timeout for this POST request in case of uploading large image files
+        r = self.session.post(api_endpoint, headers=headers, files=files, timeout=120)
 
         doc = self._parse_response(r.text)
 
