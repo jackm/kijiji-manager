@@ -32,7 +32,7 @@ setup(
         'Flask-Login',
         'Flask-Executor',
         'WTForms>=2.3',
-        'httpx~=0.21.0',
+        'httpx~=0.22.0',
         'xmltodict>=0.11',
         'is-safe-url',
         'phonenumbers',
