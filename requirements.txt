@@ -1,8 +1,9 @@
 anyio==3.6.1
 async-generator==1.10
-certifi==2022.5.18.1
+certifi==2022.6.15
 charset-normalizer==2.0.12
 click==8.0.4
+colorama==0.4.5
 contextvars==2.4
 dataclasses==0.8; python_version < '3.7'
 Flask==2.0.3
@@ -19,11 +20,18 @@ is-safe-url==1.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
 MarkupSafe==2.0.1
+numpy==1.19.5
+pandas==1.1.5
 pgeocode==0.3.0
-phonenumbers==8.12.49
+phonenumbers==8.12.50
+python-dateutil==2.8.2
+pytz==2022.1
+requests==2.27.1
 rfc3986==1.5.0
+six==1.16.0
 sniffio==1.2.0
-typing-extensions==4.1.1
+typing_extensions==4.1.1
+urllib3==1.26.9
 Werkzeug==2.0.3
 WTForms==3.0.0
 xmltodict==0.13.0
