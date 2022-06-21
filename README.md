@@ -11,7 +11,8 @@ If you find any bugs with posting ads, please create a new issue to report it.
 
 ## Requirements
 
-Kijiji Manager requires Python 3.6+.
+Kijiji Manager requires Python 3.7+.
+Most manual testing is done on Python 3.7.
 
 #### Minimum dependencies
 
