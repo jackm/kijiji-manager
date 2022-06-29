@@ -424,12 +424,32 @@ def create_attribute_payload(data):
 
 
 # Build picture payload dict from file* fields
+@login_required
 def create_picture_payload(data):
     payload = {'pic:picture': []}
+
+    # Mapping of image size names to size in px
+    image_sizes = {
+        'extraLarge': 800,
+        'large': 500,
+        'normal': 400,
+        'thumbnail': 64,
+    }
+
     for key, value in data.items():
         if key.startswith('file') and value:
-            link = kijiji_api.upload_image(value)
-            payload['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
+            link = kijiji_api.upload_image(current_user.id, current_user.token, value)
+
+            # Add a separate link for each image size
+            links = []
+            for size_name, size_px in image_sizes.items():
+                links.append({
+                    '@rel': size_name,
+                    '@href': f'{link}?rule=kijijica-{size_px}-jpg',
+                })
+
+            payload['pic:picture'].append({'pic:link': links})
+
     return payload if len(payload['pic:picture']) else {}
 
 
