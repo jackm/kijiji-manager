@@ -26,8 +26,8 @@ class KijijiApi:
         self.headers = {
             'Accept': 'application/xml',
             'Accept-Language': 'en-CA',
-            'User-Agent': 'com.ebay.kijiji.ca 14.0.2 (LGE Nexus 5; Android 6.0.1; en_CA)',
-            'X-ECG-VER': '1.84',
+            'User-Agent': 'com.ebay.kijiji.ca 17.7.0 (LGE Nexus 5; Android 6.0.1; en_US)',
+            'X-ECG-VER': '3.6',
         }
 
         if session:
