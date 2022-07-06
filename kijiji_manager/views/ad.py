@@ -424,12 +424,32 @@ def create_attribute_payload(data):
 
 
 # Build picture payload dict from file* fields
+@login_required
 def create_picture_payload(data):
     payload = {'pic:picture': []}
+
+    # Mapping of image size names to size in px
+    image_sizes = {
+        'extraLarge': 800,
+        'large': 500,
+        'normal': 400,
+        'thumbnail': 64,
+    }
+
     for key, value in data.items():
         if key.startswith('file') and value:
-            link = kijiji_api.upload_image(value)
-            payload['pic:picture'].append({'pic:link': {'@rel': 'saved', '@href': link}})
+            link = kijiji_api.upload_image(current_user.id, current_user.token, value)
+
+            # Add a separate link for each image size
+            links = []
+            for size_name, size_px in image_sizes.items():
+                links.append({
+                    '@rel': size_name,
+                    '@href': f'{link}?rule=kijijica-{size_px}-jpg',
+                })
+
+            payload['pic:picture'].append({'pic:link': links})
+
     return payload if len(payload['pic:picture']) else {}
 
 
@@ -446,6 +466,11 @@ def repost(ad_id):
 
     with open(ad_file, 'r', encoding='utf-8') as f:
         xml_payload = f.read()
+
+    # Kijiji changed their image upload API on around 2022-06-27 to use a different image host. Ad payloads that
+    # still contain the old image host URLs will be rejected unless the URLs are translated to the new image host.
+    # For ad payloads that already use the new image host, this translation should have no effect.
+    xml_payload = translate_image_urls(ad_id, xml_payload)
 
     # Delete existing ad
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
@@ -497,6 +522,14 @@ def post_ad_again(future):
                 print(f'Deleted old ad file for ad {ad_id_orig}')
     elif future.cancelled():
         print('Futures call canceled')
+
+
+# Overwrite image URLs in ad payload using image URLs from current ad
+def translate_image_urls(ad_id, xml_payload):
+    data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
+    payload = xmltodict.parse(xml_payload)
+    payload['ad:ad']['pic:pictures'] = data['ad:ad']['pic:pictures']
+    return xmltodict.unparse(payload, short_empty_elements=True)
 
 
 @ad.route('/repost_all')
