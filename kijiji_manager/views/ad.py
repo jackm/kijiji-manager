@@ -50,6 +50,8 @@ def post_manual():
                 os.makedirs(user_dir)
             ad_file = os.path.join(user_dir, f'{ad_id}.xml')
             with open(ad_file, 'w', encoding='utf-8') as f:
+                if isinstance(xml_payload, bytes):
+                    xml_payload = xml_payload.decode('utf-8')
                 f.write(xml_payload)
             flash(f'Ad {ad_id} payload saved to {ad_file}')
 
