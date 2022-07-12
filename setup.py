@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='kijiji-manager',
-    version='0.1.10',
+    version='0.1.11',
     author='jackm',
     author_email='jackm@ehelion.com',
     description='App for viewing, posting, reposting, and deleting your Kijiji ads',
@@ -32,7 +32,7 @@ setup(
         'Flask-Login',
         'Flask-Executor',
         'WTForms>=2.3',
-        'httpx~=0.21.0',
+        'httpx~=0.22.0',
         'xmltodict>=0.11',
         'is-safe-url',
         'phonenumbers',

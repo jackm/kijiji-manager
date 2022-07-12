@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+from urllib.parse import urlparse, urlunparse
 from xml.parsers.expat import ExpatError, errors
 
 import httpx
@@ -22,12 +24,15 @@ class KijijiApi:
         # Base API URL
         self.base_url = 'https://mingle.kijiji.ca/api'
 
+        # Kijiji app version number
+        self.app_ver = '17.7.0'
+
         # Common HTTP header fields
         self.headers = {
             'Accept': 'application/xml',
             'Accept-Language': 'en-CA',
-            'User-Agent': 'com.ebay.kijiji.ca 14.0.2 (LGE Nexus 5; Android 6.0.1; en_CA)',
-            'X-ECG-VER': '1.84',
+            'User-Agent': f'com.ebay.kijiji.ca {self.app_ver} (LGE Nexus 5; Android 6.0.1; en_US)',
+            'X-ECG-VER': '3.6',
         }
 
         if session:
@@ -221,64 +226,54 @@ class KijijiApi:
         else:
             raise KijijiApiException(self._error_reason(doc))
 
-    def upload_image(self, data):
-        """Upload image using eBay API
+    def upload_image(self, user_id, token, data):
+        """Upload image Kijiji mobile API
 
-        API reference https://developer.ebay.com/devzone/xml/docs/reference/ebay/UploadSiteHostedPictures.html
-
+        :param user_id: user ID number
+        :param token: session token
         :param data: werkzeug.FileStorage type image object
         :return: full image URL
         """
 
-        # eBay XML API production gateway URI
-        api_endpoint = 'https://api.ebay.com/ws/api.dll'
+        api_endpoint = 'https://mobile-api.kijiji.ca/v1/images/upload'
 
-        # eBay auth token used by Kijiji
-        token = 'AgAAAA**AQAAAA**aAAAAA**y9arYQ**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6MHloakAZGGqQSdj6x9nY+seQ**j8wBAA**AAMAAA**XCyjvCgYtZFhE1DSKsy4Fhz8o9eiKRNMtKr/P1ltxsz2B9XZgQOhlI0lG8NUmFbnltvBo5GsIYrQ56N/lZW8/yzmUczzl87c+iDF1GBH+La4WuDnGOTMlg2gLbroX7gw87xBvRaaUPRP7ZaLzhO6MRbGrTByZf/C+VphIZ5tzsUHJvxvjsgAuEaQ/vTvNfrd23FKJ8CgBt7tcK0YEJM0uBwgTzcACe2XnUKZF2f5C8AeS6z5vH5U9rf7r0CZ6BG5o2sD9umOJYCm9VimQbI/7+FCQNsqcV8erS1sng9/0fIHVk9wgfYF0yTWn0Qn8Q/Vc3jBbIAPqWKRlm2tSdjYwV8hVRNOhe7EfyHt+cpPpU6GwngeZc3+lH4eyl83443wlbRv3IWuH+eB9rdhRg1J1UIfBN5R4O1CdHPDLzRBBgduMTSB5RVHJP4cEFQL2uycW2LJq6HAFcqt3qW2mF6HdQZ8nHa3FuN7cESK4hoxJ2JABLAGHwFEDZNDlCr0gFSBZ5ajni92yxUB9h2MkBD2gMHf8qZGqHCIQVNBnEs81Dq+BK0Qc1FLaYtxQaWErTq4nOd76SkKE7uqqK4IRAhJ/hcyeqPBFSe5bNyNtiSE1g9ff0g1KaV9n5Zry6rJEr9/gOunTiTN9qLDpf2sYlD3tJL3cCSsgLCZlpAMt3+YXDmK6Fx1UA5BQAg5UIeWr1QrE4w/YEKfbD3zdf7Ww5/qIhw5trjdqvbh6Z9tHq9YGBu+wUm4AA0hHdMGa7acgU7L'
-        
-        # Image upload host uses a separate set of headers
-        headers = {
-            'User-Agent': 'okhttp/4.9.0',
-            'X-EBAY-API-CALL-NAME': 'UploadSiteHostedPictures',
-        }
+        headers = self._headers_with_auth(user_id, token)
+        headers.update({
+            'Accept': 'application/json',
+            'X-ECG-Platform': 'android',
+            'X-ECG-App-Version': self.app_ver,
+        })
 
-        # First multipart form data
-        xml_payload = {
-            'UploadSiteHostedPicturesRequest': {
-                '@xmlns': 'urn:ebay:apis:eBLBaseComponents',
-                'RequesterCredentials': {
-                    'ebl:eBayAuthToken': {
-                        '@xmlns:ebl': 'urn:ebay:apis:eBLBaseComponents',
-                        '#text': token,
-                    },
-                },
-                'PictureName': 'Kijiji CA Image',
-                'PictureSet': 'Supersize',
-                'ExtensionInDays': '365',
-            }
-        }
+        # Image expiration epoch timestamp
+        # Kijiji sets this to 199 days, 23 hours from now
+        expiration_timestamp = int((datetime.today() + timedelta(days=199, hours=23)).timestamp())
 
         # Multipart form data
         files = {
-            'XML Payload': (None, xmltodict.unparse(xml_payload).encode()),
-            'Image': (data.filename, data.read(), data.content_type),
+            'bucketAlias': (None, b'ca-prod-fsbo-ads'),
+            'objectExpiration': (None, str(expiration_timestamp).encode('utf-8')),
+            'file': (data.filename, data.read(), data.content_type),
         }
 
         # Increase timeout for this POST request in case of uploading large image files
         r = self.session.post(api_endpoint, headers=headers, files=files, timeout=120)
 
-        doc = self._parse_response(r.text)
+        # Response is in JSON format
+        doc = r.json()
 
-        try:
-            ack_code = doc['UploadSiteHostedPicturesResponse']['Ack']
+        if r.status_code == 201:
+            try:
+                url = doc['url']
+            except KeyError as e:
+                raise KijijiApiException(f"Image URL not found in response text: {e}")
 
-            # API acknowledgement code of success or warning both indicate that the call request was successful
-            if r.status_code == 200 and (ack_code == 'Success' or ack_code == 'Warning'):
-                return doc['UploadSiteHostedPicturesResponse']['SiteHostedPictureDetails']['FullURL']
-            else:
-                raise KijijiApiException(self._error_reason_ebay(doc))
-        except KeyError:
-            raise KijijiApiException(self._error_reason_ebay(doc))
+            # Query string is appended to URL to specify image size (thumbnail size by default)
+            # Strip all query strings from URL
+            url = urlunparse(urlparse(url)._replace(query=''))
+
+            return url
+        else:
+            raise KijijiApiException(self._error_reason_mobile(doc))
 
     def get_conversation(self, user_id, token, conversation_id=None):
         """Get all conversations or single conversation by conversation ID number if given
@@ -416,10 +411,8 @@ class KijijiApi:
         return message
 
     @staticmethod
-    def _error_reason_ebay(doc):
+    def _error_reason_mobile(doc):
         try:
-            error = doc['UploadSiteHostedPicturesResponse']['Errors']
-            message = f"{error['SeverityCode']}: {error['ShortMessage']} {error['LongMessage']}"
-        except (TypeError, KeyError):
-            return 'Unknown eBay API error'
-        return message
+            return doc['message']
+        except KeyError:
+            return 'Unknown mobile API error'
