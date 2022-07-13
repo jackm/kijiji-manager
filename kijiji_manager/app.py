@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, url_for, request, render_template
 from flask_login import LoginManager
 from werkzeug.serving import WSGIRequestHandler
 
+from . import __version__ as app_version
 from .kijijiapi import KijijiApiException
 from .models import User
 
@@ -64,6 +65,11 @@ def create_app(config=None):
     @app.errorhandler(KijijiApiException)
     def handle_exceptions(e):
         return render_template('error.html', message=e)
+
+    # Inject app version to all templates
+    @app.context_processor
+    def inject_version():
+        return dict(app_version=app_version)
 
     # Flask-Login
     login_manager = LoginManager()

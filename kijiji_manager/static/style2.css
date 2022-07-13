@@ -145,6 +145,14 @@ body.loggedin {
     padding: 5px;
     margin: 0 0 10px 0;
 }
+
+footer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+    width: 90%;
+}
+
 table {
     width: 100%;
 }
