@@ -3,9 +3,13 @@ from setuptools import setup, find_packages
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
+version = {}
+with open('kijiji_manager/version.py', encoding='utf-8') as f:
+    exec(f.read(), version)
+
 setup(
     name='kijiji-manager',
-    version='0.1.11',
+    version=version['__version__'],
     author='jackm',
     author_email='jackm@ehelion.com',
     description='App for viewing, posting, reposting, and deleting your Kijiji ads',
