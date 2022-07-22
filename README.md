@@ -2,7 +2,7 @@
 
 Kijiji Manager app for viewing, posting, reposting, and deleting your Kijiji ads.
 
-Built using the [Flask](https://flask.palletsprojects.com/) framework with Python 3.6+.
+Built using the [Flask](https://flask.palletsprojects.com/) framework with Python 3.7+.
 Completely API driven, with no web scraping. Runs a local webserver which provides the web user interface.
 
 Kijiji Manager is able to handle all types of ads under every Kijiji category (although not every ad type has been extensively tested).
@@ -44,7 +44,7 @@ Most manual testing is done on Python 3.7.
        * If using a Debian based Linux distro, and the _venv_ Python library is not found or if there is an error about missing _ensurepip_, you will have to apt install `python3-venv` first
        * If using Windows, you may have to use the `py` command in place of `python` or `python3`
        * If using Windows, the activate script will be at `venv/Scripts/Activate` instead
-       * See the Python [virtual environments tutorial](https://docs.python.org/3.6/tutorial/venv.html) for more information
+       * See the Python [virtual environments tutorial](https://docs.python.org/3.7/tutorial/venv.html) for more information
     1. Install the kijiji-manager package from the current directory\
        `pip install .`
 1. Copy the sample config file at [`kijiji_manager/kijiji-manager-sample.cfg`](kijiji_manager/kijiji-manager-sample.cfg) and rename it to `kijiji-manager.cfg`, putting it in the instance folder
