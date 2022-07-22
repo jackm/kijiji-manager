@@ -1,4 +1,4 @@
-FROM tiangolo/meinheld-gunicorn-flask:python3.6
+FROM tiangolo/meinheld-gunicorn-flask:python3.7
 
 # Not using prestart script; silence log output the sample script generates
 RUN rm /app/prestart.sh
