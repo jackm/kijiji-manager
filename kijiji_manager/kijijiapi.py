@@ -400,15 +400,25 @@ class KijijiApi:
 
     @staticmethod
     def _error_reason(doc):
+        messages = []
         try:
             base = doc['api-base-error']
-            if 'api-field-errors' in base and base['api-field-errors']:
-                base = base['api-field-errors']['api-field-error']
-            error = base['api-errors']['api-error']
-            message = error['message']
+
+            # Three different possible error types - search through all
+            for err_type in ['api-error', 'api-field-error', 'api-debug-error']:
+                err_type_plural = err_type + 's'  # Error type name with an appended 's'
+
+                if err_type_plural in base and base[err_type_plural]:
+                    if err_type in base[err_type_plural] and base[err_type_plural][err_type]:
+                        # Check if there are multiple error messages in the same error type
+                        if isinstance(base[err_type_plural][err_type], list):
+                            for err in base[err_type_plural][err_type]:
+                                messages.append(err_type + ': ' + err['message'])
+                        else:
+                            messages.append(err_type + ': ' + base[err_type_plural][err_type]['message'])
         except (TypeError, KeyError):
             return 'Unknown API error'
-        return message
+        return messages
 
     @staticmethod
     def _error_reason_mobile(doc):

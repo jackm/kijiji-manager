@@ -64,7 +64,7 @@ def create_app(config=None):
     # Print error message rather than showing a generic 500 Internal Server Error
     @app.errorhandler(KijijiApiException)
     def handle_exceptions(e):
-        return render_template('error.html', message=e)
+        return render_template('error.html', message=e.args[0])
 
     # Inject app version to all templates
     @app.context_processor
