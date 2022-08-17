@@ -373,8 +373,9 @@ class KijijiApi:
             return doc
         else:
             raise KijijiApiException(self._error_reason(doc))
-    
-    def geo_location(self, postal_code):
+
+    @staticmethod
+    def geo_location(postal_code):
         # pgeocode.Nominatim.query_postal_code only uses the first three characters to do the lookup for Canadian postal codes
         postalcode = postal_code[:3]
         try:
@@ -384,7 +385,7 @@ class KijijiApi:
             raise KijijiApiException(f'Error acquiring geo location data: {e}')
         else:
             return location
-    
+
     @staticmethod
     def _headers_with_auth(user_id, token):
         return {'X-ECG-Authorization-User': f'id="{user_id}", token="{token}"'}
