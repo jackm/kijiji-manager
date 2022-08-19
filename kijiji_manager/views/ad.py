@@ -539,8 +539,13 @@ def translate_image_urls(ad_id, xml_payload):
 def repost_all():
     # Get all existing ads
     data = kijiji_api.get_ad(current_user.id, current_user.token)
+    ads = data['ad:ads']['ad:ad']
 
-    for ad_id in [ad['@id'] for ad in data['ad:ads']['ad:ad']]:
+    # If there is only one ad, force it to a list
+    if not isinstance(ads, list):
+        ads = [ads]
+
+    for ad_id in [ad['@id'] for ad in ads]:
         repost(ad_id)
 
     return redirect(url_for('main.home'))
