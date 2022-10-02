@@ -467,12 +467,17 @@ def repost(ad_id):
     user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
     ad_file = os.path.join(user_dir, f'{ad_id}.xml')
 
-    if not os.path.isfile(ad_file):
-        flash(f'Cannot repost, ad file {ad_file} does not exist')
-        return redirect(url_for('main.home'))
-
-    with open(ad_file, 'r', encoding='utf-8') as f:
-        xml_payload = f.read()
+    if os.path.isfile(ad_file):
+        with open(ad_file, 'r', encoding='utf-8') as f:
+            xml_payload = f.read()
+    else:
+        # Get existing ad payload from Kijiji site when no local payload file found
+        xml_payload = generate_post_payload(ad_id)
+        if os.path.isfile(ad_file):
+            flash(f'Generated new file from existing ad on Kijiji site')
+        else:
+            flash(f'Failed to generate new ad file from existing ad on Kijiji site')
+            return redirect(url_for('main.home'))
 
     # Kijiji changed their image upload API on around 2022-06-27 to use a different image host. Ad payloads that
     # still contain the old image host URLs will be rejected unless the URLs are translated to the new image host.
@@ -537,6 +542,49 @@ def translate_image_urls(ad_id, xml_payload):
     payload = xmltodict.parse(xml_payload)
     payload['ad:ad']['pic:pictures'] = data['ad:ad']['pic:pictures']
     return xmltodict.unparse(payload, short_empty_elements=True)
+
+
+def generate_post_payload(ad_id):
+    data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
+    ad_orig = data['ad:ad']
+    payload = {
+        'ad:ad': {
+            '@xmlns:ad': 'http://www.ebayclassifiedsgroup.com/schema/ad/v1',
+            '@xmlns:cat': 'http://www.ebayclassifiedsgroup.com/schema/category/v1',
+            '@xmlns:loc': 'http://www.ebayclassifiedsgroup.com/schema/location/v1',
+            '@xmlns:attr': 'http://www.ebayclassifiedsgroup.com/schema/attribute/v1',
+            '@xmlns:types': 'http://www.ebayclassifiedsgroup.com/schema/types/v1',
+            '@xmlns:pic': 'http://www.ebayclassifiedsgroup.com/schema/picture/v1',
+            '@xmlns:vid': 'http://www.ebayclassifiedsgroup.com/schema/video/v1',
+            '@xmlns:user': 'http://www.ebayclassifiedsgroup.com/schema/user/v1',
+            '@xmlns:feature': 'http://www.ebayclassifiedsgroup.com/schema/feature/v1',
+            '@id': '',
+            'cat:category': ad_orig['cat:category'],
+            'loc:locations': ad_orig['loc:locations'],
+            'ad:ad-type': ad_orig['ad:ad-type'],
+            'ad:title': ad_orig['ad:title'],
+            'ad:description':  ad_orig['ad:description'],
+            'ad:price': ad_orig.get('ad:price'),
+            'ad:account-id': current_user.id,
+            'ad:email': current_user.email,
+            'ad:poster-contact-email': current_user.email,
+            # 'ad:poster-contact-name': None,  # Not sent by Kijiji app
+            'ad:phone': ad_orig['ad:phone'],
+            'ad:ad-address': ad_orig['ad:ad-address'],
+            'ad:visible-on-map': 'true',  # appears to make no difference if set to 'true' or 'false'
+            'attr:attributes': ad_orig['attr:attributes'],
+            'pic:pictures': ad_orig['pic:pictures'],
+            'vid:videos': None,
+            'ad:adSlots': None,
+            'ad:listing-tags': None,
+        }
+    }
+    xml_payload = xmltodict.unparse(payload, short_empty_elements=True)
+
+    # Save ad payload
+    save_ad_file(ad_id, xml_payload)
+
+    return xml_payload
 
 
 @ad.route('/repost_all')
