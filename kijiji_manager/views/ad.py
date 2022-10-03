@@ -21,6 +21,7 @@ executor = Executor()
 @ad.route('/ad/<ad_id>')
 @login_required
 def show(ad_id):
+    """Show existing ad."""
     data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
     return render_template('ad.html', data=data)
 
@@ -28,6 +29,7 @@ def show(ad_id):
 @ad.route('/delete/<ad_id>')
 @login_required
 def delete(ad_id):
+    """Delete existing ad."""
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
     flash(f'Deleted ad {ad_id}')
     return redirect(url_for('main.home'))
@@ -36,6 +38,7 @@ def delete(ad_id):
 @ad.route('/post_manual', methods=['GET', 'POST'])
 @login_required
 def post_manual():
+    """Post new ad with given raw ad payload."""
     form = PostManualForm()
     if form.validate_on_submit():
         if form.file.data:
@@ -63,6 +66,8 @@ def post_manual():
 @ad.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
+    """Post new ad using form."""
+
     # Multi-step form
     step = [
         'choose_category',
@@ -299,13 +304,13 @@ def post():
 
 
 class MultiCheckboxField(SelectMultipleField):
-    """A multiple-select, except displays a list of checkboxes"""
+    """A multiple-select, except displays a list of checkboxes."""
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
 
 class KijijiDateField(DateField):
-    """A date field, except appends a time to the value after"""
+    """A date field, except appends a time to the value after."""
     def process_formdata(self, valuelist):
         super().process_formdata(valuelist)
         if self.data:
@@ -314,10 +319,10 @@ class KijijiDateField(DateField):
             self.data = datetime.combine(self.data, datetime.min.time()).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
-# Build dynamic attribute form
 def create_attribute_form(types):
-    # Insert field attribute to form object
+    """Build dynamic attribute form."""
     def insert_attr(obj, field_type, data, **kwargs):
+        """Insert field attribute to form object."""
         try:
             for field_id, title in data['label'].items():
                 validators = []
@@ -365,9 +370,10 @@ def create_attribute_form(types):
     return AttributeForm()
 
 
-# Get dynamic car or motorcycle model choices
-# Return choices as list of tuples
 def get_vehicle_model_choices(attrib_id, value):
+    """Get dynamic car or motorcycle model choices.
+    Return choices as list of tuples.
+    """
     choices = []
     data = kijiji_api.get_attributes(current_user.id, current_user.token, attrib_id)
     if data:
@@ -384,9 +390,10 @@ def get_vehicle_model_choices(attrib_id, value):
     return choices
 
 
-# Build attributes payload dict
 def create_attribute_payload(data):
+    """Build attributes payload dict."""
     def isnumber(x):
+        """Return true if value can be coerced to valid floating point number."""
         try:
             float(x)
             return True
@@ -419,9 +426,9 @@ def create_attribute_payload(data):
     return payload if len(payload['attr:attribute']) else {}
 
 
-# Build picture payload dict from file* fields
 @login_required
 def create_picture_payload(data):
+    """Build picture payload dict from file* fields."""
     payload = {'pic:picture': []}
 
     # Mapping of image size names to size in px
@@ -449,9 +456,9 @@ def create_picture_payload(data):
     return payload if len(payload['pic:picture']) else {}
 
 
-# Save ad payload to file
 @login_required
 def save_ad_file(ad_id, xml_payload):
+    """Save ad payload to file."""
     user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
     os.makedirs(user_dir, exist_ok=True)
     ad_file = os.path.join(user_dir, f'{ad_id}.xml')
@@ -463,6 +470,8 @@ def save_ad_file(ad_id, xml_payload):
 @ad.route('/repost/<ad_id>')
 @login_required
 def repost(ad_id):
+    """Repost existing ad by deleting it and posting a new ad with the same content."""
+
     # Get existing ad
     user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
     ad_file = os.path.join(user_dir, f'{ad_id}.xml')
@@ -499,14 +508,14 @@ def repost(ad_id):
     return redirect(url_for('main.home'))
 
 
-# Delay and pass along any data given
 def delay(secs, data):
+    """Delay and pass along any data given."""
     sleep(secs)
     return data
 
 
-# Post ad again using given ad payload in Futures call
 def post_ad_again(future):
+    """Post ad again using given ad payload in Futures call."""
     if future.done():
         error = future.exception()
         if error:
@@ -536,8 +545,8 @@ def post_ad_again(future):
         print('Futures call canceled')
 
 
-# Overwrite image URLs in ad payload using image URLs from current ad
 def translate_image_urls(ad_id, xml_payload):
+    """Overwrite image URLs in ad payload using image URLs from current ad."""
     data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
     payload = xmltodict.parse(xml_payload)
     payload['ad:ad']['pic:pictures'] = data['ad:ad']['pic:pictures']
@@ -545,6 +554,7 @@ def translate_image_urls(ad_id, xml_payload):
 
 
 def generate_post_payload(ad_id):
+    """Get existing ad data and save ad payload to file."""
     data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
     ad_orig = data['ad:ad']
     payload = {
@@ -590,6 +600,8 @@ def generate_post_payload(ad_id):
 @ad.route('/repost_all')
 @login_required
 def repost_all():
+    """Repost all exisiting ads."""
+
     # Get all existing ads
     data = kijiji_api.get_ad(current_user.id, current_user.token)
     ads = data['ad:ads']['ad:ad']

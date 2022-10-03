@@ -13,6 +13,7 @@ kijiji_api = KijijiApi()
 
 @user.route('/login', methods=['GET', 'POST'])
 def login():
+    """Login to session using user credentials."""
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
@@ -49,6 +50,7 @@ def login():
 @user.route('/logout')
 @login_required
 def logout():
+    """Logout of session."""
     User.clear(current_user.id)
     logout_user()
     flash('Logged out')
@@ -58,6 +60,7 @@ def logout():
 @user.route('/profile')
 @login_required
 def profile():
+    """Show user profile data."""
     data = kijiji_api.get_profile(current_user.id, current_user.token)
     return render_template('profile.html', data=data)
 
@@ -65,6 +68,7 @@ def profile():
 @user.route('/conversations/<int:page>')
 @login_required
 def conversations(page):
+    """Show all user conversations."""
     data = kijiji_api.get_conversation_page(current_user.id, current_user.token, page)
     return render_template('conversations.html', conversations=data, page=page)
 
@@ -72,6 +76,7 @@ def conversations(page):
 @user.route('/conversation/<uid>', methods=['GET', 'POST'])
 @login_required
 def conversation(uid):
+    """Show specific user conversation."""
     data = kijiji_api.get_conversation(current_user.id, current_user.token, uid)
     form = ConversationForm()
     if form.validate_on_submit():

@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired, Optional, Length, NumberRange, Reg
 
 
 class RequiredIfFieldEqualTo(InputRequired):
-    """Validator which makes a field required if another field is set and has a desired value"""
+    """Validator which makes a field required if another field is set and has a desired value."""
 
     def __init__(self, other_field_name, value, *args, **kwargs):
         self.other_field_name = other_field_name
@@ -24,7 +24,7 @@ class RequiredIfFieldEqualTo(InputRequired):
 
 
 class PostalCode(Regexp):
-    """Validate postal code"""
+    """Validate postal code."""
 
     def __init__(self, message=None):
         if not message:
@@ -34,7 +34,7 @@ class PostalCode(Regexp):
 
 
 class PhoneNumber:
-    """Validate phone number"""
+    """Validate phone number."""
 
     def __init__(self, message=None):
         if not message:
@@ -57,7 +57,7 @@ class PhoneNumber:
 
 
 class CategoryForm(FlaskForm):
-    """Choose category form"""
+    """Choose category form."""
 
     # Only validate top level category choice
     # Subcategory choices are dynamic
@@ -69,7 +69,7 @@ class CategoryForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    """Ad post form"""
+    """Ad post form."""
 
     adtype = SelectField('Ad Type')
     adtitle = StringField('Ad Title', [InputRequired(), Length(min=8, max=64, message='Title must be between %(min)d and %(max)d characters')])
@@ -107,7 +107,7 @@ class PostForm(FlaskForm):
 
 
 class PostManualForm(FlaskForm):
-    """Ad manual post form"""
+    """Ad manual post form."""
 
     file = FileField('Ad payload file', [FileRequired(), FileAllowed(['xml'], 'Must be an XML file')])
     submit = SubmitField('Post Ad')

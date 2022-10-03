@@ -5,6 +5,7 @@ from wtforms.validators import InputRequired
 
 
 class LoginForm(FlaskForm):
+    """User login form."""
     email_icon = Markup('<i class="fas fa-user"></i>')
     email = StringField(email_icon, [InputRequired()], render_kw={'placeholder': 'Email'})
     password_icon = Markup('<i class="fas fa-lock"></i>')
