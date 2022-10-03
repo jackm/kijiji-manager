@@ -63,15 +63,6 @@ For all subsequent runs, start the app again using `python -m kijiji_manager` or
 You can also leave the app running in the terminal if you wish.
 No background HTTP calls are made unless you refresh or load new pages.
 
-## Limitiations
-
-Kijiji Manager relies on having a saved copy of each ad locally in order for it to repost these ads.
-Any ads that were created via the kijiji.ca website cannot be reposted using Kijiji Manager.
-Note that these ads will still appear on the Kijiji Manager interface as they are associated with your Kijiji account, but attempting to repost them will fail with an error "*.xml does not exist".
-
-As a workaround you will have to delete these ads, after first saving the ad contents somewhere temporarily, then post the ads again using the Kijiji Manager interface.
-From then on, you can repost the ads using Kijiji Manager since it will now have a saved copy of it when the ad is first created.
-
 ## Command line arguments
 
 ```bash

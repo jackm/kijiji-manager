@@ -7,14 +7,14 @@ json = Blueprint('json', __name__)
 kijiji_api = KijijiApi()
 
 
-# Return JSON list of subcategories under given category ID
-# Each subcategory is a dict with category 'id' and 'name' keys
-#
-# Returns an empty list if no subcategories exist under the given category ID,
-# or given category ID(s) are not found
 @json.route('/cat')
 @login_required
 def get_category():
+    """Return JSON list of subcategories under given category ID.
+    Each subcategory is a dict with category 'id' and 'name' keys.
+    Returns an empty list if no subcategories exist under the given category ID, or given category ID(s) are not found.
+    """
+
     # Start at category ID 0 ('All Categories')
     data = kijiji_api.get_categories(current_user.id, current_user.token)['cat:categories']['cat:category']
 
@@ -42,8 +42,8 @@ def get_category():
     return jsonify([{'id': c['@id'], 'name': c['cat:id-name']} for c in categories])
 
 
-# Return list of subcategories under given category dict
 def _get_subcategories(data):
+    """Return list of subcategories under given category dict."""
     cat_list = []
     try:
         if int(data['cat:children-count']) > 0:
@@ -53,14 +53,14 @@ def _get_subcategories(data):
     return cat_list
 
 
-# Return JSON list of sublocations under given location ID
-# Each sublocation is a dict with location 'id', 'name', 'long', and 'lat' keys
-#
-# Returns an empty list if no sublocations exist under the given location ID,
-# or given location ID(s) are not found
 @json.route('/loc')
 @login_required
 def get_location():
+    """Return JSON list of sublocations under given location ID.
+    Each sublocation is a dict with location 'id', 'name', 'long', and 'lat' keys.
+    Returns an empty list if no sublocations exist under the given location ID, or given location ID(s) are not found.
+    """
+
     # Start at location ID 0 ('Canada')
     data = kijiji_api.get_locations(current_user.id, current_user.token)['loc:locations']['loc:location']
 
@@ -92,14 +92,15 @@ def get_location():
     } for l in locations])
 
 
-# Return JSON list of supported values for each dependent attributes for a given attribute ID
-# Each supported value is a dict with supported value 'id' and 'name' keys
-#
-# Returns an empty list if no dependent attributes exist under the given attribute ID,
-# or given attribute ID is not found
 @json.route('/attrib')
 @login_required
 def get_supported_values():
+    """Return JSON list of supported values for each dependent attributes for a given attribute ID.
+    Each supported value is a dict with supported value 'id' and 'name' keys.
+    Returns an empty list if no dependent attributes exist under the given attribute ID,
+    or given attribute ID is not found.
+    """
+
     # Get parameters from query string
     attrib_id = request.args.get('attrib')
     value = request.args.get('value')
