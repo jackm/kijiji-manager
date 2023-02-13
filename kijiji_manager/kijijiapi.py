@@ -1,3 +1,6 @@
+import os
+import tempfile
+import uuid
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, urlunparse
 from xml.parsers.expat import ExpatError, errors
@@ -5,10 +8,33 @@ from xml.parsers.expat import ExpatError, errors
 import httpx
 import pgeocode
 import xmltodict
+from flask import current_app
+from flask_login import current_user
 
 
 class KijijiApiException(Exception):
     """KijijiApi class exception"""
+
+
+class KijijiApiXmlException(KijijiApiException):
+    """KijijiApi XML exception
+
+    Raised when KijijiApi cannot parse an XML response.
+    Saves the contents of `text` to a new file within the user's instance folder for later debugging.
+    """
+    def __init__(self, message, text, *args):
+        try:
+            user_dir = os.path.join(current_app.instance_path, 'user', current_user.id)
+            os.makedirs(user_dir, exist_ok=True)
+            dump_file = os.path.join(user_dir, f'{uuid.uuid4()}.txt')
+        except RuntimeError:
+            dump_file = os.path.join(tempfile.gettempdir(), f'kijiji_manager_{uuid.uuid4()}.txt')
+
+        with open(dump_file, 'w', encoding='utf-8') as f:
+            f.write(text)
+        messages = [message, f"Unparsable response text saved to {dump_file}"]
+
+        super().__init__(messages, *args)
 
 
 class KijijiApi:
@@ -395,7 +421,7 @@ class KijijiApi:
         try:
             doc = xmltodict.parse(text)
         except ExpatError as e:
-            raise KijijiApiException(f"Unable to parse text: {errors.messages[e.code]}")
+            raise KijijiApiXmlException(f"Unable to parse text: {errors.messages[e.code]}", text)
         return doc
 
     @staticmethod
