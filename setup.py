@@ -31,7 +31,7 @@ setup(
 
     python_requires='>=3.7',
     install_requires=[
-        'Flask~=2.1.0',
+        'Flask>=2.1,<2.4',
         'Flask-WTF>=1.0.1',
         'Flask-Login>=0.6.0',
         'Flask-Executor',
