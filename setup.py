@@ -31,12 +31,12 @@ setup(
 
     python_requires='>=3.7',
     install_requires=[
-        'Flask~=2.1.0',
+        'Flask~=2.2.0',
         'Flask-WTF>=1.0.1',
         'Flask-Login>=0.6.0',
         'Flask-Executor',
         'WTForms>=3.0.0',
-        'httpx~=0.23.0',
+        'httpx~=0.24.0',
         'xmltodict>=0.11',
         'is-safe-url',
         'phonenumbers',
