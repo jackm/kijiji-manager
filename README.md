@@ -63,6 +63,15 @@ For all subsequent runs, start the app again using `python -m kijiji_manager` or
 You can also leave the app running in the terminal if you wish.
 No background HTTP calls are made unless you refresh or load new pages.
 
+## Limitiations
+
+Kijiji employs duplicate ad detection algorithms to try and spot same ads that were recently deleted and then posted again.
+Some mitigations have been done here to try and avoid detection, but it is still highly recommended to wait at least 24 hours before attempting to repost an ad.
+If you find that after reposting an ad that it has immediately disappeared, it is likely that it has been flagged as a duplicate and Kijiji has automatically deleted it.
+
+Note that the original ad contents is still saved in the ad XML payload file located in your user instance folder.
+You can attempt to post this ad again using the "Post Manual" page and selecting the corresponding XML payload file.
+
 ## Command line arguments
 
 ```bash

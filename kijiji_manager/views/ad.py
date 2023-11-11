@@ -1,4 +1,5 @@
 import os
+import random
 from datetime import datetime
 from time import sleep
 
@@ -493,6 +494,10 @@ def repost(ad_id):
     # For ad payloads that already use the new image host, this translation should have no effect.
     xml_payload = translate_image_urls(ad_id, xml_payload)
 
+    # Modify ad title by appending or removing a randomized length suffix
+    # This is done to avoid duplicate ad detection
+    xml_payload = modify_ad_title(xml_payload)
+
     # Delete existing ad
     kijiji_api.delete_ad(current_user.id, current_user.token, ad_id)
     flash(f'Deleted old ad {ad_id}')
@@ -550,6 +555,52 @@ def translate_image_urls(ad_id, xml_payload):
     data = kijiji_api.get_ad(current_user.id, current_user.token, ad_id)
     payload = xmltodict.parse(xml_payload)
     payload['ad:ad']['pic:pictures'] = data['ad:ad']['pic:pictures']
+    return xmltodict.unparse(payload, short_empty_elements=True)
+
+
+def modify_ad_title(xml_payload):
+    """Modify ad title by appending or removing a randomized length suffix."""
+    def count_suffix_len(text, suffix_char):
+        """Count the number of consecutive characters in the string starting from the end."""
+        i = len(text)
+        for i in reversed(range(len(text))):
+            if text[i] != suffix_char:
+                i += 1
+                break
+        return len(text) - i
+
+    # Possible suffix character choices
+    suffix_chars = ['.', '!', '*', '+']
+
+    # Maximum number of consecutive suffix characters to append
+    suffix_max_length = 4
+
+    payload = xmltodict.parse(xml_payload)
+    ad_title_orig = payload['ad:ad']['ad:title']
+
+    # Test every possible suffix character, stopping on the first one found
+    # TODO Efficiency of this algorithm is pretty bad, but ad titles are limited to 64 characters at most
+    suffix_len = 0
+    for char in suffix_chars:
+        suffix_len = count_suffix_len(ad_title_orig, char)
+        if suffix_len:
+            break
+
+    if suffix_len:
+        # Suffix exists, remove it
+        ad_title_new = ad_title_orig[:-suffix_len].rstrip()
+    else:
+        # No suffix, append a random length one with a randomly chosen suffix character
+        suffix_new = f" {random.choice(suffix_chars) * random.randint(1, suffix_max_length)}"
+        ad_title_new = ad_title_orig + suffix_new
+
+        # Check if new ad title is longer than the maximum allowed ad title length
+        max_ad_title_length = 64
+        if len(ad_title_new) > max_ad_title_length:
+            flash(f'Warning: Truncating modified ad title "{ad_title_new}" to {max_ad_title_length} characters')
+            ad_title_new = ad_title_orig[:max_ad_title_length - len(suffix_new)] + suffix_new
+
+    payload['ad:ad']['ad:title'] = ad_title_new
     return xmltodict.unparse(payload, short_empty_elements=True)
 
 
